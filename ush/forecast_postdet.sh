@@ -17,6 +17,14 @@ FV3_postdet(){
   echo "warm_start = ${warm_start}"
   echo "RERUN = ${RERUN}"
 
+  #HBO+
+  # Define MISSINGGDAS
+  MISSINGGDAS="NO"
+  MISSGDASRECORD=${MISSGDASRECORD:-"/home/Bo.Huang/JEDI-2020/UFS-Aerosols_NRTcyc/UFS-Aerosols_JEDI-AeroDA-1C192-20C192_NRT/misc/GDAS/CHGRESGDAS/v15/record.chgres_hpss_htar_allmissing_v15"}
+  if ( grep ${CDATE} ${MISSGDASRECORD} ); then
+      export MISSINGGDAS="YES"
+  fi
+  #HBO
   #-------------------------------------------------------
   if [[ "${warm_start}" = ".true." ]] || [[ "${RERUN}" = "YES" ]]; then
     #-------------------------------------------------------
@@ -24,25 +32,64 @@ FV3_postdet(){
     if [[ ${RERUN} = "NO" ]]; then
       #.............................
 
-      # Link all restart files from previous cycle
+      # Link all restart files from previous cycle except for sfc_data and fv_tracer
       for file in "${COM_ATMOS_RESTART_PREV}/${sPDY}.${scyc}0000."*.nc; do
         file2=$(echo $(basename "${file}"))
         file2=$(echo "${file2}" | cut -d. -f3-) # remove the date from file
         fsuf=$(echo "${file2}" | cut -d. -f1)
-        ${NLN} "${file}" "${DATA}/INPUT/${file2}"
+	#HBO+
+	if [[ ! $(echo ${fsuf} | grep "sfc") ]] && [[ ! $(echo ${fsuf} | grep "tracer") ]]; then
+            ${NLN} "${file}" "${DATA}/INPUT/${file2}"
+	fi
+	#HBO+
       done
 
       # Replace sfc_data with sfcanl_data restart files from current cycle (if found)
-      if [[ "${MODE}" = "cycled" ]] && [[ "${CCPP_SUITE}" = "FV3_GFS_v16" ]]; then  # TODO: remove if statement when global_cycle can handle NOAHMP
-        for file in "${COM_ATMOS_RESTART}/${sPDY}.${scyc}0000."*.nc; do
-          file2=$(basename "${file}")
-          file2=$(echo "${file2}" | cut -d. -f3-) # remove the date from file
-          fsufanl=$(echo "${file2}" | cut -d. -f1)
-          file2=$(echo "${file2}" | sed -e "s/sfcanl_data/sfc_data/g")
-          rm -f "${DATA}/INPUT/${file2}"
-          ${NLN} "${file}" "${DATA}/INPUT/${file2}"
-        done
+      #HBO~+
+      #if [[ "${MODE}" = "cycled" ]] && [[ "${CCPP_SUITE}" = "FV3_GFS_v16" ]]; then  # TODO: remove if statement when global_cycle can handle NOAHMP
+      if [[ "${MODE}" = "cycled" ]]; then
+          if [[ ${MISSINGGDAS} = "NO" ]]; then
+              sfcrst=$(ls ${COM_ATMOS_RESTART}/${sPDY}.${scyc}0000.sfcanl_data.*.nc)
+	  else
+              sfcrst=$(ls ${COM_ATMOS_RESTART_PREV}/${sPDY}.${scyc}0000.sfc_data.*.nc)
+	  fi
+	  #HBO~+
+          #for file in "${COM_ATMOS_RESTART}/${sPDY}.${scyc}0000."*.nc; do
+	  for file in ${sfcrst}; do
+              file2=$(basename "${file}")
+              file2=$(echo "${file2}" | cut -d. -f3-) # remove the date from file
+              fsufanl=$(echo "${file2}" | cut -d. -f1)
+              file2=$(echo "${file2}" | sed -e "s/sfcanl_data/sfc_data/g")
+              rm -f "${DATA}/INPUT/${file2}"
+              ${NLN} "${file}" "${DATA}/INPUT/${file2}"
+         done
       fi
+
+      #HBO+
+      # Link tracer files
+      trcrst=fv_tracer
+      if [[ ${AERODA} = "YES" ]]; then
+          if [[ ${MEMBER} -le 0 ]]; then
+              trcrst="fv_tracer_aeroanl"
+	  else
+              if [[ ${RECENTER_ENKF_AERO} = "YES" ]]; then
+                  trcrst="fv_tracer_raeroanl"
+	      else
+                  trcrst="fv_tracer_aeroanl"
+	      fi
+	  fi
+      fi
+
+      for file in "${COM_ATMOS_RESTART_PREV}/${sPDY}.${scyc}0000.${trcrst}."*.nc; do
+          file2=$(echo $(basename "${file}"))
+          file2=$(echo "${file2}" | cut -d. -f3-) # remove the date from file
+          fsuf=$(echo "${file2}" | cut -d. -f1)
+	  if [ $fsuf = ${trcrst} ]; then
+              file2=$(echo $file2 | sed -e "s/${trcrst}/fv_tracer/g")
+              ${NLN} "${file}" "${DATA}/INPUT/${file2}"
+	  fi
+      done
+      #HBO+
 
       # Need a coupler.res when doing IAU
       if [[ ${DOIAU} = "YES" ]]; then
@@ -104,6 +151,23 @@ EOF
       fi
     fi
     #.............................
+    #HBO+
+    #Double check MISSINGGDAS, warm_start, read_increment, res_latlon_dynamics
+    if [[ ${MISSINGGDAS} = "YES" ]]; then
+	echo "GDAS files are missing and set read_increment=".false.""
+        read_increment=".false."
+	res_latlon_dynamics=""
+    else
+	if [[ ${read_increment} = ".false." ]]; then
+            echo "GDAS files exist, but read_increment=".false.""
+	    echo "Exit for now before to continue."
+	    echo "Please double check why read_increment=".false." was define in ush/forecast_postdet.sh"
+	    echo "Likely because increment calculation failed."
+	    exit 100
+	fi 
+    fi
+    #HBO+
+
 
   else ## cold start
     for file in "${COM_ATMOS_INPUT}/"*.nc; do
@@ -512,11 +576,13 @@ FV3_out() {
       done
       local idate=$(date --utc -d "${idate:0:8} ${idate:8:2} + ${restart_interval} hours" +%Y%m%d%H)
     done
+    #HBO+
     ${NCP} "${DATA}/input.nml" "${COM_CONF}/ufs.input.nml"
     ${NCP} "${DATA}/model_configure" "${COM_CONF}/ufs.model_configure"
     ${NCP} "${DATA}/nems.configure" "${COM_CONF}/ufs.nems.configure"
     ${NCP} "${DATA}/diag_table" "${COM_CONF}/ufs.diag_table"  
     ${NCP} "${DATA}/AERO_ExtData.rc" "${COM_CONF}/ufs.AERO_ExtData.rc"  
+    #HBO+
   else
     # No need to copy FV3 restart files when RUN=gfs or gefs
     ${NCP} "${DATA}/input.nml" "${COM_CONF}/ufs.input.nml"
@@ -1023,8 +1089,16 @@ GOCART_rc() {
     if [[ ! -f "${DATA}/AERO_ExtData.rc" ]]; then
       { \
         echo "PrimaryExports%%" ; \
-        cat "${AERO_CONFIG_DIR}/ExtData.other" ; \
-        cat "${AERO_CONFIG_DIR}/ExtData.${AERO_EMIS_FIRE:-none}" ; \
+	#HBO~
+        #cat "${AERO_CONFIG_DIR}/ExtData.other" ; \
+        if [[ ${AEROEMIS_STOCH} = "YES" ]]; then
+            cat "${AERO_CONFIG_DIR}/ExtData.other${AEROEMIS_EXTSUF}" ; \
+	    cat "${AERO_CONFIG_DIR}/ExtData.${AERO_EMIS_FIRE:-none}${AEROEMIS_EXTSUF}" ; \
+	else
+            cat "${AERO_CONFIG_DIR}/ExtData.other" ; \
+            cat "${AERO_CONFIG_DIR}/ExtData.${AERO_EMIS_FIRE:-none}" ; \
+	fi
+	#HBO~
         echo "%%" ; \
       } > "${DATA}/AERO_ExtData.rc"
       status=$?
