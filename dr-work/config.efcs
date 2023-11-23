@@ -30,8 +30,8 @@ export OUTPUT_FILETYPE_SFC="netcdf"
 
 # Number of enkf members per fcst job
 #HBO
-export NMEM_EFCSGRP=1
-export NMEM_EFCSGRP_GFS=1
+export NMEM_EFCSGRP=${NMEM_EFCSGRP:-"5"}
+export NMEM_EFCSGRP_GFS=${NMEM_EFCSGRP:-"5"}
 export RERUN_EFCSGRP="NO"
 
 # Turn off inline UPP for EnKF forecast

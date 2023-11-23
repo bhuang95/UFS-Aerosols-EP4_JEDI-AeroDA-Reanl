@@ -23,7 +23,6 @@ NDATE=${NDATE:-"/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/nd
 MEMBER=${MEMBER:-"-1"}
 DATA=${DATA:-"/scratch2/BMC/gsd-fv3-dev/NCEPDEV/stmp3/$USER/RUNDIRS/$CDATE/gdas/fcst/"}
 
-COMPONENT="atmos"
 
 #ROTDIR=/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/MISC/UFS-Aerosols/stochEmis/readPattern/dr-data
 #DATA=/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/MISC/UFS-Aerosols/stochEmis/readPattern/data

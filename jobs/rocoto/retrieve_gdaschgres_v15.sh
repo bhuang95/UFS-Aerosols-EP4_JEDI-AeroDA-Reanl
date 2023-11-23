@@ -28,11 +28,12 @@ export ENSRUN=${ENSRUN:-"YES"}
 export MISSGDASRECORD=${MISSGDASRECORD:-"/home/Bo.Huang/JEDI-2020/UFS-Aerosols_NRTcyc/UFS-Aerosols_JEDI-AeroDA-1C192-20C192_NRT/misc/GDAS/CHGRESGDAS/v15/record.chgres_hpss_htar_allmissing_v15"}
 COMP_ANL_ATM="analysis/atmos"
 COMP_MOD_ATM_RST="model_data/atmos/restart"
+NDATE="/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate"
 
-source "${HOMEgfs}/ush/preamble.sh"
-. $HOMEgfs/ush/load_ufswm_modules.sh
-status=$?
-[[ $status -ne 0 ]] && exit $status
+#source "${HOMEgfs}/ush/preamble.sh"
+#. $HOMEgfs/ush/load_ufswm_modules.sh
+#status=$?
+#[[ $status -ne 0 ]] && exit $status
 
 if ( grep ${CDATE} ${MISSGDASRECORD} ); then 
     echo "GDAS Met data not avaibale on HPSS and continue"
@@ -44,7 +45,7 @@ CM=${CDATE:4:2}
 CD=${CDATE:6:2}
 CH=${CDATE:8:2}
 
-GDATE=`$NDATE -$assim_freq ${CDATE}`
+GDATE=$($NDATE -$assim_freq ${CDATE})
 GYMD=${GDATE:0:8}
 GY=${GDATE:0:4}
 GM=${GDATE:4:2}
@@ -89,11 +90,18 @@ TARFILE=gdas.${CDATE}.${CASE_CNTL}.NC.tar
 htar -xvf ${TARDIR}/${TARFILE} 
 ERR=$?
 [[ ${ERR} -ne 0 ]] && exit ${ERR}
+TGTDIR=${ROTCNTLOUT}/${COMP_ANL_ATM}
+[[ ! -d ${TGTDIR} ]] && mkdir -p ${TGTDIR}
 mv ${GDASCNTLOUT}/gdas.t${CH}z.atmanl.${CASE_CNTL}.nc  ${ROTCNTLOUT}/${COMP_ANL_ATM}/gdas.t${CH}z.atmanl.nc
+ERR=$?
+[[ ${ERR} -ne 0 ]] && exit ${ERR}
+
 GDASCNTLRST=${GDASCNTLOUT}/RESTART
 ROTCNTLRST=${ROTCNTLOUT}/${COMP_MOD_ATM_RST}
 [[ ! -d ${ROTCNTLRST} ]] && mkdir -p ${ROTCNTLRST}
 mv ${GDASCNTLRST}/* ${ROTCNTLRST}/
+ERR=$?
+[[ ${ERR} -ne 0 ]] && exit ${ERR}
 
 if [ ${AERODA} = 'YES' -o ${ENSRUN} = 'YES' ]; then  
     cd ${GDASENKFOUT}
@@ -129,13 +137,17 @@ if [ ${AERODA} = 'YES' -o ${ENSRUN} = 'YES' ]; then
 	TGTDIR=${ROTENKFOUT}/${MEM}/${COMP_ANL_ATM}
 	[[ ! -d ${TGTDIR} ]] && mkdir -p ${TGTDIR}
         SRCFILE=${SRCDIR}/gdas.t${CH}z.ratmanl.${MEM}.${CASE_ENKF}.nc
-        TGTFILE=${TGTDIR}/gdas.t${CH}z.ratmanl.nc
+        TGTFILE=${TGTDIR}/enkfgdas.t${CH}z.ratmanl.nc
 	mv ${SRCFILE} ${TGTFILE}
+        ERR=$?
+        [[ ${ERR} -ne 0 ]] && exit ${ERR}
         
 	SRCRST=${GDASENKFOUT}/${MEM}/RESTART
 	TGTRST=${ROTENKFOUT}//${MEM}/${COMP_MOD_ATM_RST}
 	[[ ! -d ${TGTRST} ]] && mkdir -p ${TGTRST}
 	mv ${SRCRST}/* ${TGTRST}/
+        ERR=$?
+        [[ ${ERR} -ne 0 ]] && exit ${ERR}
 	#ITILE=1
 	#while [ ${ITILE} -le 6 ]; do
 	#    SRCFILE=${SRCRST}/${CYMD}.${CH}0000.sfcanl_data.tile${ITILE}.nc

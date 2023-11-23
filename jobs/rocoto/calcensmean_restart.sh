@@ -21,7 +21,7 @@ source "${HOMEgfs}/ush/jjob_header.sh" -e "aeroanlrun" -c "base aeroanlrun"
 export CDATE=${CDATE:-"2021021900"}
 export assim_freq=${assim_freq:-"6"}
 export CDUMP=${CDUMP:-${RUN:-"gdas"}}
-export COMPONENT="model_data/atmos"
+export COMP_MOD_ATM_RST="model_data/atmos/restart"
 export ROTDIR=${ROTDIR:-""}
 export ITILE=${ITILE:-"1"}
 export NMEM=${NMEM_ENKF:-"80"}
@@ -42,7 +42,7 @@ FYMD=${FDATE:0:8}
 FH=${FDATE:8:2}
 
 FENSDIR=${ROTDIR}/enkfgdas.${CYMD}/${CH}
-FENSMEANRTDIR=${ROTDIR}/enkfgdas.${CYMD}/${CH}/enseman/${COMPONENT}/restart/
+FENSMEANRTDIR=${ROTDIR}/enkfgdas.${CYMD}/${CH}/ensmean/${COMP_MOD_ATM_RST}/
 ANLPREFIX=${FYMD}.${FH}0000
 
 [[ ! -d ${FENSMEANRTDIR} ]] && mkdir -p ${FENSMEANRTDIR}
@@ -74,7 +74,7 @@ for TILEFILE in ${TILEFILES}; do
     IMEM=1
     while [ ${IMEM} -le ${NMEM} ]; do
         MEMSTR="mem"`printf %03d ${IMEM}`
-        MEMFILE_IN=${FENSDIR}/${MEMSTR}/${COMPONENT}/restart/${ANLPREFIX}.${TILEFILE}
+        MEMFILE_IN=${FENSDIR}/${MEMSTR}/${COMP_MOD_ATM_RST}/${ANLPREFIX}.${TILEFILE}
         MEMFILE_OUT=${TILEDIR}/${MEMSTR}.${TILEFILE}
         if [ ${IMEM} -eq 1 ]; then
             ${NCP} ${MEMFILE_IN} ${TILEDIR}/ensmean.${TILEFILE}
@@ -93,8 +93,8 @@ for TILEFILE in ${TILEFILES}; do
 done
 
 if [ ${ITILE} -eq 1 ]; then
-    ${NCP} ${FENSDIR}/mem001/${COMPONENT}/restart/${ANLPREFIX}.coupler.res ${FENSMEANRTDIR}/
-    ${NCP} ${FENSDIR}/mem001/${COMPONENT}/restart/${ANLPREFIX}.fv_core.res.nc ${FENSMEANRTDIR}/
+    ${NCP} ${FENSDIR}/mem001/${COMP_MOD_ATM_RST}/${ANLPREFIX}.coupler.res ${FENSMEANRTDIR}/
+    ${NCP} ${FENSDIR}/mem001/${COMP_MOD_ATM_RST}/${ANLPREFIX}.fv_core.res.nc ${FENSMEANRTDIR}/
     ERR=$?
     [[ ${ERR} -ne 0 ]] && exit ${ERR}
 fi

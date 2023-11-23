@@ -20,6 +20,7 @@ FV3_postdet(){
   #HBO+
   # Define MISSINGGDAS
   MISSINGGDAS="NO"
+  SFCANL_RST=${SFCANL_RST:-"YES"}
   MISSGDASRECORD=${MISSGDASRECORD:-"/home/Bo.Huang/JEDI-2020/UFS-Aerosols_NRTcyc/UFS-Aerosols_JEDI-AeroDA-1C192-20C192_NRT/misc/GDAS/CHGRESGDAS/v15/record.chgres_hpss_htar_allmissing_v15"}
   if ( grep ${CDATE} ${MISSGDASRECORD} ); then
       export MISSINGGDAS="YES"
@@ -48,10 +49,10 @@ FV3_postdet(){
       #HBO~+
       #if [[ "${MODE}" = "cycled" ]] && [[ "${CCPP_SUITE}" = "FV3_GFS_v16" ]]; then  # TODO: remove if statement when global_cycle can handle NOAHMP
       if [[ "${MODE}" = "cycled" ]]; then
-          if [[ ${MISSINGGDAS} = "NO" ]]; then
-              sfcrst=$(ls ${COM_ATMOS_RESTART}/${sPDY}.${scyc}0000.sfcanl_data.*.nc)
-	  else
+          if [[ ${MISSINGGDAS} = "YES" ]] || [[ ${SFCANL_RST} = "NO" ]]; then
               sfcrst=$(ls ${COM_ATMOS_RESTART_PREV}/${sPDY}.${scyc}0000.sfc_data.*.nc)
+	  else
+              sfcrst=$(ls ${COM_ATMOS_RESTART}/${sPDY}.${scyc}0000.sfcanl_data.*.nc)
 	  fi
 	  #HBO~+
           #for file in "${COM_ATMOS_RESTART}/${sPDY}.${scyc}0000."*.nc; do
