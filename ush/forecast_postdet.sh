@@ -24,6 +24,7 @@ FV3_postdet(){
   MISSGDASRECORD=${MISSGDASRECORD:-"/home/Bo.Huang/JEDI-2020/UFS-Aerosols_NRTcyc/UFS-Aerosols_JEDI-AeroDA-1C192-20C192_NRT/misc/GDAS/CHGRESGDAS/v15/record.chgres_hpss_htar_allmissing_v15"}
   if ( grep ${CDATE} ${MISSGDASRECORD} ); then
       export MISSINGGDAS="YES"
+      export SFCANL_RST="NO"
   fi
   #HBO
   #-------------------------------------------------------
@@ -49,10 +50,10 @@ FV3_postdet(){
       #HBO~+
       #if [[ "${MODE}" = "cycled" ]] && [[ "${CCPP_SUITE}" = "FV3_GFS_v16" ]]; then  # TODO: remove if statement when global_cycle can handle NOAHMP
       if [[ "${MODE}" = "cycled" ]]; then
-          if [[ ${MISSINGGDAS} = "YES" ]] || [[ ${SFCANL_RST} = "NO" ]]; then
+          if [[ ${SFCANL_RST} = "NO" ]]; then
               sfcrst=$(ls ${COM_ATMOS_RESTART_PREV}/${sPDY}.${scyc}0000.sfc_data.*.nc)
 	  else
-              sfcrst=$(ls ${COM_ATMOS_RESTART}/${sPDY}.${scyc}0000.sfcanl_data.*.nc)
+              sfcrst=$(ls ${COM_ATMOS_RESTART}/${sPDY}.${scyc}0000.sfc_data_rpl.*.nc)
 	  fi
 	  #HBO~+
           #for file in "${COM_ATMOS_RESTART}/${sPDY}.${scyc}0000."*.nc; do
@@ -60,7 +61,7 @@ FV3_postdet(){
               file2=$(basename "${file}")
               file2=$(echo "${file2}" | cut -d. -f3-) # remove the date from file
               fsufanl=$(echo "${file2}" | cut -d. -f1)
-              file2=$(echo "${file2}" | sed -e "s/sfcanl_data/sfc_data/g")
+              file2=$(echo "${file2}" | sed -e "s/sfc_data_rpl/sfc_data/g")
               rm -f "${DATA}/INPUT/${file2}"
               ${NLN} "${file}" "${DATA}/INPUT/${file2}"
          done
@@ -573,7 +574,9 @@ FV3_out() {
     local idate=$(date --utc -d "${current_cycle:0:8} ${current_cycle:8:2} + ${restart_interval} hours" +%Y%m%d%H)
     while [[ ${idate} -le ${forecast_end_cycle} ]]; do
       for file in "${idate:0:8}.${idate:8:2}0000."*; do
-        ${NCP} "${file}" "${COM_ATMOS_RESTART}/${file}"
+        #HBO~
+	#${NCP} "${file}" "${COM_ATMOS_RESTART}/${file}"
+        mv "${file}" "${COM_ATMOS_RESTART}/${file}"
       done
       local idate=$(date --utc -d "${idate:0:8} ${idate:8:2} + ${restart_interval} hours" +%Y%m%d%H)
     done

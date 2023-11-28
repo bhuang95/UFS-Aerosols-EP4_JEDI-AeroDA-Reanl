@@ -48,37 +48,36 @@ export HOMEgfs=${HOMEgfs:-"home/Bo.Huang/JEDI-2020/UFS-Aerosols_NRTcyc/UFS-Aeros
 export EXPDIR=${EXPDIR:-"${HOMEgfs}/dr-work/"}
 export ROTDIR=${ROTDIR:-"/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expRuns/exp_UFS-Aerosols/cycExp_ATMA_warm/dr-data"}
 export DATAROOT=${DATAROOT:-"/scratch2/BMC/gsd-fv3-dev/NCEPDEV/stmp3/Bo.Huang/RUNDIRS/cycExp_ATMA_warm/"}
-export METDIR_NRT=${METDIR_NRT:-"${ROTDIR}/RetrieveGDAS"}
 export assim_freq=${assim_freq:-"6"}
 export CDUMP=${CDUMP:-"gdas"}
-export CASE_CNTL=${CASE_CNTL:-"C192"}
-export CASE_ENKF=${CASE_ENKF:-"C192"}
+export SFCANL_RST=${SFCANL_RST:-"YES"}
 
 #export COMPONENT=${COMPONENT:-"atmos"}
-COMP_ANL="analysis/atmos"
-COMP_BKG="model_data/atmos/history/"
-export job="calcinc"
+COMP_RST="model_data/atmos/restart/"
+export job="rplsfc"
 export jobid="${job}.$$"
 export DATA=${DATA:-${DATAROOT}/${jobid}}
 #export DATA=${jobid}
 
 export MISSGDASRECORD=${MISSGDASRECORD:-"/home/Bo.Huang/JEDI-2020/UFS-Aerosols_NRTcyc/UFS-Aerosols_JEDI-AeroDA-1C192-20C192_NRT/misc/GDAS/CHGRESGDAS/v15/record.chgres_hpss_htar_allmissing_v15"}
 
+
 if ( grep ${CDATE} ${MISSGDASRECORD} ); then 
     echo "GDAS Met data not avaibale on HPSS and continue"
+    export SFCANL_RST="NO"
+fi
+
+if [ ${SFCANL_RST} = "NO" ]; then
+    echo "SFCANL_RST=${SFCANL_RST}"
     exit 0
 fi
 
 mkdir -p $DATA
 
-GDATE=`$NDATE -$assim_freq ${CDATE}`
-NTHREADS_CALCINC=${NTHREADS_CALCINC:-1}
-ncmd=${ncmd:-1}
-imp_physics=${imp_physics:-99}
-INCREMENTS_TO_ZERO=${INCREMENTS_TO_ZERO:-"'NONE'"}
-DO_CALC_INCREMENT=${DO_CALC_INCREMENT:-"YES"}
+RPLEXEC=${HOMEgfs}/ush/python/replace_sfc_data_restart.py
+NTILES=6
 
-CALCINCNCEXEC=${HOMEgfs}/exec/calc_increment_ens_ncio.x
+GDATE=`$NDATE -$assim_freq ${CDATE}`
 
 CYMD=${CDATE:0:8}
 CH=${CDATE:8:2}
@@ -93,45 +92,28 @@ NRM="/bin/rm -rf"
 NLN="/bin/ln -sf"
 
 cd $DATA
-${NRM} atmges_mem001 atmanl_mem001 atminc_mem001 calc_increment.nml
-${NCP} $CALCINCNCEXEC ./calc_inc.x
-export OMP_NUM_THREADS=$NTHREADS_CALCINC
+${NCP} ${RPLEXEC} ./replace_sfc_data_restart.py
 
-BKGDIR=${ROTDIR}/${CDUMP}.${GYMD}/${GH}/${COMP_BKG}/
-ANLDIR=${ROTDIR}/${CDUMP}.${CYMD}/${CH}/${COMP_ANL}/
-[[ ! -d ${BKGDIR} ]] && mkdir -p ${BKGDIR}
-[[ ! -d ${ANLDIR} ]] && mkdir -p ${ANLDIR}
+BKGDIR=${ROTDIR}/${CDUMP}.${GYMD}/${GH}/${COMP_RST}/
+ANLDIR=${ROTDIR}/${CDUMP}.${CYMD}/${CH}/${COMP_RST}/
+SFCPRE=${CYMD}.${CH}0000
 
-BKGFILE=${BKGDIR}/${CDUMP}.t${GH}z.atmf${FHR}.nc 
-INCFILE=${ANLDIR}/${CDUMP}.t${CH}z.atminc.nc
-ANLFILE=${ANLDIR}/${CDUMP}.t${CH}z.atmanl.nc
+${NRM} sfc.* sfcanl.*
 
-${NLN} ${BKGFILE} atmges_mem001
-${NLN} ${ANLFILE} atmanl_mem001
-${NLN} ${INCFILE} atminc_mem001
+ITILE=1
+while [ ${ITILE} -le ${NTILES} ]; do
+    RSTBKG=${BKGDIR}/${SFCPRE}.sfc_data.tile${ITILE}.nc
+    RSTBKG_RPL=${BKGDIR}/${SFCPRE}.sfc_data_rpl.tile${ITILE}.nc 
+    RSTANL=${ANLDIR}/${SFCPRE}.sfcanl_data.tile${ITILE}.nc 
+    ${NCP} ${RSTBKG} ${RSTBKG_RPL}
+    ${NLN} ${RSTBKG_RPL} sfc.mem001.tile${ITILE}
+    ${NLN} ${RSTANL} sfcanl.mem001.tile${ITILE}
+    ITILE=$((ITILE+1))
+done
 
-cat > calc_increment.nml << EOF
-&setup
-  datapath = './'
-  analysis_filename = 'atmanl'
-  firstguess_filename = 'atmges'
-  increment_filename = 'atminc'
-  debug = .false.
-  nens = 1
-  imp_physics = $imp_physics
-/
-&zeroinc
-  incvars_to_zero = $INCREMENTS_TO_ZERO
-/
-EOF
-
-cat calc_increment.nml
-
-srun --export=all -n ${ncmd} ./calc_inc.x
+srun --export=all -n 1 python finalize_ens_aeroanl_restart.py -a sfcanl -b sfc -i 1 -j 1
 ERR=$?
-if [[ $ERR != 0 ]]; then
-    exit ${ERR}
-fi
+[[ ${ERR} -ne 0 ]] && exit ${ERR}
 
 rm -rf ${DATA}
 exit ${ERR}

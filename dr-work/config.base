@@ -91,7 +91,7 @@ export NMV="/bin/mv"
 export NLN="/bin/ln -sf"
 export VERBOSE="YES"
 #HBO
-export KEEPDATA="YES"
+export KEEPDATA="NO"
 export CHGRP_RSTPROD="YES"
 export CHGRP_CMD="chgrp rstprod"
 export NCDUMP="${NETCDF:-}/bin/ncdump"

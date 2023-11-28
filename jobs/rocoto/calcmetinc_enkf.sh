@@ -1,13 +1,13 @@
 #!/usr/bin/env bash 
-#SBATCH -n 1
-#SBATCH -t 00:30:00
-#SBATCH -p hera
-#SBATCH -q debug
-#SBATCH -A chem-var
-#SBATCH -J fgat
-#SBATCH -D ./
-#SBATCH -o ./bump_gfs_c96.out
-#SBATCH -e ./bump_gfs_c96.out
+##SBATCH -n 1
+##SBATCH -t 00:30:00
+##SBATCH -p hera
+##SBATCH -q debug
+##SBATCH -A chem-var
+##SBATCH -J fgat
+##SBATCH -D ./
+##SBATCH -o ./bump_gfs_c96.out
+##SBATCH -e ./bump_gfs_c96.out
 
 set -x
 
