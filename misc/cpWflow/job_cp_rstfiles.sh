@@ -4,10 +4,10 @@
 #DETDIR=/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/UFSAerosols-workflow/20231116-develop/global-workflow/comrot/cycExp_ATMA_warm/gdas.20201220/18/model_data/atmos/restart/
 #SRCPRE="20201221.000000.fv_tracer.res"
 #DETPRE="20201221.000000.fv_tracer_aeroanl.res"
-SRCDIR=/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/UFSAerosols-workflow/20231116-develop/global-workflow/comrot/cycExp_ATMA_warm/enkfgdas.20201220/18/mem001/model_data/atmos/restart
-DETDIR=/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/UFSAerosols-workflow/20231116-develop/global-workflow/comrot/cycExp_ATMA_warm/enkfgdas.20201220/18/mem001/model_data/atmos/restart
-SRCPRE="20201221.000000.fv_tracer.res"
-DETPRE="20201221.000000.fv_tracer_raeroanl.res"
+SRCDIR=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/RET_EP4_AeroDA_YesSPE_41M_C96_201712/dr-data/gdas.20171130/18/model_data/atmos/restart
+DETDIR=${SRCDIR}
+SRCPRE="20171201.000000.fv_tracer.res"
+DETPRE="20171201.000000.fv_tracer_aeroanl.res"
 
 NTILES=6
 

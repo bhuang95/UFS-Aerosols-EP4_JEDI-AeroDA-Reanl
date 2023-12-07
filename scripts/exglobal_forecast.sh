@@ -155,13 +155,13 @@ if [[ "${esmf_profile:-}" = ".true." ]]; then
 fi
 
 #HBO+
-if [ ${AEROEMIS_STOCH} = "YES" ]; then
-    echo "Stochastically perturbing aerosol emissions"
-    ${HOMEgfs}/ush/stoch_aeroemis.sh
-    export ERR=$?
-    export err=${ERR}
-    ${ERRSCRIPT} || exit ${err}
-fi
+#if [ ${AEROEMIS_STOCH} = "YES" ]; then
+#    echo "Stochastically perturbing aerosol emissions"
+#    ${HOMEgfs}/ush/stoch_aeroemis.sh
+#    export ERR=$?
+#    export err=${ERR}
+#    ${ERRSCRIPT} || exit ${err}
+#fi
 #HBO+
 
 ${NCP} "${FCSTEXECDIR}/${FCSTEXEC}" "${DATA}/"

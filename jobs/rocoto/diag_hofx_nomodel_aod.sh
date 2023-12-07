@@ -61,8 +61,8 @@ JEDIUSH=${HOMEgfs}/ush/JEDI/
 ENSED=$((${NMEM_EFCSGRP} * 10#${ENSGRP}))
 ENSST=$((ENSED - NMEM_EFCSGRP + 1))
 
-if [ ${ENSED} -gt ${NMEM_ENKF} ]; then
-    echo "Member number ${ENSED} exceeds ensemble size ${NMEM_ENKF} and exit."
+if [ ${ENSED} -gt ${NMEM_ENKF} ] || [ ${ENSST} -lt 0 ]; then
+    echo "Member ${ENSST}-${ENSED} range is not right and exit."
     exit 100
 fi
 

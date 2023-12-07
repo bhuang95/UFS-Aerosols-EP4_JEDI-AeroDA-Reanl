@@ -116,22 +116,22 @@ ${NLN} ${JEDIDIR}/geos-aero/test/Data ${DATA}/
 OBSTIME=${ANLTIME}
 if [ ${AODTYPE} = "NOAA_VIIRS" ]; then
     OBSIN=${OBSDIR_NRT}/${OBSTIME}/${AODTYPE}_AOD_npp.${OBSTIME}.iodav3.nc
-    OBSIN1=${OBSDIR_NRT}/${OBSTIME}/${AODTYPE}_AOD_j01.${OBSTIME}.iodav3.nc
+    #OBSIN1=${OBSDIR_NRT}/${OBSTIME}/${AODTYPE}_AOD_j01.${OBSTIME}.iodav3.nc
     SENSORID=v.viirs-m_npp
-    SENSORID1=v.viirs-m_npp
+    #SENSORID1=v.viirs-m_npp
     OBSOUT=aod_viirs_npp_obs_${OBSTIME}.nc4
-    OBSOUT1=aod_viirs_j01_obs_${OBSTIME}.nc4
+    #OBSOUT1=aod_viirs_j01_obs_${OBSTIME}.nc4
     ${NLN} ${OBSIN} ${DATAINPUT}/${OBSOUT}
-    ${NLN} ${OBSIN1} ${DATAINPUT}/${OBSOUT1}
+    #${NLN} ${OBSIN1} ${DATAINPUT}/${OBSOUT1}
 elif [ ${AODTYPE} = "MODIS" ]; then
     OBSIN=${OBSDIR_NRT}/${OBSTIME}/nnr_aqua.${OBSTIME}.nc
-    OBSIN1=${OBSDIR_NRT}/${OBSTIME}/nnr_terra.${OBSTIME}.nc
+    #OBSIN1=${OBSDIR_NRT}/${OBSTIME}/nnr_terra.${OBSTIME}.nc
     SENSORID=v.modis_aqua
-    SENSORID1=v.modis_terra
+    #SENSORID1=v.modis_terra
     OBSOUT=aod_nnr_aqua_obs_${OBSTIME}.nc4
-    OBSOUT1=aod_nnr_terra_obs_${OBSTIME}.nc4
+    #OBSOUT1=aod_nnr_terra_obs_${OBSTIME}.nc4
     ${NLN} ${OBSIN} ${DATAINPUT}/${OBSOUT}
-    ${NLN} ${OBSIN1} ${DATAINPUT}/${OBSOUT1}
+    #${NLN} ${OBSIN1} ${DATAINPUT}/${OBSOUT1}
 else
     echo "AODTYBE must be VIIRS or MODIS; exit this program now!"
     exit 1

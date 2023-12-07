@@ -98,15 +98,15 @@ OBSTIME=${ANLTIME}
 #if [ "${AODTYPE}" == "NOAA_VIIRS" ]; then
 if ( echo ${AODTYPE} | grep -q "NOAA_VIIRS" ); then
     OBSIN=${OBSDIR_NRT}/${OBSTIME}/${AODTYPE}_AOD_npp.${OBSTIME}.iodav3.nc
-    OBSIN1=${OBSDIR_NRT}/${OBSTIME}/${AODTYPE}_AOD_j01.${OBSTIME}.iodav3.nc
+    #OBSIN1=${OBSDIR_NRT}/${OBSTIME}/${AODTYPE}_AOD_j01.${OBSTIME}.iodav3.nc
     SENSORID=v.viirs-m_npp
-    SENSORID1=v.viirs-m_npp
+    #SENSORID1=v.viirs-m_npp
     OBSOUT=aod_viirs_npp_obs_${OBSTIME}.nc4
-    OBSOUT1=aod_viirs_j01_obs_${OBSTIME}.nc4
+    #OBSOUT1=aod_viirs_j01_obs_${OBSTIME}.nc4
     HOFXOUT=${AODTYPE}_npp_obs_hofx_3dvar_LUTs_${TRCR}_${OBSTIME}.nc4
-    HOFXOUT1=${AODTYPE}_j01_obs_hofx_3dvar_LUTs_${TRCR}_${OBSTIME}.nc4
+    #HOFXOUT1=${AODTYPE}_j01_obs_hofx_3dvar_LUTs_${TRCR}_${OBSTIME}.nc4
     ${NLN} ${OBSIN} ${DATAINPUT}/${OBSOUT}
-    ${NLN} ${OBSIN1} ${DATAINPUT}/${OBSOUT1}
+    #${NLN} ${OBSIN1} ${DATAINPUT}/${OBSOUT1}
 #elif [ "${AODTYPE}" == *"AERONET"* ]; then
 elif ( echo ${AODTYPE} | grep -q "AERONET" ); then
     OBSIN=${OBSDIR_NRT}/${OBSTIME}/${AODTYPE}_AOD.${OBSTIME}.iodav3.nc
@@ -201,28 +201,29 @@ observations:
         AerosolOption: aerosols_gocart_1
         RCFile: geosaod.rc
         model units coeff: 1.e-9
-  - obs space:
-      name: Aod
-      obsdatain:
-        engine:
-          type: H5File
-          obsfile: ./INPUT/${OBSOUT1}
-      obsdataout:
-        engine:
-          type: H5File
-          obsfile: ./DIAG/${HOFXOUT1}
-      simulated variables: [aerosolOpticalDepth]
-      channels: 4
-    obs operator:
-      name: AodLUTs
-      obs options:
-        Sensor_ID: ${SENSORID}
-        EndianType: little_endian
-        CoefficientPath: ./CRTM/
-        AerosolOption: aerosols_gocart_1
-        RCFile: geosaod.rc
-        model units coeff: 1.e-9
 "
+#  - obs space:
+#      name: Aod
+#      obsdatain:
+#        engine:
+#          type: H5File
+#          obsfile: ./INPUT/${OBSOUT1}
+#      obsdataout:
+#        engine:
+#          type: H5File
+#          obsfile: ./DIAG/${HOFXOUT1}
+#      simulated variables: [aerosolOpticalDepth]
+#      channels: 4
+#    obs operator:
+#      name: AodLUTs
+#      obs options:
+#        Sensor_ID: ${SENSORID}
+#        EndianType: little_endian
+#        CoefficientPath: ./CRTM/
+#        AerosolOption: aerosols_gocart_1
+#        RCFile: geosaod.rc
+#        model units coeff: 1.e-9
+
 #elif [ "${AODTYPE}" == *"AERONET"* ]; then
 elif ( echo ${AODTYPE} | grep -q "AERONET" ); then
 OBSBLK="  
@@ -295,9 +296,9 @@ if [ ${ERR} -ne 0 ]; then
 fi
 
 ${NMV} ${DIAGDIR}/${HOFXOUT} ${HOFXDIR}/${HOFXOUT}
-if ( echo ${AODTYPE} | grep -q "NOAA_VIIRS" ); then
-    ${NMV} ${DIAGDIR}/${HOFXOUT1} ${HOFXDIR}/${HOFXOUT1}
-fi
+#if ( echo ${AODTYPE} | grep -q "NOAA_VIIRS" ); then
+#    ${NMV} ${DIAGDIR}/${HOFXOUT1} ${HOFXDIR}/${HOFXOUT1}
+#fi
 ${NCP} ${DATA}/hofx_nomodel_aero_${AODTYPE}.yaml ${HOFXDIR}/
 
 ERR=$?

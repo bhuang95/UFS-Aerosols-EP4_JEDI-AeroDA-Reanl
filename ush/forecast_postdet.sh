@@ -53,7 +53,7 @@ FV3_postdet(){
           if [[ ${SFCANL_RST} = "NO" ]]; then
               sfcrst=$(ls ${COM_ATMOS_RESTART_PREV}/${sPDY}.${scyc}0000.sfc_data.*.nc)
 	  else
-              sfcrst=$(ls ${COM_ATMOS_RESTART}/${sPDY}.${scyc}0000.sfc_data_rpl.*.nc)
+              sfcrst=$(ls ${COM_ATMOS_RESTART_PREV}/${sPDY}.${scyc}0000.sfc_data_com_sfcanl.*.nc)
 	  fi
 	  #HBO~+
           #for file in "${COM_ATMOS_RESTART}/${sPDY}.${scyc}0000."*.nc; do
@@ -61,7 +61,7 @@ FV3_postdet(){
               file2=$(basename "${file}")
               file2=$(echo "${file2}" | cut -d. -f3-) # remove the date from file
               fsufanl=$(echo "${file2}" | cut -d. -f1)
-              file2=$(echo "${file2}" | sed -e "s/sfc_data_rpl/sfc_data/g")
+              file2=$(echo "${file2}" | sed -e "s/sfc_data_com_sfcanl/sfc_data/g")
               rm -f "${DATA}/INPUT/${file2}"
               ${NLN} "${file}" "${DATA}/INPUT/${file2}"
          done
@@ -1098,6 +1098,7 @@ GOCART_rc() {
         if [[ ${AEROEMIS_STOCH} = "YES" ]]; then
             cat "${AERO_CONFIG_DIR}/ExtData.other${AEROEMIS_EXTSUF}" ; \
 	    cat "${AERO_CONFIG_DIR}/ExtData.${AERO_EMIS_FIRE:-none}${AEROEMIS_EXTSUF}" ; \
+	    ${NLN} ${COM_ATMOS_RESTART_PREV}/pertEmis/* ${DATA} 
 	else
             cat "${AERO_CONFIG_DIR}/ExtData.other" ; \
             cat "${AERO_CONFIG_DIR}/ExtData.${AERO_EMIS_FIRE:-none}" ; \

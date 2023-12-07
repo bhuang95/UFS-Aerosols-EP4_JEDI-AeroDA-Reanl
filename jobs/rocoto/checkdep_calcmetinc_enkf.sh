@@ -27,7 +27,7 @@ if [ ${nfiles} != ${NMEM_ENKF} ]; then
     ecode=$((ecode+1))
 fi
 
-nfiles=$(ls ${ROTDIR}/enkfgdas.${GYY}${GMM}${GDD}/${GHH}/mem???/model_data/history/enkfgdas.t${GHH}z.atmf006.nc | wc -l)
+nfiles=$(ls ${ROTDIR}/enkfgdas.${GYY}${GMM}${GDD}/${GHH}/mem???/model_data/atmos/history/enkfgdas.t${GHH}z.atmf006.nc | wc -l)
 if [ ${nfiles} != ${NMEM_ENKF} ]; then
     ecode=$((ecode+1))
 fi

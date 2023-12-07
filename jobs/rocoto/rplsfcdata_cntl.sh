@@ -91,19 +91,19 @@ NMV="/bin/mv -f"
 NRM="/bin/rm -rf"
 NLN="/bin/ln -sf"
 
-cd $DATA
+cd ${DATA}
 ${NCP} ${RPLEXEC} ./replace_sfc_data_restart.py
 
 BKGDIR=${ROTDIR}/${CDUMP}.${GYMD}/${GH}/${COMP_RST}/
 ANLDIR=${ROTDIR}/${CDUMP}.${CYMD}/${CH}/${COMP_RST}/
 SFCPRE=${CYMD}.${CH}0000
 
-${NRM} sfc.* sfcanl.*
+${NRM} ${DATA}/sfc.* ${DATA}/sfcanl.*
 
 ITILE=1
 while [ ${ITILE} -le ${NTILES} ]; do
     RSTBKG=${BKGDIR}/${SFCPRE}.sfc_data.tile${ITILE}.nc
-    RSTBKG_RPL=${BKGDIR}/${SFCPRE}.sfc_data_rpl.tile${ITILE}.nc 
+    RSTBKG_RPL=${BKGDIR}/${SFCPRE}.sfc_data_com_sfcanl.tile${ITILE}.nc 
     RSTANL=${ANLDIR}/${SFCPRE}.sfcanl_data.tile${ITILE}.nc 
     ${NCP} ${RSTBKG} ${RSTBKG_RPL}
     ${NLN} ${RSTBKG_RPL} sfc.mem001.tile${ITILE}
@@ -111,7 +111,7 @@ while [ ${ITILE} -le ${NTILES} ]; do
     ITILE=$((ITILE+1))
 done
 
-srun --export=all -n 1 python finalize_ens_aeroanl_restart.py -a sfcanl -b sfc -i 1 -j 1
+srun --export=all -n 1 python replace_sfc_data_restart.py  -a sfcanl -b sfc -i 1 -j 1
 ERR=$?
 [[ ${ERR} -ne 0 ]] && exit ${ERR}
 

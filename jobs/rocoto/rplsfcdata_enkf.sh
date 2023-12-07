@@ -87,8 +87,8 @@ NTILES=6
 ENSED=$((${NMEM_EFCSGRP} * 10#${ENSGRP}))
 ENSST=$((ENSED - NMEM_EFCSGRP + 1))
 
-if [ ${ENSED} -gt ${NMEM_ENKF} ]; then
-    echo "Member number ${ENSED} exceeds ensemble size ${NMEM_ENKF} and exit."
+if [ ${ENSED} -gt ${NMEM_ENKF} ] || [ ${ENSST} -lt 0 ]; then
+    echo "Member ${ENSST}-${ENSED} range is not right and exit."
     exit 100
 fi
 
@@ -106,12 +106,12 @@ NMV="/bin/mv -f"
 NRM="/bin/rm -rf"
 NLN="/bin/ln -sf"
 
-cd $DATA
+cd ${DATA}
 ${NCP} ${RPLEXEC} ./replace_sfc_data_restart.py
 
 IMEM=${ENSST}
 SFCPRE=${CYMD}.${CH}0000
-${NRM} sfc.* sfcanl.*
+${NRM} ${DATA}/sfc.* ${DATA}/sfcanl.*
 while [ ${IMEM} -le ${ENSED} ]; do
     MEMSTR="mem"`printf %03d ${IMEM}`
 
@@ -121,7 +121,7 @@ while [ ${IMEM} -le ${ENSED} ]; do
     ITILE=1
     while [ ${ITILE} -le ${NTILES} ]; do
         RSTBKG=${BKGDIR}/${SFCPRE}.sfc_data.tile${ITILE}.nc
-        RSTBKG_RPL=${BKGDIR}/${SFCPRE}.sfc_data_rpl.tile${ITILE}.nc 
+        RSTBKG_RPL=${BKGDIR}/${SFCPRE}.sfc_data_com_sfcanl.tile${ITILE}.nc 
         RSTANL=${ANLDIR}/${SFCPRE}.sfcanl_data.tile${ITILE}.nc 
         ${NCP} ${RSTBKG} ${RSTBKG_RPL}
         ${NLN} ${RSTBKG_RPL} sfc.${MEMSTR}.tile${ITILE}
@@ -131,7 +131,7 @@ while [ ${IMEM} -le ${ENSED} ]; do
     IMEM=$((IMEM+1))
 done
 
-srun --export=all -n 1 python finalize_ens_aeroanl_restart.py -a sfcanl -b sfc -i ${ENSST} -j ${ENSED}
+srun --export=all -n 1 python replace_sfc_data_restart.py -a sfcanl -b sfc -i ${ENSST} -j ${ENSED}
 ERR=$?
 [[ ${ERR} -ne 0 ]] && exit ${ERR}
 

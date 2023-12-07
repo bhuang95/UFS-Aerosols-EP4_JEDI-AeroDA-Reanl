@@ -1,17 +1,28 @@
 #!/bin/bash
 
-CYCDIR=/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expRuns/UFS-Aerosols_RETcyc/RET_EP4_SpinUp_C96_202005/dr-data/20200526/06
-NMEM=20
-INPUTDIR="model_data/atmos/input"
+DATADIR=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/RET_EP4_SpinUp_NoSfcanl_41M_C96_202005/dr-data
+ICDIR=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/RET_EP4_SpinUp_41M_C96_202005/dr-data/IC/CHGRES/
+CYCLE="2020052606"
+CYMD=${CYCLE:0:8}
+CH=${CYCLE:8:2}
+NMEM=40
 
-IMEM=1
+IMEM=0
 while [ ${IMEM} -le ${NMEM} ]; do
-    MEMSTR=mem`printf %03d ${IMEM}`
-    MEMDIR=${CYCDIR}/${MEMSTR}
-    echo "${MEMDIR}"
-    cd ${MEMDIR}
-    rm -rf *.rc *.nc input.nml  model_configure	nems.configure	RESTART
-    mkdir -p ${INPUTDIR}
-    mv INPUT/* ${INPUTDIR}/
+    if [ ${IMEM} -eq '0' ]; then
+        MEMSTR=""
+        ENKOPT=""
+    else
+        MEMSTR=mem`printf %03d ${IMEM}`
+        ENKOPT="enkf"
+    fi
+    SRCDIR=${ICDIR}/${ENKOPT}gdas.${CYMD}/${CH}/atmos/${MEMSTR}/INPUT
+    TGTDIR=${DATADIR}/${ENKOPT}gdas.${CYMD}/${CH}/${MEMSTR}/model_data/atmos/input
+
+    [[ ! -d ${TGTDIR} ]] && mkdir -p ${TGTDIR}
+    echo ${SRCDIR} 
+    echo ${TGTDIR}
+    cp ${SRCDIR}/* ${TGTDIR}/
+
     IMEM=$((IMEM+1))
 done

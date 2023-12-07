@@ -336,8 +336,9 @@ export DOHYBVAR="NO"
 export NMEM_ENS=20
 export NMEM_ENS_GFS=20
 export SMOOTH_ENKF="NO"
-export l4densvar=".true."
-export lwrite4danl=".true."
+#HBO
+export l4densvar=".false."
+export lwrite4danl=".false."
 
 # EnKF output frequency
 if [[ ${DOHYBVAR} = "YES" ]]; then
@@ -384,7 +385,18 @@ export MAKE_NSSTBUFR="NO"
 export MAKE_ACFTBUFR="NO"
 
 # Analysis increments to zero in CALCINCEXEC
-export INCREMENTS_TO_ZERO="'liq_wat_inc','icmr_inc'"
+#HBO-orig
+GFSVERSION=${GFSVERSION-"v15"}
+if [ ${GFSVERSION} = "v14" ];then
+    export INCREMENTS_TO_ZERO=${ZERO_METINCS:-"'delp_inc','delz_inc','clwmr_inc','icmr_inc','liq_wat_inc'"}
+elif [ ${GFSVERSION} = "v15" ];then
+    export INCREMENTS_TO_ZERO=${ZERO_METINCS:-"'delp_inc','clwmr_inc','icmr_inc','liq_wat_inc'"}
+elif [ ${GFSVERSION} = "v16" ];then
+    export INCREMENTS_TO_ZERO=${ZERO_METINCS:-"'clwmr_inc','icmr_inc','liq_wat_inc'"}
+else
+    echo "In config.base, please define INCREMENTS_TO_ZERO for GFSVERSION that is not v14/15/16"
+    exit 100
+fi
 
 # Write analysis files for early cycle EnKF
 export DO_CALC_INCREMENT_ENKF_GFS="YES"
