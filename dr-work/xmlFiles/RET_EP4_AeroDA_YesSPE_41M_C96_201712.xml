@@ -46,6 +46,9 @@
 	<!ENTITY RECENTER_ENKF_AERO "YES">
 	<!ENTITY ENSRUN "YES">
 	<!ENTITY ENSDIAG "YES">
+	<!-- T1: sfcanl=no, aeroda=yes, run passes -->
+	<!--ENTITY SFCANL_RST "NO"-->
+	<!-- T2: sfcanl=yes, aeroda=yes, run passes -->
 	<!ENTITY SFCANL_RST "YES">
 
 	<!-- GDAS met setup-->

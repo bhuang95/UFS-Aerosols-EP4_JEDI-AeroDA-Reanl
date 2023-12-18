@@ -72,9 +72,9 @@ fi
 mkdir -p $DATA
 
 GDATE=`$NDATE -$assim_freq ${CDATE}`
-NTHREADS_CALCINC=${NTHREADS_CALCINC:-1}
-ncmd=${ncmd:-1}
-imp_physics=${imp_physics:-99}
+NTHREADS_CALCINC=${NTHREADS_CALCINC:-"1"}
+ncmd=${ncmd:-"1"}
+imp_physics=${imp_physics:-"99"}
 INCREMENTS_TO_ZERO=${INCREMENTS_TO_ZERO:-"'NONE'"}
 DO_CALC_INCREMENT=${DO_CALC_INCREMENT:-"YES"}
 

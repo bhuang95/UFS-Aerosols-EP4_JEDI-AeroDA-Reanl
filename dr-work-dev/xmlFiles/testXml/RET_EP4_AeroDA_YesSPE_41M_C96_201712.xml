@@ -50,6 +50,12 @@
 	<!ENTITY ENSRUN "YES">
 	<!ENTITY ENSDIAG "YES">
 	<!ENTITY SFCANL_RST "YES">
+	<!ENTITY ZERO_METINCS "'delz_inc','clwmr_inc','icmr_inc','liq_wat_inc'">
+
+	<!-- Forecast setup -->
+	<!ENTITY FHMIN "6">
+	<!ENTITY FHMAX "12">
+	<!ENTITY FHOUT "6">
 
 	<!-- GDAS met setup-->
 	<!ENTITY GFSVERSION "v14">
@@ -77,7 +83,7 @@
 	<!ENTITY EMISDIR_NRT "/scratch1/NCEPDEV/global/glopara/data/gocart_emissions">
 	-->
 	<!ENTITY AEROEMIS_STOCH_CNTL "YES">
-	<!ENTITY AEROEMIS_STOCH_ENKF "YES">
+	<!ENTITY AEROEMIS_STOCH_ENKF "NO">
 	<!ENTITY AEROEMIS_EXTSUF "_stochAeroEmis">
 	<!ENTITY AEROEMIS_STOCH_INIT ".T.">
 	<!ENTITY AEROEMIS_STOCH_INIT_RST00Z ".T.">
@@ -107,7 +113,7 @@
 
 	<!-- Machine related entities -->
 	<!ENTITY PARTITION    "hera">
-	<!ENTITY ACCOUNT    "wrf-chem">
+	<!ENTITY ACCOUNT    "gsd-fv3-dev">
 	<!ENTITY QUEUE      "debug">
 	<!ENTITY SCHEDULER  "slurm">
 
@@ -262,6 +268,7 @@
 	<envar><name>GFSVERSION</name><value>&GFSVERSION;</value></envar>
 	<envar><name>NMEM_ENKF</name><value>&NMEM_ENKF;</value></envar>
 	<envar><name>ENSRUN</name><value>&ENSRUN;</value></envar>
+	<envar><name>ZERO_METINCS</name><value>&ZERO_METINCS;</value></envar>
 
 	<dependency>
 		<and>
@@ -353,7 +360,7 @@
 	<envar><name>DUSTDIR_NRT</name><value>&DUSTDIR_NRT;</value></envar>
 	<envar><name>CEDSVER</name><value>&CEDSVER;</value></envar>
 	<envar><name>AEROEMIS_STOCH_CNTL</name><value>&AEROEMIS_STOCH_CNTL;</value></envar>
-	<envar><name>AEROEMIS_STOCHE_ENKF</name><value>&AEROEMIS_STOCH_ENKF;</value></envar>
+	<envar><name>AEROEMIS_STOCH_ENKF</name><value>&AEROEMIS_STOCH_ENKF;</value></envar>
 	<envar><name>AEROEMIS_EXTSUF</name><value>&AEROEMIS_EXTSUF;</value></envar>
 	<envar><name>AEROEMIS_STOCH_INIT</name><value>&AEROEMIS_STOCH_INIT;</value></envar>
 	<envar><name>AEROEMIS_STOCH_INIT_RST00Z</name><value>&AEROEMIS_STOCH_INIT_RST00Z;</value></envar>
@@ -361,6 +368,9 @@
 	<envar><name>AEROEMIS_SPPT</name><value>&AEROEMIS_SPPT;</value></envar>
 	<envar><name>AEROEMIS_SPPT_TAU</name><value>&AEROEMIS_SPPT_TAU;</value></envar>
 	<envar><name>AEROEMIS_SPPT_LSCALE</name><value>&AEROEMIS_SPPT_LSCALE;</value></envar>
+	<envar><name>FHMAX</name><value>&FHMAX;</value></envar>
+	<envar><name>FHMIN</name><value>&FHMIN;</value></envar>
+	<envar><name>FHOUT</name><value>&FHOUT;</value></envar>
 
 	<dependency>
 		<and>
@@ -604,6 +614,9 @@
 	<envar><name>MISSGDASRECORD</name><value>&MISSGDASRECORD;</value></envar>
 	<envar><name>SFCANL_RST</name><value>&SFCANL_RST;</value></envar>
 	<envar><name>GFSVERSION</name><value>&GFSVERSION;</value></envar>
+	<envar><name>FHMAX</name><value>&FHMAX;</value></envar>
+	<envar><name>FHMIN</name><value>&FHMIN;</value></envar>
+	<envar><name>FHOUT</name><value>&FHOUT;</value></envar>
 
 
 	<dependency>

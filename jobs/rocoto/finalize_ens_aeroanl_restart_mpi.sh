@@ -75,6 +75,9 @@ TRCRRCEANL="fv_tracer_raeroanl"
 CNTLDIR="${GDIR}/${COMP_MOD_ATM_RST}"
 EMEANDIR="${GENSDIR}/ensmean/${COMP_MOD_ATM_RST}/"
 
+NTHREADS_AEROANL=${NTHREADS_AEROANL:-"1"}
+ncmd=${ncmd:-"1"}
+export OMP_NUM_THREADS=$NTHREADS_AEROANL
 IMEM=${ENSST}
 while [ ${IMEM} -le ${ENSED} ]; do
     MEMSTR="mem"`printf %03d ${IMEM}`
@@ -121,7 +124,7 @@ while [ ${IMEM} -le ${ENSED} ]; do
 
         ITILE=$((ITILE+1))
     done
-    { srun --export=all -n 1 python finalize_ens_aeroanl_restart.py -i ${IMEM} -j ${IMEM} -v "INVARS.nml" >& ${RCELOG}; echo "$?" > extcode.out; } & 
+    { srun --export=all -n ${ncmd} python finalize_ens_aeroanl_restart.py -i ${IMEM} -j ${IMEM} -v "INVARS.nml" >& ${RCELOG}; echo "$?" > extcode.out; } & 
     IMEM=$((IMEM+1))
 done
 wait

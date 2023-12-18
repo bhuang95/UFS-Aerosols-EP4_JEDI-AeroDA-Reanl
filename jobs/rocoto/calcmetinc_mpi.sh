@@ -44,7 +44,6 @@ done
 
 #export ROTDIR=/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expRuns/exp_UFS-Aerosols/cycExp_ATMA_warm/dr-data/
 #export CDATE=2017110106
-[[ $status -ne 0 ]] && exit $status
 
 ulimit -s unlimited
 ###############################################################
@@ -91,9 +90,9 @@ fi
 
 GDATE=`$NDATE -$assim_freq ${CDATE}`
 
-NTHREADS_CALCINC=${NTHREADS_CALCINC:-1}
-ncmd=${ncmd:-1}
-imp_physics=${imp_physics:-99}
+NTHREADS_CALCINC=${NTHREADS_CALCINC:-"1"}
+ncmd=${ncmd:-"1"}
+imp_physics=${imp_physics:-"99"}
 INCREMENTS_TO_ZERO=${INCREMENTS_TO_ZERO:-"'NONE'"}
 DO_CALC_INCREMENT=${DO_CALC_INCREMENT:-"YES"}
 

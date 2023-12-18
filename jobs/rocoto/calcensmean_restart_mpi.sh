@@ -107,12 +107,13 @@ while [ ${ITILE} -le 6 ]; do
     ITILE=$((ITILE+1))
 done
 
-if [ ${ITILE} -eq 1 ]; then
-    ${NCP} ${FENSDIR}/mem001/${COMP_MOD_ATM_RST}/${ANLPREFIX}.coupler.res ${FENSMEANRTDIR}/
-    ${NCP} ${FENSDIR}/mem001/${COMP_MOD_ATM_RST}/${ANLPREFIX}.fv_core.res.nc ${FENSMEANRTDIR}/
-    ERR=$?
-    [[ ${ERR} -ne 0 ]] && exit ${ERR}
-fi
+
+
+${NCP} ${FENSDIR}/mem001/${COMP_MOD_ATM_RST}/${ANLPREFIX}.coupler.res ${FENSMEANRTDIR}/
+${NCP} ${FENSDIR}/mem001/${COMP_MOD_ATM_RST}/${ANLPREFIX}.fv_core.res.nc ${FENSMEANRTDIR}/
+ERR=$?
+[[ ${ERR} -ne 0 ]] && exit ${ERR}
+
 
 if [ ${ERR} -eq 0 ]; then
     rm -rf ${DATA}

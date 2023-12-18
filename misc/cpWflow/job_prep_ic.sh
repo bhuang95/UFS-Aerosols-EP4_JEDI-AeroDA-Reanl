@@ -1,11 +1,13 @@
 #!/bin/bash
 
-DATADIR=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/RET_EP4_SpinUp_NoSfcanl_41M_C96_202005/dr-data
+DATADIR=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/RET_EP4_SpinUp_NoSfcanl_v15_0delz_41M_C96_202005/dr-data
 ICDIR=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/RET_EP4_SpinUp_41M_C96_202005/dr-data/IC/CHGRES/
 CYCLE="2020052606"
 CYMD=${CYCLE:0:8}
 CH=${CYCLE:8:2}
 NMEM=40
+
+mkdir -p ${DATADIR}/../dr-work
 
 IMEM=0
 while [ ${IMEM} -le ${NMEM} ]; do

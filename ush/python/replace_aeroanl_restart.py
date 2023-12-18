@@ -55,8 +55,8 @@ if __name__ == '__main__':
             with nc.Dataset(jediensname,'r') as jediensfile:
                 with nc.Dataset(rplensname,'a') as rplensfile:
                         for vname in invars:
-                            jedidata = jediensfile.variables[vname][:]
-                            rplensfile.variables[vname][:] = jedidata[:]
+                            #jedidata = jediensfile.variables[vname][:]
+                            rplensfile.variables[vname][:] = jediensfile.variables[vname][:]
                             try:
                                 rplensfile.variables[vname].delncattr('checksum')  # remove the checksum so fv3 does not complain
                             except AttributeError:

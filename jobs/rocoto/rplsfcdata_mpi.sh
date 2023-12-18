@@ -44,7 +44,6 @@ done
 
 #export ROTDIR=/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expRuns/exp_UFS-Aerosols/cycExp_ATMA_warm/dr-data/
 #export CDATE=2017110106
-[[ $status -ne 0 ]] && exit $status
 
 ulimit -s unlimited
 ###############################################################
@@ -81,6 +80,8 @@ fi
 
 mkdir -p $DATA
 
+NTHREADS_RPLSFC=${NTHREADS_RPLSFC:-"1"}
+ncmd=${ncmd:-"1"}
 RPLEXEC=${HOMEgfs}/ush/python/replace_sfc_data_restart.py
 NTILES=6
 ENSST=0
@@ -89,6 +90,7 @@ ENSED=${NMEM_ENKF}
 if [ ${ENSRUN} = "NO" ]; then
     ENSED=0
 fi
+
 
 if [ ${ENSED} -lt ${ENSST} ]; then
     echo "ENSED smaller than ENSST and please check first before continuing."
@@ -109,7 +111,7 @@ NMV="/bin/mv -f"
 NRM="/bin/rm -rf"
 NLN="/bin/ln -sf"
 
-
+export OMP_NUM_THREADS=$NTHREADS_RPLSFC
 SFCPRE=${CYMD}.${CH}0000
 IMEM=${ENSST}
 while [ ${IMEM} -le ${ENSED} ]; do
@@ -141,7 +143,7 @@ while [ ${IMEM} -le ${ENSED} ]; do
         ${NLN} ${RSTANL} sfcanl.mem001.tile${ITILE}
         ITILE=$((ITILE+1))
     done
-    { srun --export=all -n 1 python replace_sfc_data_restart.py -a sfcanl -b sfc -i 1 -j 1 >& ${RPLLOG}; echo "$?" > extcode.out; } &
+    { srun --export=all -n ${ncmd} python replace_sfc_data_restart.py -a sfcanl -b sfc -i 1 -j 1 >& ${RPLLOG}; echo "$?" > extcode.out; } &
     IMEM=$((IMEM+1))
 done
 wait

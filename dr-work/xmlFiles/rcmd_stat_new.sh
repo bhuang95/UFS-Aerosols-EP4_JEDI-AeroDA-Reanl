@@ -14,7 +14,7 @@ DBDIR="/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/"
 EXP=$1
 #for EXP in ${EXPS}; do
     echo "${RORUNCMD} -w ${XMLDIR}/${EXP}.xml -d ${DBDIR}/${EXP}/dr-work/${EXP}.db"
-    ${RORUNCMD} -w ${XMLDIR}/${EXP}.xml -d ${DBDIR}/${EXP}/dr-work/${EXP}.db
+    ${RORUNCMD} -w ${XMLDIR}/${EXP}.xml -d ${DBDIR}/${EXP}/dr-work/${EXP}.db | less
 #done
 
 #TASKS="

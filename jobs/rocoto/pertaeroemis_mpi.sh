@@ -32,8 +32,8 @@ NMEM_ENKF=${NMEM_ENKF:-"5"}
 ENSRUN=${ENSRUN:-"YES"}
 COMP_PERT="model_data/atmos/restart/pertEmis"
 
-if [ ${AEROEMIS_STOCH_CNTL} = "NO"] && [ ${AEROEMIS_STOCH_ENKF} = "NO"]; then
-    echo "Don't perform SPE for control and ensemble"
+if [ ${AEROEMIS_STOCH_CNTL} = "NO" ] && [ ${AEROEMIS_STOCH_ENKF} = "NO" ]; then
+    echo "Do not perform SPE for control and ensemble"
     exit 0
 fi
 
@@ -44,7 +44,7 @@ if [ ${AEROEMIS_STOCH_CNTL} = "YES" ]; then
     ENSST=0
 fi
 
-if [ ${ENSRUN} = "NO" ] || [ ${AEROEMIS_STOCH_ENKF} = "NO"]; then
+if [ ${ENSRUN} = "NO"  ] || [ ${AEROEMIS_STOCH_ENKF} = "NO" ]; then
     ENSED=0
 fi
 

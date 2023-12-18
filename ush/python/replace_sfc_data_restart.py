@@ -1,5 +1,6 @@
 import datetime as dt
 import netCDF4 as nc
+import numpy as np
 import os, argparse, copy
 
 '''
@@ -61,8 +62,10 @@ if __name__ == '__main__':
                         sfcanl_dims=sfcanlfile.variables[comvar].shape
                         if (len(sfc_dims)) > 1 and (sfc_dims == sfcanl_dims):
                             #print(comvar)
-                            sfcfile.variables[comvar][:] = sfcanlfile.variables[comvar][:]
-                            try:
-                                sfcfile.variables[comvar].delncattr('checksum')  # remove the checksum so fv3 does not complain
-                            except AttributeError:
-                                pass  # checksum is missing, move on
+                            rplarr = sfcanlfile.variables[comvar][:]
+                            if not np.isnan(rplarr).any():
+                                sfcfile.variables[comvar][:] = sfcanlfile.variables[comvar][:]
+                                try:
+                                    sfcfile.variables[comvar].delncattr('checksum')  # remove the checksum so fv3 does not complain
+                                except AttributeError:
+                                    pass  # checksum is missing, move on
