@@ -15,7 +15,7 @@
 	    For now, SFCANL_RST="NO" to use sfc_data from past cycle
 	-->
 	<!-- Experiment directory setup -->
-	<!ENTITY PSLOT "RET_EP4_SpinUp_YesSfcanl_v15_0delz_41M_C96_202005">
+	<!ENTITY PSLOT "RET_EP4_FreeRun_NoSPE_YesSfcanl_v14_0dz0dp_1M_C96_201712">
 	<!ENTITY HOMEgfs "/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/"> 
 	<!--
 	<!ENTITY HOMEgfs "/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/MISC/UFS-Workflow/20231130/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl">
@@ -33,8 +33,8 @@
 	<!ENTITY DMPDIR   "/scratch1/NCEPDEV/global/glopara/dump">
 
 	<!-- Experiment parameter setup -->
-	<!ENTITY SDATE "202005260600">
-	<!ENTITY EDATE "202005311800">
+	<!ENTITY SDATE "201712010000">
+	<!ENTITY EDATE "201712311800">
 	<!ENTITY INTERVAL "06:00:00">
 	<!ENTITY CYCINTHR "06">
 	<!ENTITY CDUMP_CNTL "gdas">
@@ -47,13 +47,13 @@
 	<!ENTITY NMEM_EFCSGRP_FAST     "5">
 	<!ENTITY AERODA "NO">
 	<!ENTITY RECENTER_ENKF_AERO "YES">
-	<!ENTITY ENSRUN "YES">
+	<!ENTITY ENSRUN "NO">
 	<!ENTITY ENSDIAG "NO">
 	<!ENTITY SFCANL_RST "YES">
-	<!ENTITY ZERO_METINCS "'delz_inc','clwmr_inc','icmr_inc','liq_wat_inc'">
+	<!ENTITY ZERO_METINCS "'delp_inc','delz_inc','clwmr_inc','icmr_inc','liq_wat_inc'">
 
 	<!-- GDAS met setup-->
-	<!ENTITY GFSVERSION "v15">
+	<!ENTITY GFSVERSION "v14">
 	<!ENTITY METDIR_NRT  "&ROTDIR;/RetrieveGDAS/">
 	<!ENTITY CASE     "C96">
 	<!ENTITY CASE_CNTL     "C96">
@@ -108,8 +108,9 @@
 
 	<!-- Machine related entities -->
 	<!ENTITY PARTITION    "hera">
-	<!ENTITY ACCOUNT    "chem-var">
-	<!ENTITY QUEUE      "debug">
+	<!ENTITY ACCOUNT    "wrf-chem">
+	<!ENTITY QUEUE      "batch">
+	<!ENTITY QUEUE_DEB      "debug">
 	<!ENTITY SCHEDULER  "slurm">
 
 	<!-- ROCOTO task control -->
@@ -152,7 +153,7 @@
 
 	<!ENTITY QUEUE_DIAG_GDAS     "&QUEUE;">
 	<!ENTITY WALLTIME_DIAG_GDAS  "00:29:00">
-	<!ENTITY RESOURCES_DIAG_GDAS "2:ppn=12:tpp=1">
+	<!ENTITY RESOURCES_DIAG_GDAS "1:ppn=24:tpp=1">
 	<!--ENTITY MEMORIES_DIAG_GDAS "100G"-->
 	<!ENTITY NATIVE_DIAG_GDAS    "--export=NONE">
 
@@ -216,7 +217,10 @@
 
 	<dependency>
 		<and>
-			<taskdep task="gdasarch" cycle_offset="-06:00:00"/>
+			<or>
+				<taskdep task="gdasarch" cycle_offset="-06:00:00"/>
+				<not><cycleexistdep cycle_offset="-06:00:00"/></not>
+			</or>
 			<or>
 				<sh shell="/bin/bash"><cyclestr>grep @Y@m@d@H &METRECORD;</cyclestr></sh>
 				<sh shell="/bin/bash"><cyclestr>grep @Y@m@d@H &MISSGDASRECORD;</cyclestr></sh>
@@ -233,7 +237,7 @@
 
 	<jobname><cyclestr>&PSLOT;_gdascalcinc_@H</cyclestr></jobname>
 
-	<queue>&QUEUE;</queue>
+	<queue>&QUEUE_DEB;</queue>
 	<partition>&PARTITION;</partition>
 	<account>&ACCOUNT;</account>
 	<walltime>&WALLTIME_SIGP_GDAS;</walltime>
@@ -264,7 +268,11 @@
 
 	<dependency>
 		<and>
-			<taskdep task="gdasarch" cycle_offset="-06:00:00"/>
+			<taskdep task="gdasretrievemet"/>
+			<or>
+				<taskdep task="gdasarch" cycle_offset="-06:00:00"/>
+				<not><cycleexistdep cycle_offset="-06:00:00"/></not>
+			</or>
 			<or>
 				<sh shell="/bin/bash"><cyclestr>&JOBS_DIR;/checkdep_calcmetinc_mpi.sh</cyclestr></sh>
 				<sh shell="/bin/bash"><cyclestr>grep @Y@m@d@H &MISSGDASRECORD;</cyclestr></sh>
@@ -280,7 +288,7 @@
 
 	<jobname><cyclestr>&PSLOT;_gdassfcrpl_@H</cyclestr></jobname>
 
-	<queue>&QUEUE;</queue>
+	<queue>&QUEUE_DEB;</queue>
 	<partition>&PARTITION;</partition>
 	<account>&ACCOUNT;</account>
 	<walltime>&WALLTIME_SIGP_GDAS;</walltime>
@@ -306,7 +314,11 @@
 
 	<dependency>
 		<and>
-			<taskdep task="gdasarch" cycle_offset="-06:00:00"/>
+			<taskdep task="gdasretrievemet"/>
+			<or>
+				<taskdep task="gdasarch" cycle_offset="-06:00:00"/>
+				<not><cycleexistdep cycle_offset="-06:00:00"/></not>
+			</or>
 			<or>
 				<sh shell="/bin/bash"><cyclestr>&JOBS_DIR;/checkdep_rplsfc_mpi.sh</cyclestr></sh>
 				<sh shell="/bin/bash"><cyclestr>grep @Y@m@d@H &MISSGDASRECORD;</cyclestr></sh>
@@ -323,7 +335,7 @@
 
 	<jobname><cyclestr>&PSLOT;_pertemis_@H</cyclestr></jobname>
 	<account>&ACCOUNT;</account>
-	<queue>&QUEUE_SIGP_GDAS;</queue>
+	<queue>&QUEUE_DEB;</queue>
 	<partition>&PARTITION;</partition>
 	<walltime>&WALLTIME_SIGP_GDAS;</walltime>
 	<nodes>&RESOURCES_SIGP_GDAS;</nodes>
@@ -353,7 +365,7 @@
 	<envar><name>DUSTDIR_NRT</name><value>&DUSTDIR_NRT;</value></envar>
 	<envar><name>CEDSVER</name><value>&CEDSVER;</value></envar>
 	<envar><name>AEROEMIS_STOCH_CNTL</name><value>&AEROEMIS_STOCH_CNTL;</value></envar>
-	<envar><name>AEROEMIS_STOCHE_ENKF</name><value>&AEROEMIS_STOCH_ENKF;</value></envar>
+	<envar><name>AEROEMIS_STOCH_ENKF</name><value>&AEROEMIS_STOCH_ENKF;</value></envar>
 	<envar><name>AEROEMIS_EXTSUF</name><value>&AEROEMIS_EXTSUF;</value></envar>
 	<envar><name>AEROEMIS_STOCH_INIT</name><value>&AEROEMIS_STOCH_INIT;</value></envar>
 	<envar><name>AEROEMIS_STOCH_INIT_RST00Z</name><value>&AEROEMIS_STOCH_INIT_RST00Z;</value></envar>
@@ -512,11 +524,9 @@
 </task>
 -->
 
-
-<!--
 <metatask name="gdasaerodiag">
 
-	<var name="grp">01 02 03 04</var>
+	<var name="grp">01</var>
 
 	<task name="gdasaerodiag#grp#" cycledefs="gdas_half,gdas" maxtries="&MAXTRIES;">
 
@@ -556,12 +566,14 @@
 		<envar><name>TASKRC</name><value>&TASKRC;</value></envar>
 		<envar><name>GFSVERSION</name><value>&GFSVERSION;</value></envar>
 		<dependency>
-			<taskdep task="gdasaeroanlefinal"/>
+			<or>
+				<taskdep task="gdasarch" cycle_offset="-06:00:00"/>
+				<not><cycleexistdep cycle_offset="-06:00:00"/></not>
+			</or>
 		</dependency>
 	</task>
 
 </metatask>
--->
 
 <task name="gdasfcst" cycledefs="gdas_half,gdas" maxtries="&MAXTRIES;">
 
@@ -614,25 +626,19 @@
 	<envar><name>MISSGDASRECORD</name><value>&MISSGDASRECORD;</value></envar>
 	<envar><name>SFCANL_RST</name><value>&SFCANL_RST;</value></envar>
 	<envar><name>GFSVERSION</name><value>&GFSVERSION;</value></envar>
+	<envar><name>ZERO_METINCS</name><value>&ZERO_METINCS;</value></envar>
 
 
 	<dependency>
 		<and>
-			<or>
-				<and>
-					<taskdep task="gdasmetinc"/>
-					<taskdep task="gdasrplsfc"/>
-					<!--
-					<taskdep task="gdasaeroanlvar"/>
-					-->
-				</and>
-				<not><cycleexistdep cycle_offset="-06:00:00"/></not>
-			</or>
+			<taskdep task="gdasmetinc"/>
+			<taskdep task="gdasrplsfc"/>
 			<sh shell="/bin/bash"><cyclestr>&JOBS_DIR;/checkdep_aerofcst_emis.sh</cyclestr></sh>
 		</and>
 	</dependency>
 </task>
 
+<!--
 <metatask name="gdasefmn">
 
 	<var name="grp">01 02 03 04 05 06 07 08</var>
@@ -689,31 +695,26 @@
 	        <envar><name>MISSGDASRECORD</name><value>&MISSGDASRECORD;</value></envar>
 		<envar><name>SFCANL_RST</name><value>&SFCANL_RST;</value></envar>
 		<envar><name>GFSVERSION</name><value>&GFSVERSION;</value></envar>
+		<envar><name>ZERO_METINCS</name><value>&ZERO_METINCS;</value></envar>
 		<dependency>
 			<and>
-				<or>
-					<and>
-						<taskdep task="gdasmetinc"/>
-						<taskdep task="gdasrplsfc"/>
-						<!--
-						<taskdep task="gdasaeroanlvar"/>
-						-->
-					</and>
-					<not><cycleexistdep cycle_offset="-06:00:00"/></not>
-				</or>
+				<taskdep task="gdasmetinc"/>
+				<taskdep task="gdasrplsfc"/>
 				<sh shell="/bin/bash"><cyclestr>&JOBS_DIR;/checkdep_aerofcst_emis.sh</cyclestr></sh>
 			</and>
 		</dependency>
 	</task>
 </metatask>
+-->
 
+<!--
 <task name="gdasemean" cycledefs="gdas_half,gdas" maxtries="&MAXTRIES;">
 
 	<command>&JOBS_DIR;/calcensmean_restart_mpi.sh</command>
 
 	<jobname><cyclestr>&PSLOT;_gdasemean_@H</cyclestr></jobname>
 	<account>&ACCOUNT;</account>
-	<queue>&QUEUE_EMEAN_GDAS;</queue>
+	<queue>&QUEUE_DEB;</queue>
 	<partition>&PARTITION;</partition>
 	<walltime>&WALLTIME_EMEAN_GDAS;</walltime>
 	<nodes>&RESOURCES_EMEAN_GDAS;</nodes>
@@ -736,6 +737,7 @@
 		<metataskdep metatask="gdasefmn"/>
 	</dependency>
 </task>
+-->
 
 <task name="gdasarch" cycledefs="gdas_half,gdas" maxtries="&MAXTRIES;" final="true">
 
@@ -776,12 +778,8 @@
 
 	<dependency>
 		<and>
-			<taskdep task="gdasemean"/>
 			<taskdep task="gdasfcst"/>
-			<metataskdep metatask="gdasefmn"/>
-			<!--
 			<metataskdep metatask="gdasaerodiag"/>
-			-->
 		</and>
 	</dependency>
 </task>

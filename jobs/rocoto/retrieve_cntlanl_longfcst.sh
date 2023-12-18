@@ -17,6 +17,7 @@ ROTDIR=${ROTDIR:-"/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/
 CDATE=${CDATE:-"2017100600"}
 CYCINTHR=${CYCINTHR:-"06"}
 ARCHHPSSDIR=${ARCHHPSSDIR:-"/BMC/fim/5year/MAPP_2018/bhuang/UFS-Aerosols-expRuns/UFS-Aerosols_RETcyc/"}
+SFCANL_RST=${SFCANL_RST:-"YES"}
 TMPDIR=${ROTDIR}/
 
 NDATE="/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate"
@@ -48,36 +49,47 @@ while [ ${IDATE} -le ${CDATE} ]; do
     cd ${TGTDIR} 
 
     if [ ${IDATE} = ${GDATE} ]; then
-        htar -xvf ${SRCFILE} atmos/RESTART
+        RETDIR=model_data/atmos/restart
+        htar -xvf ${SRCFILE} ${RETDIR}
         ERR=$?
         [[ ${ERR} -ne 0 ]] && exit ${ERR}
-        TGTDIR_ROT=${ROTDIR}/gdas.${IYMD}/${IH}/atmos/RESTART
-	[[ -d ${TGTDIR_ROT} ]] && mkdir -p ${TGTDIR_ROT}
-	mv ${TGTDIR}/atmos/RESTART/*  ${TGTDIR_ROT}/
-        [[ ${ERR} -ne 0 ]] && exit ${ERR}
+        #TGTDIR_ROT=${ROTDIR}/gdas.${IYMD}/${IH}/${RETDIR}
+	#[[ -d ${TGTDIR_ROT} ]] && mkdir -p ${TGTDIR_ROT}
+	#mv ${TGTDIR}/${RETDIR}/*  ${TGTDIR_ROT}/
+        #[[ ${ERR} -ne 0 ]] && exit ${ERR}
+
+	if [ -d ${RETDIR}/pertEmis ]; then
+	   echo "${RETDIR}/pertEmis"
+	   #${NRM} -rf ${RETDIR}/pertEmis
+	fi
     elif [ ${IDATE} = ${CDATE} ]; then
-        htar -xvf ${SRCFILE} atmos/gdas.t${IH}z.atminc.nc
+        RETDIR=analysis/atmos
+        htar -xvf ${SRCFILE} ${RETDIR}/gdas.t${IH}z.atminc.nc
         ERR=$?
         [[ ${ERR} -ne 0 ]] && exit ${ERR}
-        TGTDIR_ROT=${ROTDIR}/gdas.${IYMD}/${IH}/atmos/
-	[[ -d ${TGTDIR_ROT} ]] && mkdir -p ${TGTDIR_ROT}
-	mv ${TGTDIR}/atmos/gdas.t${IH}z.atminc.nc  ${TGTDIR_ROT}/
-        [[ ${ERR} -ne 0 ]] && exit ${ERR}
+        #TGTDIR_ROT=${ROTDIR}/gdas.${IYMD}/${IH}/${RETDIR}
+	#[[ -d ${TGTDIR_ROT} ]] && mkdir -p ${TGTDIR_ROT}
+	#mv ${TGTDIR}/${RETDIR}/gdas.t${IH}z.atminc.nc  ${TGTDIR_ROT}/
+        #[[ ${ERR} -ne 0 ]] && exit ${ERR}
         
-	i=1
-	while [ ${i} -le 6 ]; do
-            htar -xvf ${SRCFILE} atmos/RESTART/${IYMD}.${IH}0000.sfcanl_data.tile${i}.nc
-            ERR=$?
-            [[ ${ERR} -ne 0 ]] && exit ${ERR}
-	    i=$((i+1))
-	done
-        TGTDIR_ROT=${ROTDIR}/gdas.${IYMD}/${IH}/atmos/RESTART/
-	[[ -d ${TGTDIR_ROT} ]] && mkdir -p ${TGTDIR_ROT}
-	mv ${TGTDIR}/atmos/RESTART/${IYMD}.${IH}0000.sfcanl_data*.nc  ${TGTDIR_ROT}/
-        [[ ${ERR} -ne 0 ]] && exit ${ERR}
+	#if [ ${SFCANL_RST} = "YES" ]; then
+	#	
+	#    RETDIR=model_data/atmos/restart
+	#    i=1
+	#    while [ ${i} -le 6 ]; do
+        #        htar -xvf ${SRCFILE} ${RETDIR}/${IYMD}.${IH}0000.sfc_data_com_sfcanl.tile${i}.nc
+        #        ERR=$?
+        #        [[ ${ERR} -ne 0 ]] && exit ${ERR}
+	#        i=$((i+1))
+	#    done
+        #    TGTDIR_ROT=${ROTDIR}/gdas.${IYMD}/${IH}/${RETDIR}
+	#    [[ -d ${TGTDIR_ROT} ]] && mkdir -p ${TGTDIR_ROT}
+	#    mv ${TGTDIR}/${RETDIR}/${IYMD}.${IH}0000.sfc_data_com_sfcanl.tile?.nc  ${TGTDIR_ROT}/
+        #    [[ ${ERR} -ne 0 ]] && exit ${ERR}
+	#fi
     else
         echo "IDATE not properly defined and exit now"
-	exit 100
+        exit 100
     fi
 
     IDATE=$(${NDATE} ${CYCINTHR} ${IDATE})

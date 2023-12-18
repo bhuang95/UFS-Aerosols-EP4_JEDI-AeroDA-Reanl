@@ -122,10 +122,10 @@ case "${fv3_res}" in
     "C96")
         export DELTIM=600
 	#HBO~
-        export layout_x=4 #2
-        export layout_y=6 #2
-        export layout_x_gfs=4 #2
-        export layout_y_gfs=6 #2
+        export layout_x=${layout_x:-"4"} #2
+        export layout_y=${layout_y:-"6"} #2
+        export layout_x_gfs=${layout_x} #2
+        export layout_y_gfs=${layout_y} #2
 	#HBO~
         export nthreads_fv3=1
         export nthreads_fv3_gfs=1
