@@ -76,7 +76,7 @@ SPPT_INTP=".T."
 STOCH_WRITE_ORIG=".T."
 GBBEPx_VERSION=${AERO_EMIS_FIRE:-"gbbepx_v004"}
 
-PERTEXEC_CHEM=${HOMEgfs}/exec/standalone_stochy_chem_modified.x
+PERTEXEC_CHEM=${HOMEgfs}/exec/standalone_stochy_chem.x
 PERTEXEC_DUST=${HOMEgfs}/exec/standalone_stochy_dust.x
 
 NLN='/bin/ln -sf'
