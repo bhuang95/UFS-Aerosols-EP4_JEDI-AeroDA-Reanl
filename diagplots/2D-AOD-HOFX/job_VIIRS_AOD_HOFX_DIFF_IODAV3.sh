@@ -21,8 +21,8 @@ ndate=/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate
 
 #cycst=2017101500 # Starting cycle
 #cyced=2017102700 # Ending cycle
-cycst=2020060600 # Starting cycle
-cyced=2020061100 # Ending cycle
+cycst=2020061000 # Starting cycle
+cyced=2020061400 # Ending cycle
 	# All four cycles at 00/06/12/18Z has to be available at a certain day. Otherwise, it will crash/ 
 	
 # (if cycinc=24, set cycst and cyced as YYYYMMDD00)
@@ -40,7 +40,7 @@ aerodaexp="
 	"
         # DA experiments
 	#ENKF_AEROSEMIS-ON_STOCH_MODIFIED_INIT-ON-201710_nobias_correction
-exps="${freerunexp}"
+exps="${aerodaexp}"
 
 for exp in ${exps}; do
     topplotdir=${topexpdir}/${exp}/diagplots/VIIRS_AOD_HOFX_DIFF_IODAV3

@@ -20,8 +20,8 @@ topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc
 
 ndate=/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate
 
-cycst=2020060400
-cyced=2020060500
+cycst=2020060600
+cyced=2020060900
 # (if cycinc=24, set cycst and cyced as YYYYMMDD00)
 cycinc=24 
 # (6 or 24 hours)
