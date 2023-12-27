@@ -28,8 +28,12 @@ done
 
 EXPS="
     RET_EP4_AeroDA_NoSPE_YesSfcanl_v15_0dz0dp_41M_C96_202006_Diag
-    RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006_Diag
+    RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v15_0dz0dp_41M_C96_202006_Diag
+    RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006_LongFcst
+    RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006_LongFcst_Diag
+
 "
+#    RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006_Diag
 
 for EXP in ${EXPS}; do
     echo "${RORUNCMD} -w ${XMLDIR}/${EXP}.xml -d ${COMDBDIR}/${EXP}.db"

@@ -173,11 +173,11 @@ DUSTPARM_CV="
 if [ ${STOCH_INIT} = ".T." ]; then
     if [ ${STOCH_INIT_RST00Z} = ".T." -a ${CH} = "00" ]; then
         STOCH_INIT=".F."
-    else
-        if [ ! -e ${STOCHPAT_IN} ]; then
-           STOCH_INIT=".F."
-           echo "WARNING: STOCH_INIT was changed to False due to missing pattern from previoys cycle. "
-        fi
+    #else
+    #    if [ ! -e ${STOCHPAT_IN} ]; then
+    #       STOCH_INIT=".F."
+    #       echo "WARNING: STOCH_INIT was changed to False due to missing pattern from previoys cycle. "
+    #    fi
     fi
 fi
 
@@ -247,17 +247,14 @@ for EMIS_SRC in ${EMIS_SRCS}; do
 
 	PERTLOG=${ROTDIR}/logs/${CDATE}/pert_${EMIS_SRC}_${ENKFOPT}${MEMOPT}
         PERT_GDATE=${ROTDIR}/${ENKFOPT}.${GYMD}/${GH}/${MEMOPT}/${COMP_PERT}/
-        PERT_CDATE=${ROTDIR}/${ENKFOPT}.${CYMD}/${CH}/${MEMOPT}/${COMP_PERT}/
         CONF_CDATE=${ROTDIR}/${ENKFOPT}.${CYMD}/${CH}/${MEMOPT}/conf/
         STOCHPAT_IN=${PERT_GDATE}/${CY}${CM}${CD}.${CH}0000.aeroemis_stoch.res.nc
         STOCHPAT_OUT=${EY}${EM}${ED}.${EH}0000.aeroemis_stoch.res.nc
 
         DIR_TGT="${DATA}/pert_${EMIS_SRC}/${ENKFOPT}${MEMOPT}/"
         PERT_GDATE_TGT=${PERT_GDATE}/pert_${EMIS_SRC}
-        PERT_CDATE_TGT=${PERT_CDATE}/pert_${EMIS_SRC}
         [[ ! -d ${DIR_TGT} ]] && mkdir -p ${DIR_TGT}
         [[ ! -d ${PERT_GDATE_TGT} ]] && mkdir -p ${PERT_GDATE_TGT}
-        [[ ! -d ${PERT_CDATE_TGT} ]] && mkdir -p ${PERT_CDATE_TGT}
 
         [[ ! -d ${CONF_CDATE} ]] && mkdir -p ${CONF_CDATE}
 
@@ -265,7 +262,12 @@ for EMIS_SRC in ${EMIS_SRCS}; do
 
         [[ ! -d ./INPUT ]] && mkdir ./INPUT
         if [ ${STOCH_INIT} = ".T." ]; then
-            ${NCP} ${STOCHPAT_IN} ./INPUT//ocn_stoch.res.nc
+            if [ ! -e ${STOCHPAT_IN} ]; then
+                echo "STOCH_INIT=.T. but ${STOCHPAT_IN} is missing. Exit now..."
+		exit 100
+	    else
+                ${NCP} ${STOCHPAT_IN} ./INPUT//ocn_stoch.res.nc
+	    fi
         fi
         ${NCP} ${FILE_ORG} ./INPUT/${EMIS_SRC}.nc
         ${NCP} ${PERTEXEC} ./standalone_stochy_${EMIS_SRC}.x
@@ -327,12 +329,15 @@ EOF
 
         PERT_GDATE=${ROTDIR}/${ENKFOPT}.${GYMD}/${GH}/${MEMOPT}/${COMP_PERT}/
         PERT_CDATE=${ROTDIR}/${ENKFOPT}.${CYMD}/${CH}/${MEMOPT}/${COMP_PERT}/
-        STOCHPAT_IN=${PERT_GDATE}/${CY}${CM}${CD}.${CH}0000.aeroemis_stoch.res.nc
-        STOCHPAT_OUT=${EY}${EM}${ED}.${EH}0000.aeroemis_stoch.res.nc
 
         DIR_TGT="${DATA}/pert_${EMIS_SRC}/${ENKFOPT}${MEMOPT}/"
         PERT_GDATE_TGT=${PERT_GDATE}/pert_${EMIS_SRC}
         PERT_CDATE_TGT=${PERT_CDATE}/pert_${EMIS_SRC}
+        FILE_CDATE=${FILE_TGT_PRE}${CY}${CM}${CD}t${CH}:00:00z.nc
+        FILE_VDATE=${FILE_TGT_PRE}${EY}${EM}${ED}t${EH}:00:00z.nc
+        STOCHPAT_OUT=${EY}${EM}${ED}.${EH}0000.aeroemis_stoch.res.nc
+
+        [[ ! -d ${PERT_CDATE_TGT} ]] && mkdir -p ${PERT_CDATE_TGT}
 	
 	cd ${DIR_TGT}
 	ERR=$(cat extcode.${EMIS_SRC})
@@ -343,18 +348,19 @@ EOF
             echo "Perturbing ${EMIS_SRC} is successful and modify the date if necessary."
             if [ ${STOCH_WRITE}  = ".T." ]; then
                 if [ -e ${STOCHPAT_OUT} ]; then
-	            ${NMV} ${STOCHPAT_OUT} ${PERT_CDATE}/
+	            ${NCP} ${STOCHPAT_OUT} ${PERT_CDATE}/
     	        else
                     echo "${STOCHPAT_OUT} doesn't exist and exit"
                     exit 100
 	        fi
             fi
 
+	    ${NCP} ${FILE_VDATE} ${PERT_CDATE_TGT}/${FILE_VDATE}_forNextCycleWithStochInitTrue
+
             if [ ${DELAY_HR} -eq 0 ]; then
-                FILE_CDATE=${PERT_GDATE_TGT}/${FILE_TGT_PRE}${CY}${CM}${CD}t${CH}:00:00z.nc
-    	        ${NCP} ${FILE_CDATE} ./
+    	        ${NCP} ${PERT_GDATE_TGT}/${FILE_CDATE}_forNextCycleWithStochInitTrue ./${FILE_CDATE}
             fi
-            FILE_VDATE=${FILE_TGT_PRE}${EY}${EM}${ED}t${EH}:00:00z.nc
+
             ${NMV} *.nc ${PERT_GDATE_TGT}/
         fi
         IMEM=$((IMEM+1))

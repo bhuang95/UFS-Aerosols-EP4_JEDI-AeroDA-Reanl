@@ -33,8 +33,8 @@
 	<!ENTITY DMPDIR   "/scratch1/NCEPDEV/global/glopara/dump">
 
 	<!-- Experiment parameter setup -->
-	<!ENTITY SDATE "202006050000">
-	<!ENTITY EDATE "202006060000">
+	<!ENTITY SDATE "202006080000">
+	<!ENTITY EDATE "202006300000">
 	<!ENTITY INTERVAL "24:00:00">
 	<!ENTITY CYCINTHR "06">
 	<!ENTITY CDUMP_CNTL "gdas">
@@ -44,7 +44,7 @@
 	<!ENTITY RUN_ENVIR "emc">
 	<!ENTITY FHMIN "0">
 	<!ENTITY FHOUT "6">
-	<!ENTITY FHMAX "72">
+	<!ENTITY FHMAX "120">
 	<!ENTITY TARALLRST "YES">
 
 	<!-- GDAS met setup-->
