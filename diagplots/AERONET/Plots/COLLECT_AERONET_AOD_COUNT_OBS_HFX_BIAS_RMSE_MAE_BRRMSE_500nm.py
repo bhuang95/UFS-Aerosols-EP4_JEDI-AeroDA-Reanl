@@ -42,7 +42,7 @@ if __name__ == '__main__':
         obs=float(line.split()[2])
         hfx=float(line.split()[3])
         #if ~np.isnan(obs):
-	if obs >= aodmin and obs <= aodmax:
+        if obs >= aodmin and obs <= aodmax:
             lonvec.append(lon)
             latvec.append(lat)
             obsvec.append(obs)

@@ -190,6 +190,23 @@ def plot_bar_scatter(rmse, spread, rmsem, spreadm, expleg, nmasks, cols):
     plt.close(fig)
     return
 
+def plot_err_var_vartot(mask, data, cols, clegs, plttit):
+    nvars, ndays = data.shape
+    fsize = 14
+    xarr = range(1, ndays+1)
+    fig = plt.figure(figsize=[8,4])
+    ax=fig.add_subplot(111)
+    ax.set_title(f'{plttit}', fontsize = fsize)
+    for iv in range(nvars):
+        plt.plot(xarr, data[iv, :], color=clos[iv], label=clegs[iv], linewidth=2)
+    plt.legend(loc='upper right')
+    plt.xlabel('Days', fontsize=fsize)
+    plt.xticks(fontsize=fsize)
+    plt.yticks(fontsize=fsize)
+    #plt.xlim(0, ndays)
+    fig.tight_layout()
+    plt.savefig('%s-TimeSeries-err_var_vartot.png' % (plttit), format='png')
+
 """
 expdir='/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expRuns/'
 expnames=[\

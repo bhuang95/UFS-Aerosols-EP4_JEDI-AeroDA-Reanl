@@ -15,15 +15,15 @@
 	    For now, SFCANL_RST="NO" to use sfc_data from past cycle
 	-->
 	<!-- Experiment directory setup -->
-	<!ENTITY PSLOT "RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006">
+	<!ENTITY PSLOT "RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v15_0dz0dp_41M_C96_202006">
 	<!ENTITY HOMEgfs "/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/"> 
 	<!--
 	<!ENTITY HOMEgfs "/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/MISC/UFS-Workflow/20231130/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl">
 	-->
 	<!ENTITY TOPRUNDIR "/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/">
 	<!ENTITY EXPDIR "&HOMEgfs;/dr-work-mpi/">
-	<!ENTITY ROTDIR "&TOPRUNDIR;/&PSLOT;/dr-data-longfcst/">
-	<!ENTITY TASKRC "&EXPDIR;/TaskRecords/cmplCycle_&PSLOT;_longfcst.rc">
+	<!ENTITY ROTDIR "&TOPRUNDIR;/&PSLOT;/dr-data-longfcst-pertgbbepx/">
+	<!ENTITY TASKRC "&EXPDIR;/TaskRecords/cmplCycle_&PSLOT;_longfcst_pertgbbepx.rc">
 
 	<!-- Directories for driving the workflow -->
 	<!ENTITY HOMEjedi "/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/fv3-bundle/V20230312/build/">
@@ -45,7 +45,7 @@
 	<!ENTITY NMEM_ENKF     "40">
 	<!ENTITY NMEM_EFCSGRP_SLOW     "5">
 	<!ENTITY NMEM_EFCSGRP_FAST     "10">
-	<!ENTITY AERODA "NO">
+	<!ENTITY AERODA "YES">
 	<!ENTITY RECENTER_ENKF_AERO "NO">
 	<!ENTITY ENSRUN "NO">
 	<!ENTITY ENSDIAG "NO">
@@ -83,15 +83,15 @@
 	<!--
 	<!ENTITY EMISDIR_NRT "/scratch1/NCEPDEV/global/glopara/data/gocart_emissions">
 	-->
-	<!ENTITY AEROEMIS_STOCH_CNTL "NO">
+	<!ENTITY AEROEMIS_STOCH_CNTL "YES">
 	<!ENTITY AEROEMIS_STOCH_ENKF "NO">
-	<!ENTITY AEROEMIS_EXTSUF "_stochAeroEmis">
-	<!ENTITY AEROEMIS_STOCH_INIT ".T.">
-	<!ENTITY AEROEMIS_STOCH_INIT_RST00Z ".T.">
+	<!ENTITY AEROEMIS_EXTSUF "_stochAeroEmis_gbbepxOnly">
+	<!ENTITY AEROEMIS_STOCH_INIT ".F.">
+	<!ENTITY AEROEMIS_STOCH_INIT_RST00Z ".F.">
 	<!--
-	<!ENTITY AEROEMIS_SRCS "GBBEPx CEDS MEGAN DUSTPARM DUSTSRC">
-	-->
 	<!ENTITY AEROEMIS_SRCS "GBBEPx CEDS MEGAN DUSTPARM">
+	-->
+	<!ENTITY AEROEMIS_SRCS "GBBEPx">
 	<!ENTITY AEROEMIS_SPPT "1.0">
 	<!ENTITY AEROEMIS_SPPT_TAU "6" >
 	<!ENTITY AEROEMIS_SPPT_LSCALE "500000">
@@ -189,7 +189,6 @@
 
 </task>
 
-<!--
 <task name="pertemis" cycledefs="gdas_half,gdas" maxtries="&MAXTRIES;">
 
 	<command>&JOBS_DIR;/pertaeroemis_mpi.sh</command>
@@ -206,8 +205,6 @@
 
 	<envar><name>CASE</name><value>&CASE_CNTL;</value></envar>
 	<envar><name>NMEM_ENKF</name><value>&NMEM_ENKF;</value></envar>
-	<envar><name>NMEM_EFCSGRP</name><value>&NMEM_EFCSGRP_SLOW;</value></envar>
-	<envar><name>ENSGRP</name><value>01</value></envar>
 	<envar><name>PSLOT</name><value>&PSLOT;</value></envar>
 	<envar><name>ROTDIR</name><value>&ROTDIR;</value></envar>
 	<envar><name>HOMEgfs</name><value>&HOMEgfs;</value></envar>
@@ -227,13 +224,15 @@
 	<envar><name>CEDSVER</name><value>&CEDSVER;</value></envar>
 	<envar><name>AEROEMIS_STOCH_CNTL</name><value>&AEROEMIS_STOCH_CNTL;</value></envar>
 	<envar><name>AEROEMIS_STOCH_ENKF</name><value>&AEROEMIS_STOCH_ENKF;</value></envar>
-	<envar><name>AEROEMIS_EXTSUF</name><value>&AEROEMIS_EXTSUF;</value></envar>
 	<envar><name>AEROEMIS_STOCH_INIT</name><value>&AEROEMIS_STOCH_INIT;</value></envar>
 	<envar><name>AEROEMIS_STOCH_INIT_RST00Z</name><value>&AEROEMIS_STOCH_INIT_RST00Z;</value></envar>
 	<envar><name>AEROEMIS_SRCS</name><value>&AEROEMIS_SRCS;</value></envar>
 	<envar><name>AEROEMIS_SPPT</name><value>&AEROEMIS_SPPT;</value></envar>
 	<envar><name>AEROEMIS_SPPT_TAU</name><value>&AEROEMIS_SPPT_TAU;</value></envar>
 	<envar><name>AEROEMIS_SPPT_LSCALE</name><value>&AEROEMIS_SPPT_LSCALE;</value></envar>
+	<envar><name>FHMIN</name><value>&FHMIN;</value></envar>
+	<envar><name>FHOUT</name><value>&FHOUT;</value></envar>
+	<envar><name>FHMAX</name><value>&FHMAX;</value></envar>
 
 	<dependency>
 		<and>
@@ -242,10 +241,10 @@
 				<not><cycleexistdep cycle_offset="-06:00:00"/></not>
 			</or>
 			<sh shell="/bin/bash"><cyclestr>&JOBS_DIR;/checkdep_aerofcst_emis.sh</cyclestr></sh>
+			<taskdep task="gdasretcntlanl"/>
 		</and>
 	</dependency>
 </task>
--->
 
 <task name="gdasfcst" cycledefs="gdas_half,gdas" maxtries="&MAXTRIES;">
 
@@ -308,6 +307,7 @@
 	<dependency>
 		<and>
 			<taskdep task="gdasretcntlanl"/>
+			<taskdep task="pertemis"/>	
 			<sh shell="/bin/bash"><cyclestr>&JOBS_DIR;/checkdep_aerofcst_emis.sh</cyclestr></sh>
 		</and>
 	</dependency>
@@ -315,7 +315,7 @@
 
 <task name="gdasarch" cycledefs="gdas_half,gdas" maxtries="&MAXTRIES;" final="true">
 
-	<command>&JOBS_DIR;/arch2hpss_longfcst.sh</command>
+	<command>&JOBS_DIR;/arch2hpss_longfcst_pertgbbepx.sh</command>
 
 	<jobname><cyclestr>&PSLOT;_gdasarch_@H</cyclestr></jobname>
 	<account>&ACCOUNT;</account>

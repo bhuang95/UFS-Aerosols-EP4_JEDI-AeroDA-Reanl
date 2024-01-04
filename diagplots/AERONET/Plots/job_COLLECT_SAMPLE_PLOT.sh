@@ -22,21 +22,22 @@ CURDIR=$(pwd)
 #SDATE=2017101000 # Starting cycle. Here not using cycels before 2017101000 for spinup purpose
 #EDATE=2017102718 # Ending cycle
 SDATE=2020060800 # Starting cycle. Here not using cycels before 2017101000 for spinup purpose
-EDATE=2020062318 # Ending cycle
+EDATE=2020061418 # Ending cycle
 MISS_AERONET=${CURDIR}/Record_AeronetHfxMissing.info
 CINC=6
 AODTYPE='AERONET_SOLAR_AOD15'
 PMONTH=False
 TOPEXPDIR=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc
 	# run dir
-NODAEXP=RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006
+NODAEXP="RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006"
 #NODAEXP=RET_FreeRun_NoEmisStoch_C96_202006
 	# Freerun expname
 	# If using mine, link /scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expRuns/UFS-Aerosols_RETcyc/FreeRun-201710/dr-data-backup to your ${TOPEXPDIR}
 #DAEXP=ENKF_AEROSEMIS-ON_STOCHINIT-ON-201710 #ENKF_AEROSEMIS-OFF-201710
 DAEXPS="
-        RET_EP4_AeroDA_NoSPE_YesSfcanl_v15_0dz0dp_41M_C96_202006
+        RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v15_0dz0dp_41M_C96_202006
        "
+        #RET_EP4_AeroDA_NoSPE_YesSfcanl_v15_0dz0dp_41M_C96_202006
 	#RET_AeroDA_NoEmisStoch_C96_202006
 #DAEXPS="
 #       "

@@ -22,7 +22,7 @@ CURDIR=$(pwd)
 #SDATE=2017101000 # Starting cycle. Here not using cycels before 2017101000 for spinup purpose
 #EDATE=2017102718 # Ending cycle
 SDATE=2020060800 # Starting cycle. Here not using cycels before 2017101000 for spinup purpose
-EDATE=2020061100 # Ending cycle
+EDATE=2020063000 # Ending cycle
 MISS_AERONET=${CURDIR}/Record_AeronetHfxMissing.info
 CINC=24
 AODTYPE='AERONET_SOLAR_AOD15'
@@ -57,7 +57,7 @@ for EXP in ${EXPS}; do
     cp ${CURDIR}/${PYPLTMEANSTATS} ./${PYPLTMEANSTATS}
     cp ${CURDIR}/${PYPLTMAP} ./${PYPLTMAP}
 
-if [ "HBO" = '1' ]; then
+if [ "HBO" = 'HBO' ]; then
 # Step-1: Output and collect AERONET AOD and HFX samples
 echo "Step-1: Output and collect AERONET AOD and HFX samples"
 CDATE=${SDATE}

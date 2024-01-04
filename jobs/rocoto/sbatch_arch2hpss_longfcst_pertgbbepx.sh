@@ -46,7 +46,7 @@ GD=${GDATE:6:2}
 GH=${GDATE:8:2}
 GYMD=${GDATE:0:8}
 
-DATAHPSSDIR=${ARCHHPSSDIR}/${PSLOT}/dr-data-longfcst/${CY}/${CY}${CM}/${CYMD}/
+DATAHPSSDIR=${ARCHHPSSDIR}/${PSLOT}/dr-data-longfcst-pertgbbepx/${CY}/${CY}${CM}/${CYMD}/
 hsi "mkdir -p ${DATAHPSSDIR}"
 ERR=$?
 if [ ${ERR} -ne 0 ]; then
@@ -63,7 +63,7 @@ CNTLDIR_ATMOS_CDATE=${CNTLDIR_CDATE}/model_data/atmos/
 CNTLDIR_ATMOS_RT_GDATE=${CNTLDIR_ATMOS_GDATE}/restart
 CNTLDIR_ATMOS_RT_CDATE=${CNTLDIR_ATMOS_CDATE}/restart
 
-CNTLBAK=${ROTDIR}/../dr-data-longfcst-backup/gdas.${CYMD}/${CH}
+CNTLBAK=${ROTDIR}/../dr-data-longfcst-pertgbbepx-backup/gdas.${CYMD}/${CH}
 CNTLBAK_ATMOS_RT_CDATE=${CNTLBAK}/model_data/atmos/restart/
 
 [[ ! -d ${CNTLBAK_ATMOS_RT_CDATE} ]] && mkdir -p ${CNTLBAK_ATMOS_RT_CDATE}
@@ -147,7 +147,6 @@ if [ -s ${CNTLDIR_ATMOS_RT_CDATE} ]; then
     done
     
     if [ ${TARALLRST} = "YES" ]; then
-
         if [ -d ${CNTLDIR_ATMOS_RT_GDATE}/pertEmis ]; then
             TARFILE=${DATAHPSSDIR}/gdas.longfcst.${CDATE}.pertEmis.InRstDir${GDATE}.tar
             cd ${CNTLDIR_ATMOS_RT_GDATE}
@@ -173,6 +172,7 @@ if [ -s ${CNTLDIR_ATMOS_RT_CDATE} ]; then
             ${NRM} ${CNTLDIR_CDATE}
             ${NRM} ${CNTLDIR_GDATE}
 	fi
+
     else
         cd ${CNTLDIR_ATMOS_RT_CDATE}
 
@@ -250,6 +250,7 @@ if [ -s ${CNTLDIR_ATMOS_RT_CDATE} ]; then
             ${NRM} ${CNTLDIR_CDATE}
             ${NRM} ${CNTLDIR_GDATE}
         fi
+
     fi    
     echo "YES" > ${TMPDIR}/remove.record
 fi # Done with loop through cntl

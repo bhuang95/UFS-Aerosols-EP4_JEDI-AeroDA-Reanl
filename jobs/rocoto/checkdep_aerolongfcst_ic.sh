@@ -15,6 +15,8 @@ CYMD=${CDATE:0:8}
 
 PYMD=${PDATE:0:8}
 PH=${PDATE:8:2}
+
+[[ ! -d ${ROTDIR} ]] && mkdir -p ${ROTDIR}
 CPLFILE=${ROTDIR}/../dr-data-backup/gdas.${CYMD}/${CH}/model_data/atmos/restart/${PYMD}.${PH}0000.coupler.res
 
 if  test `find ${CPLFILE} -mmin +120` 

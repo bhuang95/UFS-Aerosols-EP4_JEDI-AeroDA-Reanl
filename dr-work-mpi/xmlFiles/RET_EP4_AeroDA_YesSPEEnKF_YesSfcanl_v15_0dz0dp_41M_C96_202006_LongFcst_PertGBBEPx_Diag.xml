@@ -15,14 +15,14 @@
 	    For now, SFCANL_RST="NO" to use sfc_data from past cycle
 	-->
 	<!-- Experiment directory setup -->
-	<!ENTITY PSLOT "RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006">
+	<!ENTITY PSLOT "RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v15_0dz0dp_41M_C96_202006">
 	<!ENTITY HOMEgfs "/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/"> 
 	<!--
 	<!ENTITY HOMEgfs "/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/MISC/UFS-Workflow/20231130/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl">
 	-->
 	<!ENTITY TOPRUNDIR "/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/">
 	<!ENTITY EXPDIR "&HOMEgfs;/dr-work-mpi/">
-	<!ENTITY ROTDIR "&TOPRUNDIR;/&PSLOT;/dr-data-longfcst-backup/">
+	<!ENTITY ROTDIR "&TOPRUNDIR;/&PSLOT;/dr-data-longfcst-pertgbbepx-backup/">
 	<!ENTITY TASKRC "&EXPDIR;/TaskRecords/cmplCycle_&PSLOT;_longfcst_Diag.rc">
 
 	<!-- Directories for driving the workflow -->
@@ -176,7 +176,7 @@
 
 <task name="gdasarch" cycledefs="gdas_half,gdas" maxtries="&MAXTRIES;" final="true">
 
-	<command>&JOBS_DIR;/arch2hpss_longfcst_diag.sh</command>
+	<command>&JOBS_DIR;/arch2hpss_longfcst_pertgbbepx_diag.sh</command>
 
 	<jobname><cyclestr>&PSLOT;_gdasarch_@H</cyclestr></jobname>
 	<account>&ACCOUNT;</account>
