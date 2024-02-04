@@ -78,7 +78,12 @@ def plot_scatter(rmse, spread, expleg, spnum, vmax):
     ax.set_title(expleg, fontsize=fsize)
     for iplt in range(nmasks):
         plt.scatter(spread[iplt, spnum:], rmse[iplt, spnum:], s=20, marker='o', color=cols[iplt])
-    m, b=np.polyfit(spread[:,spnum:].flatten(), rmse[:,spnum:].flatten(), 1)
+    sarr1=spread[:,spnum:].flatten()
+    rarr1=rmse[:,spnum:].flatten()
+    vind=~np.isnan(sarr1)
+    sarr=sarr1[vind]
+    rarr=rarr1[vind]
+    m, b=np.polyfit(sarr, rarr, 1)
     num = rmse[:,spnum:].size
     mspread = np.nanmean(spread[:,spnum:])
     mrmse = np.nanmean(rmse[:,spnum:])
@@ -372,7 +377,7 @@ if __name__ == '__main__':
         plttit = f'{expname}-{mask}'
         plot_err_var_vartot(mask, data, clos, clegs, plttit)
         mdata = np.nanmean(data[:,spnum:], axis=1)
-        outfile=f'mean-mse-vartot-var-err2-{dayst}-{dayed}-${mask}.txt'
+        outfile=f'mean-mse-vartot-var-err2-{dayst}-{dayed}-{mask}.txt'
         with open(outfile, 'w') as fp:
             fp.write('\t'.join(clegs))
             fp.write('\n')

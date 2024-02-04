@@ -16,28 +16,35 @@ module use -a /contrib/anaconda/modulefiles
 module load anaconda/latest
 
 codedir=$(pwd)
-topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc
+#topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc
+topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/MariuszRun
 
 ndate=/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate
 
-cycst=2020060100
-cyced=2020061400
+cycst=2017120100
+cyced=2017123100
+#cycst=2020061400
+#cyced=2020062900
 # (if cycinc=24, set cycst and cyced as YYYYMMDD00)
 cycinc=24 
 # (6 or 24 hours)
 
 
-freerunexp="RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006"
+#freerunexp="RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006"
+freerunexp="RET_EP4_FreeRun_NoSPE_YesSfcanl_v14_0dz0dp_1M_C96_201712"
 #aerodaexp="RET_EP4_AeroDA_NoSPE_YesSfcanl_v15_0dz0dp_41M_C96_202006"
-aerodaexp="RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v15_0dz0dp_41M_C96_202006"
+#aerodaexp="RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v15_0dz0dp_41M_C96_202006"
+aerodaexp="RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v14_0dz0dp_41M_C96_201712"
+#"RET_EP4_AeroDA_NoSPE_YesSfcanl_v14_0dz0dp_41M_C96_201712"
 
-exps="${aerodaexp}"
+
+exps="${freerunexp}"
 
 for exp in ${exps}; do
     topplotdir=${topexpdir}/${exp}/diagplots/VIIRS_AOD_HOFX_INCREMENT_IODAV3
     if [ ${exp} = ${aerodaexp} ]; then
         aeroda=True
-        emean=True
+        emean=False
         prefix=AeroDA_NoSPE
     #elif [ ${exp} = ${freerunexp} ]; then
     #    aeroda=False

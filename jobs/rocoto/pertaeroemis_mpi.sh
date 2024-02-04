@@ -205,7 +205,7 @@ for EMIS_SRC in ${EMIS_SRCS}; do
         PERTEXEC=${PERTEXEC_CHEM}
     elif [ ${EMIS_SRC} = "MEGAN" ]; then
         FILE_ORG=${MEGAN_ORG}
-	    FILE_TGT_PRE=${MEGAN_PRE}
+        FILE_TGT_PRE=${MEGAN_PRE}
         VARLIST=${MEGAN_VAR}
         CREC_FILLV=${MEGAN_CREC_FILLV}
         CV_VARS=${MEGAN_CV}
@@ -362,6 +362,19 @@ EOF
             fi
 
             ${NMV} *.nc ${PERT_GDATE_TGT}/
+
+            if [ ${EMIS_SRC} = "MEGAN" ]; then
+	        cd ${PERT_GDATE_TGT}
+	        FILES_NYEAR=$(ls MEGAN.OFFLINE.BIOVOC.${CY}.emis.${EY}*.nc)
+		for FILE in ${FILES_NYEAR}; do
+		    FPRE=$(echo "${FILE}" | cut -d. -f1-3)
+		    FSUF=$(echo "${FILE}" | cut -d. -f5-)
+		    FILE_NYEAR=${FPRE}.${EY}.${FSUF}
+		    echo ${FILE}
+		    echo ${FILE_NYEAR}
+                    ${NCP} ${FILE} ${FILE_NYEAR}
+		done
+            fi
         fi
         IMEM=$((IMEM+1))
     done

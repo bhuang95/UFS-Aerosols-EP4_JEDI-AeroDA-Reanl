@@ -16,13 +16,14 @@ module use -a /contrib/anaconda/modulefiles
 module load anaconda/latest
 
 codedir=$(pwd)
-topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc
+#topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc
+topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/MariuszRun
 ndate=/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate
 
-#cycst=2017101500 # Starting cycle
-#cyced=2017102700 # Ending cycle
-cycst=2020060100 # Starting cycle
-cyced=2020061400 # Ending cycle
+cycst=2017120100 # Starting cycle
+cyced=2017123100 # Ending cycle
+#cycst=2020061500 # Starting cycle
+#cyced=2020062900 # Ending cycle
 	# All four cycles at 00/06/12/18Z has to be available at a certain day. Otherwise, it will crash/ 
 	
 # (if cycinc=24, set cycst and cyced as YYYYMMDD00)
@@ -30,17 +31,20 @@ cycinc=24
 # (6 or 24 hours)
 
 #freerunexp="FreeRun-1C192-0C192-201710"
-freerunexp="RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006"
+#freerunexp="RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006"
+freerunexp="RET_EP4_FreeRun_NoSPE_YesSfcanl_v14_0dz0dp_1M_C96_201712"
 	# Not necessary
 #aerodaexp="
 #	ENKF_AEROSEMIS-ON_STOCH_MODIFIED_INIT-ON-201710_bc_1.5
 #	"
 aerodaexp="
-	RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v15_0dz0dp_41M_C96_202006
+	RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v14_0dz0dp_41M_C96_201712
 	"
+	#RET_EP4_AeroDA_NoSPE_YesSfcanl_v14_0dz0dp_41M_C96_201712
+	#RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v15_0dz0dp_41M_C96_202006
         # DA experiments
 	#ENKF_AEROSEMIS-ON_STOCH_MODIFIED_INIT-ON-201710_nobias_correction
-exps="${aerodaexp}"
+exps="${freerunexp}"
 
 for exp in ${exps}; do
     topplotdir=${topexpdir}/${exp}/diagplots/VIIRS_AOD_HOFX_DIFF_IODAV3

@@ -67,7 +67,7 @@
 	<!-- Machine related entities -->
 	<!ENTITY PARTITION    "hera">
 	<!ENTITY ACCOUNT    "gsd-fv3-dev">
-	<!ENTITY QUEUE      "batch">
+	<!ENTITY QUEUE      "debug">
 	<!ENTITY QUEUE_DEB      "debug">
 	<!ENTITY SCHEDULER  "slurm">
 
@@ -78,7 +78,7 @@
 
 	<!-- ROCOTO parameters that control workflow -->
 	<!ENTITY PARTITION_HPSS    "service">
-	<!ENTITY ACCOUNT_HPSS    "chem-var">
+	<!ENTITY ACCOUNT_HPSS    "wrf-chem">
 	<!ENTITY QUEUE_HPSS      "batch">
 	<!ENTITY WALLTIME_HPSS  "07:59:00">
 	<!ENTITY RESOURCES_HPSS "1:ppn=1:tpp=1">

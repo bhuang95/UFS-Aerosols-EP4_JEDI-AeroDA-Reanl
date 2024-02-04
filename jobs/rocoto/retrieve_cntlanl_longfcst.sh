@@ -60,7 +60,7 @@ while [ ${IDATE} -le ${CDATE} ]; do
 
 	if [ -d ${RETDIR}/pertEmis ]; then
 	   echo "${RETDIR}/pertEmis"
-	   #${NRM} -rf ${RETDIR}/pertEmis
+	   ${NRM} -rf ${RETDIR}/pertEmis
 	fi
     elif [ ${IDATE} = ${CDATE} ]; then
         RETDIR=analysis/atmos

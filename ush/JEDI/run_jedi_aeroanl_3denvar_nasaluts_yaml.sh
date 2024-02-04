@@ -28,10 +28,11 @@ BUMPDIR=${BUMPDIR:-${JEDIDIR}/fv3-jedi/test/Data/bump/${CASE}/layout-${BUMPLAYOU
 FIELDMETADIR=${JEDIDIR}/fv3-jedi/test/Data/fieldmetadata/
 FV3DIR=${JEDIDIR}/fv3-jedi/test/Data/fv3files/
 ### Hard coded this directory
-CRTMFIX=${HOMEgfs}/fix/jedi_crtm_fix_20200413/CRTM_fix/Little_Endian/
+#CRTMFIX=${HOMEgfs}/fix/jedi_crtm_fix_20200413/CRTM_fix/Little_Endian/
+CRTMFIX=${JEDIDIR}/fv3-jedi/test/Data/crtm
 JEDIEXE=${JEDIDIR}/bin/fv3jedi_var.x
 STATICB_WEG=${STATICB_WEG:-"0.0"}
-ENSB_WEG=${ENSB_WEG:-"0.0"}
+ENSB_WEG=${ENSB_WEG:-"1.0"}
 
 CDUMP=${CDUMP:-"gdas"}
 NMEM=${NMEM_ENKF:-"10"}
@@ -244,9 +245,24 @@ BKGERRBLK="
           template:
             datetime: ${ANLTIMEFMT}
             filetype: fms restart
-            state variables: &aerovars [so4,bc1,bc2,oc1,oc2,
-                                        dust1,dust2,dust3,dust4,dust5,
-                                        seas1,seas2,seas3,seas4,seas5]
+            #state variables: &aerovars [so4,bc1,bc2,oc1,oc2,
+            #                            dust1,dust2,dust3,dust4,dust5,
+            #                            seas1,seas2,seas3,seas4,seas5]
+            state variables: &aerovars [mass_fraction_of_sulfate_in_air,
+                               mass_fraction_of_hydrophobic_black_carbon_in_air,
+                               mass_fraction_of_hydrophilic_black_carbon_in_air,
+                               mass_fraction_of_hydrophobic_organic_carbon_in_air,
+                               mass_fraction_of_hydrophilic_organic_carbon_in_air,
+                               mass_fraction_of_dust001_in_air,
+                               mass_fraction_of_dust002_in_air,
+                               mass_fraction_of_dust003_in_air,
+                               mass_fraction_of_dust004_in_air,
+                               mass_fraction_of_dust005_in_air,
+                               mass_fraction_of_sea_salt001_in_air,
+                               mass_fraction_of_sea_salt002_in_air,
+                               mass_fraction_of_sea_salt003_in_air,
+                               mass_fraction_of_sea_salt004_in_air,
+                               mass_fraction_of_sea_salt005_in_air]
             datapath: INPUT/mem%mem%/
             filename_trcr: ${ANLPREFIX}.fv_tracer.res.nc
             filename_cplr: ${ANLPREFIX}.coupler.res
@@ -272,7 +288,7 @@ BKGERRBLK="
                                mass_fraction_of_sea_salt003_in_air,
                                mass_fraction_of_sea_salt004_in_air,
                                mass_fraction_of_sea_salt005_in_air]
-            bump:
+            read:
               io:
                 files prefix: BUMP/fv3jedi_bumpparameters_nicas_3D_gfs
                 alias:
@@ -322,8 +338,9 @@ ${BKGERRBLK}
 ${OBSBLK}
   cost type: 3D-Var
   analysis variables: *aerovars 
-  window begin: '${STWINFMT}'
-  window length: PT6H
+  time window:
+    begin: '${STWINFMT}'
+    length: PT6H
   geometry:
     fms initialization:
       namelist filename: fmsmpp.nml
@@ -343,7 +360,6 @@ output:
   filetype: fms restart
   datapath: ./ANALYSIS/
   prefix: ${ANLPREFIX}.hyb-3dvar-gfs_aero
-  first: PT0H
   frequency: PT1H
 variational:
   minimizer:

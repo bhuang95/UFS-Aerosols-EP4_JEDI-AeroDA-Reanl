@@ -26,14 +26,15 @@
 	<!ENTITY TASKRC "&EXPDIR;/TaskRecords/cmplCycle_&PSLOT;.rc">
 
 	<!-- Directories for driving the workflow -->
-	<!ENTITY HOMEjedi "/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/fv3-bundle/V20230312/build/">
+	<!--ENTITY HOMEjedi "/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/fv3-bundle/V20230312/build/"-->
+	<!ENTITY HOMEjedi "/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/fv3-bundle/V20240115/build/">
 	<!ENTITY JOBS_DIR "&HOMEgfs;/jobs/rocoto">
 	<!ENTITY DATAROOTTOP "/scratch2/BMC/gsd-fv3-dev/NCEPDEV/stmp3/Bo.Huang/RUNDIRS/&PSLOT;/">
 	<!ENTITY COMROOT "/scratch1/NCEPDEV/global/glopara/com/">
 	<!ENTITY DMPDIR   "/scratch1/NCEPDEV/global/glopara/dump">
 
 	<!-- Experiment parameter setup -->
-	<!ENTITY SDATE "202006010000">
+	<!ENTITY SDATE "202006301800">
 	<!ENTITY EDATE "202006301800">
 	<!ENTITY INTERVAL "06:00:00">
 	<!ENTITY CYCINTHR "06">

@@ -28,7 +28,8 @@ LETKF_INF_RTPS=${LETKF_INF_RTPS:-"0.85"}
 
 FIELDMETADIR=${JEDIDIR}/fv3-jedi/test/Data/fieldmetadata/
 FV3DIR=${JEDIDIR}/fv3-jedi/test/Data/fv3files/
-CRTMFIX=${HOMEgfs}/fix/jedi_crtm_fix_20200413/CRTM_fix/Little_Endian/
+#CRTMFIX=${HOMEgfs}/fix/jedi_crtm_fix_20200413/CRTM_fix/Little_Endian/
+CRTMFIX=${JEDIDIR}/fv3-jedi/test/Data/crtm
 JEDIEXE=${JEDIDIR}/bin/fv3jedi_letkf.x
 
 CDUMP=${CDUMP:-"gdas"}
@@ -264,8 +265,9 @@ geometry:
   ntiles: 6
   field metadata override: ufs-aerosol.yaml
 
-window begin: &date '${STWINFMT}'
-window length: PT6H
+time window:
+  begin: &date '${STWINFMT}'
+  length: PT6H
 
 ${BKGBLK}
 ${OBSBLK}

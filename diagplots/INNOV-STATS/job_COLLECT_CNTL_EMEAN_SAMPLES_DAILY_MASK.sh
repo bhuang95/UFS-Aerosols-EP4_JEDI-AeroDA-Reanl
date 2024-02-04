@@ -13,27 +13,30 @@ module load anaconda/latest
 
 curdir=`pwd`
 aod=NOAA_VIIRS_npp
-#cycst=2017100600 # Starting cycle
-#cyced=2017102700 # Ending cycle
-#spcyc=2017101000 # Starting cycle to perform averaging in the stats 
-cycst=2020060100 # Starting cycle
-cyced=2020061400 # Ending cycle
-spcyc=2020060800 # Starting cycle to perform averaging in the stats 
-topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/
+cycst=2017120100 # Starting cycle
+cyced=2017123000 # Ending cycle
+spcyc=2017120800 # Starting cycle to perform averaging in the stats 
+topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/MariuszRun/
+#cycst=2020060100 # Starting cycle
+#cyced=2020062900 # Ending cycle
+#spcyc=2020060800 # Starting cycle to perform averaging in the stats 
+#topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/
         # Define run directory
 
 # It plots time-series and bars for AOD, bias and RMSE, scattering plot of RMSE vs spread over different regions. 
 # In this diagnostics, ${nodaexp} and ${daexp} are both needed. All four cycles at 00/06/12/18Z at a certain day
 # 	has to be available. Otherwise, it will crash. 
 #nodaexp=FreeRun-201710 
-nodaexp="RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006"
-	# Define free experiment. 
+#nodaexp="RET_EP4_FreeRun_NoSPE_YesSfcanl_v15_0dz0dp_1M_C96_202006"
+nodaexp="RET_EP4_FreeRun_NoSPE_YesSfcanl_v14_0dz0dp_1M_C96_201712"
+# Define free experiment. 
         # If using my free run, link /scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expRuns/UFS-Aerosols_RETcyc/FreeRun-201710/dr-data-backup/ to your ${topexpdir}
 #daexps="
-#	ENKF_AEROSEMIS-ON_STOCH_MODIFIED_INIT-ON-201710_bc_1.5
+#	RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v15_0dz0dp_41M_C96_202006
 #	"
 daexps="
-	RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v15_0dz0dp_41M_C96_202006
+	RET_EP4_AeroDA_NoSPE_YesSfcanl_v14_0dz0dp_41M_C96_201712
+	RET_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v14_0dz0dp_41M_C96_201712
 	"
 
         #ENKF_AEROSEMIS-OFF-201710 

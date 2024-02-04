@@ -66,8 +66,8 @@
 
 	<!-- Machine related entities -->
 	<!ENTITY PARTITION    "hera">
-	<!ENTITY ACCOUNT    "gsd-fv3-dev">
-	<!ENTITY QUEUE      "batch">
+	<!ENTITY ACCOUNT    "wrf-chem">
+	<!ENTITY QUEUE      "debug">
 	<!ENTITY QUEUE_DEB      "debug">
 	<!ENTITY SCHEDULER  "slurm">
 
