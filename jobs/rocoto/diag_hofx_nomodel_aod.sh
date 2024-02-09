@@ -107,7 +107,10 @@ fi
 
 if [ ${AERODA} = "YES" ]; then
     if [ ${ENSGRP} = "01" ]; then
-        HOFXFIELDS="${HOFXFIELDS} cntlanal meananal"
+        HOFXFIELDS="${HOFXFIELDS} cntlanal"
+	if [ ${ENSRUN} = "YES" ]; then
+            HOFXFIELDS="${HOFXFIELDS} meananal"
+	fi
     fi
     if [ ${ENSDIAG} = "YES" ]; then
         HOFXFIELDS="${HOFXFIELDS} memanal"

@@ -18,6 +18,7 @@ CH=${CDATE:8:2}
 CDATEPRE="${CYMD}.${CH}0000"
 
 NLN="/bin/ln -sf"
+NCP="/bin/cp -r"
 
 ${NLN} ${AEROLLEXEC} ./fv32ll.x
 ${NLN} ${AEROPLLEXEC} ./fv32pll.x
@@ -68,6 +69,7 @@ if [ ${ERR} -ne 0 ]; then
     echo "fv3aod2ll.x failed an exit!!!"
 #    exit 1
 fi
+${NCP} fv32ll.nl ${FV3AEROLLDIR}/fv32ll_${TRCR}.nl
 
 AEROPLL=fv3_aeros_${TRCR}_${CDATE}_pll.nc
 [[ ! -d ${FV3AEROPLLDIR} ]] && mkdir -p ${FV3AEROPLLDIR}
@@ -110,5 +112,6 @@ if [ ${ERR} -ne 0 ]; then
     echo "fv3aod2ll.x failed an exit!!!"
     exit 1
 fi
+${NCP} fv32pll.nl ${FV3AEROPLLDIR}/fv32pll_${TRCR}.nl
 
 exit ${ERR}

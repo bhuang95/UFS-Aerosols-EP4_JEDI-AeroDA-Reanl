@@ -38,8 +38,8 @@ AEROPLLEXEC=${HOMEgfs}/exec/fv32pll.x
 NCORES=1
 
 #Load modules
-#source ${HOMEjedi}/jedi_module_base.hera.sh
-source /home/Mariusz.Pagowski/.jedi
+source ${HOMEjedi}/jedi_module_base.hera.sh
+#source /home/Mariusz.Pagowski/.jedi
 ERR=$?
 [[ ${ERR} -ne 0 ]] && exit 1
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/libs/fortran-datetime/lib"
@@ -140,8 +140,8 @@ for FIELD in ${HOFXFIELDS}; do
 
 	ROTDIRBASE=$(basename ${ROTDIR})
 	if [ ${ROTDIRBASE} = "dr-data-backup" ]; then
-            FV3AEROLLDIR=${ROTDIR}/${ENKFOPT}gdas.${CYMD}/${CH}/diag/aero_grid_ll/${MEMOPT}${MEMSTR}
-            FV3AEROPLLDIR=${ROTDIR}/${ENKFOPT}gdas.${CYMD}/${CH}/diag/aero_grid_pll/${MEMOPT}${MEMSTR}
+            FV3AEROLLDIR=${ROTDIR}/${ENKFOPT}gdas.${CYMD}/${CH}/diag/aeros_grid_ll/${MEMOPT}${MEMSTR}
+            FV3AEROPLLDIR=${ROTDIR}/${ENKFOPT}gdas.${CYMD}/${CH}/diag/aeros_grid_pll/${MEMOPT}${MEMSTR}
 	else
             FV3AEROLLDIR=${ROTDIR}/${ENKFOPT}gdas.${CYMD}/${CH}/diag/${MEMOPT}${MEMSTR}
             FV3AEROPLLDIR=${ROTDIR}/${ENKFOPT}gdas.${CYMD}/${CH}/diag/${MEMOPT}${MEMSTR}
@@ -164,6 +164,7 @@ for FIELD in ${HOFXFIELDS}; do
 	    #    ${NRM} ${FV3AODDIR}/FV3AOD_${TRCR}
 	    #fi
 	    #${NMV} ${DATA}/FV3AOD ${FV3AODDIR}/FV3AOD_${TRCR}
+	    #${NMV} ${DATA}/*.nl ${FV3AODDIR}/
 	    ${NRM} ${DATA}
         fi
 

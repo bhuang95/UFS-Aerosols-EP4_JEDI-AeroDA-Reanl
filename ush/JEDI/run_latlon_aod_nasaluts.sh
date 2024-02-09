@@ -17,6 +17,7 @@ CYMD=${CDATE:0:8}
 CH=${CDATE:8:2}
 CDATEPRE="${CYMD}.${CH}0000"
 
+NCP="/bin/cp -r"
 NLN="/bin/ln -sf"
 
 ${NLN} ${FV3AODEXEC} ./gocart_aod_fv3_mpi_LUTs.x
@@ -77,6 +78,7 @@ if [ ${ERR} -ne 0 ]; then
     exit 1
 fi
 done
+${NCP} gocart_aod_fv3_mpi.nl ${OUTDATADIR}/gocart_aod_fv3_mpi_${TRCR}.nl
 
 FV3AOD=${CDATEPRE}.fv_aod_LUTs.${TRCR}.res.tile?.nc
 GRIDAOD=fv3_aod_LUTs_${TRCR}_${CDATE}_ll.nc
@@ -113,5 +115,6 @@ if [ ${ERR} -ne 0 ]; then
     echo "fv3aod2ll.x failed an exit!!!"
     exit 1
 fi
+${NCP} fv3aod2ll.nl ${OUTDATADIR}/fv3aod2ll_${TRCR}.nl
 
 exit ${ERR}

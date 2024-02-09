@@ -303,7 +303,7 @@ ${NMV} ${DIAGDIR}/${HOFXOUT} ${HOFXDIR}/${HOFXOUT}
 #if ( echo ${AODTYPE} | grep -q "NOAA_VIIRS" ); then
 #    ${NMV} ${DIAGDIR}/${HOFXOUT1} ${HOFXDIR}/${HOFXOUT1}
 #fi
-${NCP} ${DATA}/hofx_nomodel_aero_${AODTYPE}.yaml ${HOFXDIR}/
+${NCP} ${DATA}/hofx_nomodel_aero_${AODTYPE}.yaml ${HOFXDIR}/hofx_nomodel_aero_${AODTYPE}_${TRCR}.yaml
 
 ERR=$?
 if [ ${ERR} -ne 0 ]; then

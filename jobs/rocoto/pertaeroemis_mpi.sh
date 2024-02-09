@@ -364,6 +364,7 @@ EOF
             ${NMV} *.nc ${PERT_GDATE_TGT}/
 
             if [ ${EMIS_SRC} = "MEGAN" ]; then
+	    if [ ${CY} != ${EY} ]; then
 	        cd ${PERT_GDATE_TGT}
 	        FILES_NYEAR=$(ls MEGAN.OFFLINE.BIOVOC.${CY}.emis.${EY}*.nc)
 		for FILE in ${FILES_NYEAR}; do
@@ -374,6 +375,7 @@ EOF
 		    echo ${FILE_NYEAR}
                     ${NCP} ${FILE} ${FILE_NYEAR}
 		done
+             fi
             fi
         fi
         IMEM=$((IMEM+1))

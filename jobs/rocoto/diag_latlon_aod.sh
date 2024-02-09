@@ -36,8 +36,8 @@ LLAODEXEC=${HOMEgfs}/exec/fv3aod2ll.x
 NCORES=40
 
 #Load modules
-#source ${HOMEjedi}/jedi_module_base.hera.sh
-source /home/Mariusz.Pagowski/.jedi
+source ${HOMEjedi}/jedi_module_base.hera.sh
+#source /home/Mariusz.Pagowski/.jedi
 ERR=$?
 [[ ${ERR} -ne 0 ]] && exit 1
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/libs/fortran-datetime/lib"
@@ -84,7 +84,10 @@ fi
 
 if [ ${AERODA} = "YES" ]; then
     if [ ${ENSGRP} = "01" ]; then
-        HOFXFIELDS="${HOFXFIELDS} cntlanal meananal"
+        HOFXFIELDS="${HOFXFIELDS} cntlanal"
+        if [ ${ENSRUN} = "YES" ]; then
+            HOFXFIELDS="${HOFXFIELDS} meananal"
+        fi
     fi
     if [ ${ENSDIAG} = "YES" ]; then
         HOFXFIELDS="${HOFXFIELDS} memanal"
@@ -159,6 +162,7 @@ for FIELD in ${HOFXFIELDS}; do
 	        ${NRM} ${FV3AODDIR}/FV3AOD_${TRCR}
 	    fi
 	    ${NMV} ${DATA}/FV3AOD ${FV3AODDIR}/FV3AOD_${TRCR}
+	    #${NMV} ${DATA}/*.nl ${FV3AODDIR}/
 	    ${NRM} ${DATA}
         fi
 

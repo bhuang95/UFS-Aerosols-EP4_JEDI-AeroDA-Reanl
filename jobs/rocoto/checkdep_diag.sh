@@ -35,18 +35,18 @@ if [ ${AERODA} = "YES" ]; then
     fi
 fi
 
-if [ ${ENSRUN} = "YES" ]; then
-    ntiles1=$(ls ${ROTDIR}/enkfgdas.${GYY}${GMM}${GDD}/${GHH}/ensmean/model_data/atmos/restart/${CYY}${CMM}${CDD}.${CHH}0000.fv_tracer.res.tile?.nc | wc -l)
-    if [ ${ntiles1} != ${NTILES} ]; then
-        ecode=$((ecode+1))
-    fi
+#if [ ${ENSRUN} = "YES" ]; then
+#    ntiles1=$(ls ${ROTDIR}/enkfgdas.${GYY}${GMM}${GDD}/${GHH}/ensmean/model_data/atmos/restart/${CYY}${CMM}${CDD}.${CHH}0000.fv_tracer.res.tile?.nc | wc -l)
+#    if [ ${ntiles1} != ${NTILES} ]; then
+#        ecode=$((ecode+1))
+#    fi
 
-    if [ ${AERODA} = "YES" ]; then
-        ntiles1=$(ls ${ROTDIR}/enkfgdas.${GYY}${GMM}${GDD}/${GHH}/ensmean/model_data/atmos/restart/${CYY}${CMM}${CDD}.${CHH}0000.fv_tracer_aeroanl.res.tile?.nc | wc -l)
-        if [ ${ntiles1} != ${NTILES} ]; then
-             ecode=$((ecode+1))
-        fi
-    fi
-fi
+#    if [ ${AERODA} = "YES" ]; then
+#        ntiles1=$(ls ${ROTDIR}/enkfgdas.${GYY}${GMM}${GDD}/${GHH}/ensmean/model_data/atmos/restart/${CYY}${CMM}${CDD}.${CHH}0000.fv_tracer_aeroanl.res.tile?.nc | wc -l)
+#        if [ ${ntiles1} != ${NTILES} ]; then
+#             ecode=$((ecode+1))
+#        fi
+#    fi
+#fi
 
 exit ${ecode}

@@ -113,7 +113,7 @@ if [ ${ENSRUN} = "YES" ]; then
     ENKFBAK_ATMOS_MEAN_RT=${ENKFBAK}/ensmean/model_data/atmos/restart
 
     [[ ! -d ${ENKFBAK_DIAG} ]] && mkdir -p ${ENKFBAK_DIAG}
-    [[ ! -d ${ENKFBAK_ATMOS_MEAN_RT} ]] && mkdir -p ${ENKFBAK_ATMOS_MEAN_RT}
+    #[[ ! -d ${ENKFBAK_ATMOS_MEAN_RT} ]] && mkdir -p ${ENKFBAK_ATMOS_MEAN_RT}
 
     #${NRM} ${ENKFDIR_ATMOS}/mem???/*.txt
 
@@ -123,9 +123,9 @@ if [ ${ENSRUN} = "YES" ]; then
     fi
 
     ${NCP} ${ENKFDIR_DIAG}/* ${ENKFBAK_DIAG}/
-    ${NCP} ${ENKFDIR_ATMOS_MEAN_RT}/${CPREFIX}.coupler* ${ENKFBAK_ATMOS_MEAN_RT}/
-    ${NCP} ${ENKFDIR_ATMOS_MEAN_RT}/${CPREFIX}.fv_core* ${ENKFBAK_ATMOS_MEAN_RT}/
-    ${NCP} ${ENKFDIR_ATMOS_MEAN_RT}/${CPREFIX}.fv_tracer* ${ENKFBAK_ATMOS_MEAN_RT}/
+    #${NCP} ${ENKFDIR_ATMOS_MEAN_RT}/${CPREFIX}.coupler* ${ENKFBAK_ATMOS_MEAN_RT}/
+    #${NCP} ${ENKFDIR_ATMOS_MEAN_RT}/${CPREFIX}.fv_core* ${ENKFBAK_ATMOS_MEAN_RT}/
+    #${NCP} ${ENKFDIR_ATMOS_MEAN_RT}/${CPREFIX}.fv_tracer* ${ENKFBAK_ATMOS_MEAN_RT}/
 
     ERR=$?
     if [ ${ERR} -ne 0 ]; then
