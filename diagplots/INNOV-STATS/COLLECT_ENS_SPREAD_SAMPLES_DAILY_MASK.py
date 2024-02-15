@@ -221,7 +221,7 @@ if __name__ == '__main__':
 
     fields=['ememBkg']
     masks=['GLOBAL', 'NAFRME', 'CONUS', 'EASIA', 'SAFRTROP', 'RUSC2S', 'NATL', 'NPAC', 'SATL', 'SPAC', 'INDOCE']
-    nmem = 20
+    nmem = 40
 
     print(fields)
     for field in fields:

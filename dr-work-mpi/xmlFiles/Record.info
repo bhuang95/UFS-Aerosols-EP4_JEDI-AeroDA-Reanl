@@ -1,0 +1,3 @@
+VIIRS AOD
+  #[2018010100-2019033118] from Mariusz using outdated viirs2ioda_old.x with possible negative AOD from mixed HPSS and AWS.
+  #[2020070100-] using updated viirs2ioda_old.x by remove AOD<0.0 and >5.0 from HPSS. 

@@ -1,19 +1,18 @@
 #! /usr/bin/env bash
-
-#SBATCH --account=wrf-chem
-##SBATCH --account=chem-var
+#SBATCH --account=chem-var
+##SBATCH --account=ap-fc
 #SBATCH --qos=debug
 ##SBATCH --qos=batch
 #SBATCH --ntasks=40
-#SBATCH --cpus-per-task=10
-#SBATCH --time=00:30:00
+#SBATCH --cpus-per-task=1
 ##SBATCH --time=08:00:00
-#SBATCH --job-name="viirs2ioda"
-#SBATCH -o /scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/miscLog/viirs2ioda.log
-#SBATCH -e /scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/miscLog/viirs2ioda.log
+#SBATCH --time=00:30:00
+#SBATCH --job-name="viirs2aeronet"
+#SBATCH -o viirs2aeronet.log
+#SBATCH -e viirs2aeronet.log
 #SBATCH --exclusive
 
-#sbatch --export=ALL sbatch_mpi_viirs2ioda.bash
+#sbatch --export=ALL sbatch_mpi_viirs2aeronet.bash
 
 # Synopsis: This replacement for run_viirs2ioda.py is parallelized,
 # and it has error checking, documentation, and logging. It uses
@@ -25,8 +24,9 @@
 # (Last tested with GNU bash 4.2.46 on NOAA Hera.)
 #
 # Author: Samuel Trahan, NOAA, April 28, 2021
+# MZP: for AERONET
 #
-# Prerequisites: viirs2ioda, mpiserial, ncrcat
+# Prerequisites: viirs2aeronet, mpiserial, ncrcat
 
 script_start_time=$( date +%s )
 
@@ -36,34 +36,62 @@ script_start_time=$( date +%s )
 
 set -xue # disabled later if verbose==NO
 
-StartCycle="2020-07-09t12:00:00"
-EndCycle="2020-07-10t18:00:00"
+CurDir=$(pwd)
+JediDir='/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/fv3-bundle/V20240115/build/'
+StartCycle="2022-01-01t00:00:00"
+EndCycle="2022-01-02t00:00:00"
 
-grid=192 # FV3 grid size
+#input params
+radius=25 # in km
+tdiff_aeronet_max=0.5
+tdiff_v2a_max=1.
+satellite=npp
+#satellite=j01
+
+viirs_errors=0 
+#viirs_errors=0 - bias=0, error=0
+#viirs_errors=1 - bias,error using old stats from 2019
+#viirs_errors=2 - bias,error using new stats from 2021
+
+aggregation=0
+#aggregation=0 - nearest neighboor
+#aggregation=1 - arithmetic averaging
+#aggregation=2 - geometric (log) averaging with 0.01 offset
+#aggregation=3 - random sampling within circle
+
+#echo 100 > seed.txt
+#seed=`shuf --random-source=seed.txt -i0-10000 -n1`
+#seed=`shuf -i0-10000 -n1`
+seed=1000 
+#seed for random sampling i.e. used only when aggregation=0
 
 # How many hours between analysis cycles?
-CycleHrs=6 # Must be an integer in the range [1,47]
+CycleHrs=1 # Must be an integer in the range [1,47]
 
 # Input directory:
-#InRoot='/scratch1/BMC/wrf-chem/pagowski/MAPP_2018/OBS/VIIRS/AOT'
-#InRoot='/scratch1/BMC/chem-var/pagowski/DATA/OBS/VIIRS/AOT'
-InRoot='/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/DATA/OBS/VIIRS/AOT'
+InRoot='/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/DATA/OBS/VIIRS/AOT/hpss'
 
 # Output directory. Will receive one subdirectory per cycle:
-#OutRoot='/scratch1/BMC/wrf-chem/pagowski/MAPP_2018/DATA/OBS/VIIRS/thinned_debiased_C192'
-OutRoot='/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/DATA/OBS/VIIRS/thinned_debiased_C192'
+#OutRoot='/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/DATA/OBS/VIIRS/viirs2aeronet'
+OutRoot="${CurDir}/output"
 
-# FV3 grid definition file:
-FV3Grid='/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/fix_fv3/C'$grid
+#AERONET file
+AeronetRoot='/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/DATA/OBS/AERONET/AERONET_solar_AOD20'
 
 verbose=NO # YES = very wordy; NO = normal
 
+#. ~/mapp_2018/.environ.ksh
+source ${JediDir}/jedi_module_base.hera.sh
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/libs/fortran-datetime/lib"
+module load nco
 
-# The viirs2ioda.x executable. Make sure the "Prepare the environment"
+# The viirs2aeronet.x executable. Make sure the "Prepare the environment"
 # section correctly prepares the environment (module load, LD_LIBRARY_PATH)
-viirs2ioda='/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/exec/viirs2ioda.x'
+viirs2aeronet='/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/exec/viirs2aeronet.x'
 
-ignore_errors=YES # if YES, keep going no matter what. If NO, exit on error.
+#@mzp
+#ignore_errors=NO # if YES, keep going no matter what. If NO, exit on error.
+ignore_errors=YES
 
 # ----------------------------------------------------------------------
 
@@ -85,20 +113,17 @@ fi
 
 . /apps/lmod/lmod/init/bash
 
-. ~/.nc
-module load impi/2020.2
-
-JEDIDIR=/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/jedi/build/ioda-bundle/bin
-
-JEDICODE=/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/jedi/code/ioda-bundle
-
-module list
 
 # The Fortran datetime library must be in LD_LIBRARY_PATH:
-export LD_LIBRARY_PATH="/home/Mariusz.Pagowski/MAPP_2018/libs/fortran-datetime/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+#@mzp
+#export LD_LIBRARY_PATH="/home/Mariusz.Pagowski/MAPP_2018/libs/fortran-datetime/lib:${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
 # The mpiserial and ncrcat must be in $PATH:
-export PATH="/scratch2/BMC/wrfruc/Samuel.Trahan/viirs-thinning/mpiserial/exec:$PATH"
+#export PATH="/scratch2/BMC/wrfruc/Samuel.Trahan/viirs-thinning/mpiserial/exec:$PATH"
+
+export PATH="/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/exec:$PATH"
+
+
 
 # ----------------------------------------------------------------------
 
@@ -106,7 +131,9 @@ export PATH="/scratch2/BMC/wrfruc/Samuel.Trahan/viirs-thinning/mpiserial/exec:$P
 # Actual script begins here
 
 # Make sure we have the required executables
-for exe in mpiserial ncrcat ; do
+#@mzp
+#for exe in mpiserial ncrcat ; do
+for exe in mpiserial ; do
     if ( ! which "$exe" ) ; then
         echo "Error: $exe is not in \$PATH. Go find it and rerun." 1>&2
         if [[ $ignore_errors == NO ]] ; then exit 1 ; fi
@@ -117,8 +144,8 @@ done
 export TZ=UTC
 
 # Make sure we have viirs
-if [[ ! -e "$viirs2ioda" || ! -x "$viirs2ioda" ]] ; then
-    echo "Error: viirs2ioda is not an executable file: $viirs2ioda" 1>&2
+if [[ ! -e "$viirs2aeronet" || ! -x "$viirs2aeronet" ]] ; then
+    echo "Error: viirs2aeronet is not an executable file: $viirs2aeronet" 1>&2
     if [[ $ignore_errors == NO ]] ; then exit 1 ; fi
 fi
 
@@ -155,7 +182,7 @@ while [[ "$NowCycle" < "$EndCycle" || "$NowCycle" = "$EndCycle" ]] ; do
         echo "Disabling set -x for the moment; the next region is too verbose for set -x."
     fi
     usefiles=() # clear the list of files
-    for f in $( ls -1 "$InRoot/$StartYMD"/*.nc "$InRoot/$EndYMD"/*.nc | sort -u ) ; do
+    for f in $( ls -1 "$InRoot/$StartYMD"/*${satellite}*.nc "$InRoot/$EndYMD"/*${satellite}*.nc | sort -u ) ; do
         # Match the _s(number) start time and make sure it is after the time of interest
         if ! [[ $f =~ ^.*_s([0-9]{14}) ]] || ! (( BASH_REMATCH[1] >= StartYMDHMS )) ; then
             echo "Skip; too early: $f"
@@ -203,18 +230,32 @@ while [[ "$NowCycle" < "$EndCycle" || "$NowCycle" = "$EndCycle" ]] ; do
         exit 1 # cannot keep going after this failure
     fi
 
+    aeronetfile=${AeronetRoot}/aeronet_aod.${validtime}.nc
+
     # Prepare the list of commands to run.
     cat /dev/null > cmdfile
     for f in "${usefiles[@]}" ; do
         fout=$( basename "$f" )
-        echo "$viirs2ioda" "$validtime" "$FV3Grid" "$f" "$fout" >> cmdfile
+        echo "$viirs2aeronet" "$validtime" "$aeronetfile" "$f" "$fout" >> cmdfile
         file_count=$(( file_count + 1 ))
     done
 
-    . ~/.jedi
+
+cat > viirs2aeronet_common.nl <<EOF
+&common_params
+radius=${radius}
+tdiff_aeronet_max=${tdiff_aeronet_max}
+tdiff_v2a_max=${tdiff_v2a_max}
+satellite='${satellite}'
+viirs_errors=${viirs_errors}
+aggregation=${aggregation}
+seed=${seed}
+/
+EOF
+
 
     # Run many tasks in parallel via mpiserial.
-    echo "Now running executable $viirs2ioda"
+    echo "Now running executable $viirs2aeronet"
     if ( ! srun -l mpiserial $mpiserial_flags cmdfile ) ; then
         echo "At least one of the files failed. See prior logs for details." 1>&2
         if [[ $ignore_errors == NO ]] ; then exit 1 ; fi
@@ -245,58 +286,22 @@ while [[ "$NowCycle" < "$EndCycle" || "$NowCycle" = "$EndCycle" ]] ; do
         echo "In analysis cycle $NowCycle, all $success of ${#usefiles[@]} files were output."
     fi
 
-    # Merge the files.
 
-. ~/.nc
-
-    FinalFile_v1="viirs_aod_npp.${validtime}_v1.nc"
-    FinalFile_v2="viirs_aod_npp.${validtime}_v2.nc"
-    FinalFile_v3="NOAA_VIIRS_AOD_npp.${validtime}.iodav3.nc"
-    FinalFile_v3="VIIRS_AOD_npp.${validtime}.nc"
-
+    FinalFile="viirs2aeronet_aod_${satellite}.${validtime}.nc"
     echo Merging files now...
-    if ( ! ncrcat -O *npp*.nc tmp.nc ) ; then
-        echo "Error: ncrcat returned non-zero exit status" 1>&2
+    if ( ! ncrcat -O *${satellite}*.nc ${FinalFile} ) ; then
+        echo "ncrcat returned non-zero exit status" 1>&2
+        echo "ncrcat did not create ${FinalFile} ." 1>&2
         if [[ $ignore_errors == NO ]] ; then exit 1 ; fi
     fi
 
+    /bin/rm -f JRR-AOD_v2r3_${satellite}_s*.nc
+
     # Make sure they really were merged.
-    if [[ ! -s tmp.nc ]] ; then
-        echo "Error: ncrcat did not create ${FinalFile_v1} ." 1>&2
+    if [[ ! -s $FinalFile ]] ; then
+        echo "Error: ncrcat did not create ${FinalFile} ." 1>&2
         if [[ $ignore_errors == NO ]] ; then exit 1 ; fi
     fi
-
-    ncks -O --fix_rec_dmn all tmp.nc "${FinalFile_v1}"
-
-    /bin/rm tmp.nc
-
-    . ~/.jedi
-
-    ${JEDIDIR}/ioda-upgrade-v1-to-v2.x ${FinalFile_v1} ${FinalFile_v2}
-    ${JEDIDIR}/ioda-upgrade-v2-to-v3.x ${FinalFile_v2} ${FinalFile_v3} ${JEDICODE}/ioda/share/ioda/yaml/validation/ObsSpace.yaml
-
-#j01
-#    . ~/.nc
-#    module load impi/2020.2
-
-#    FinalFile_v1="viirs_aod_j01.${validtime}_v1.nc"
-#    FinalFile_v2="VIIRS_AOD_j01.${validtime}.nc"
-#    echo Merging files now...
-#    if ( ! ncrcat -O *j01*.nc tmp.nc ) ; then
-#        echo "Error: ncrcat returned non-zero exit status" 1>&2
-#        if [[ $ignore_errors == NO ]] ; then exit 1 ; fi
-#    fi
-
-    # Make sure they really were merged.
-#    if [[ ! -s tmp.nc ]] ; then
-#        echo "Error: ncrcat did not create ${FinalFile_v1}." 1>&2
-#        if [[ $ignore_errors == NO ]] ; then exit 1 ; fi
-#    fi
-
-#    ncks -O --fix_rec_dmn all tmp.nc "${FinalFile_v1}"
-#    ${JEDIDIR}/ioda-upgrade.x ${FinalFile_v1} ${FinalFile_v2}
-
-    /bin/rm -f tmp.nc JRR-AOD*.nc *_v1.nc *_v2.nc
 
     # Go back to the prior directory:
     popd
@@ -321,7 +326,7 @@ echo "Output files are here ==> $OutRoot"
 echo
 echo "Processed $file_count files in $(( script_end_time - script_start_time )) seconds."
 if (( no_output > 0 )) ; then
-    echo "Of those, $no_output input files had no thinned obs output files."
+    echo "Of those, $no_output input files had no obs output files."
     echo "Usually this means some files had no valid obs. See prior messages for details."
 fi
 echo "Please enjoy your files and have a nice day."

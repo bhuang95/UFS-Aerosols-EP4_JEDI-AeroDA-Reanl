@@ -109,7 +109,7 @@
 
 	<!-- Machine related entities -->
 	<!ENTITY PARTITION    "hera">
-	<!ENTITY ACCOUNT    "gsd-fv3-dev">
+	<!ENTITY ACCOUNT    "chem-var">
 	<!ENTITY QUEUE      "batch">
 	<!ENTITY QUEUE_DEB      "batch">
 	<!ENTITY SCHEDULER  "slurm">

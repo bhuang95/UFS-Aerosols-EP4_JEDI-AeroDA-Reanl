@@ -1,1 +1,0 @@
-/scratch1/BMC/gsd-fv3-dev/MAPP_2018/pagowski/exec/viirs2ioda_old.x
