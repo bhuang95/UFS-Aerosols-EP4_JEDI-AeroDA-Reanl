@@ -109,7 +109,7 @@
 
 	<!-- Machine related entities -->
 	<!ENTITY PARTITION    "hera">
-	<!ENTITY ACCOUNT    "wrf-chem">
+	<!ENTITY ACCOUNT    "chem-var">
 	<!ENTITY QUEUE      "batch">
 	<!ENTITY QUEUE_DEB      "batch">
 	<!ENTITY SCHEDULER  "slurm">
@@ -121,7 +121,7 @@
 
 	<!-- ROCOTO parameters that control workflow -->
 	<!ENTITY PARTITION_HPSS    "service">
-	<!ENTITY ACCOUNT_HPSS    "wrf-chem">
+	<!ENTITY ACCOUNT_HPSS    "chem-var">
 	<!ENTITY QUEUE_HPSS      "batch">
 	<!ENTITY WALLTIME_HPSS  "07:59:00">
 	<!ENTITY RESOURCES_HPSS "1:ppn=1:tpp=1">

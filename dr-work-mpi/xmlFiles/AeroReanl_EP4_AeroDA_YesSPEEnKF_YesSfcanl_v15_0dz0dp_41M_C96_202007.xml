@@ -33,7 +33,7 @@
 	<!ENTITY DMPDIR   "/scratch1/NCEPDEV/global/glopara/dump">
 
 	<!-- Experiment parameter setup -->
-	<!ENTITY SDATE "202006300600">
+	<!ENTITY SDATE "202007010000">
 	<!ENTITY EDATE "202007311800">
 	<!ENTITY INTERVAL "06:00:00">
 	<!ENTITY CYCINTHR "06">
@@ -109,7 +109,7 @@
 	<!-- Machine related entities -->
 	<!ENTITY PARTITION    "hera">
 	<!ENTITY ACCOUNT    "wrf-chem">
-	<!ENTITY QUEUE      "debug">
+	<!ENTITY QUEUE      "batch">
 	<!ENTITY QUEUE_DEB      "debug">
 	<!ENTITY SCHEDULER  "slurm">
 
