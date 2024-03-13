@@ -31,7 +31,7 @@
 
 	<!-- Experiment parameter setup -->
 	<!ENTITY SDATE "202007010000">
-	<!ENTITY EDATE "202012310000">
+	<!ENTITY EDATE "202112310000">
 	<!ENTITY INTERVAL "24:00:00">
 	<!ENTITY CYCINTHR "6">
 	<!ENTITY CDUMP "gdas">
@@ -44,6 +44,7 @@
 	<!ENTITY OBSDIR_NRT  "/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/NRTdata_UFS-Aerosols/AODObs/&AODTYPE;/&CASE_OBS;">
 	<!ENTITY MISS_NOAA_NPP "&EXPDIR;/TaskRecords/record.miss_NOAAVIIRS_NPP">
 	<!ENTITY MISS_NOAA_J01 "&EXPDIR;/TaskRecords/record.miss_NOAAVIIRS_J01">
+	<!ENTITY AODPRODDIR "/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/&PSLOT;/">
 
 	<!-- Machine related entities -->
 	<!ENTITY PARTITION    "hera">
@@ -53,7 +54,7 @@
 	<!ENTITY SCHEDULER  "slurm">
 
 	<!-- ROCOTO task control -->
-	<!ENTITY MAXTRIES "3">
+	<!ENTITY MAXTRIES "5">
 	<!ENTITY CYCLETHROTTLE "1">
 	<!ENTITY TASKTHROTTLE  "20">
 
@@ -104,6 +105,7 @@
 	<envar><name>AODSAT</name><value>&AODSAT;</value></envar>
 	<envar><name>TASKRC</name><value>&TASKRC;</value></envar>
 	<envar><name>HPSSPASS</name><value>&HPSSPASS;</value></envar>
+	<envar><name>AODPRODDIR</name><value>&AODPRODDIR;</value></envar>
 
 	<dependency>
 		<or>
@@ -145,6 +147,7 @@
 	<envar><name>OBSDIR_NRT</name><value>&OBSDIR_NRT;</value></envar>
 	<envar><name>AODTYPE</name><value>&AODTYPE;</value></envar>
 	<envar><name>TASKRC</name><value>&TASKRC;</value></envar>
+	<envar><name>AODPRODDIR</name><value>&AODPRODDIR;</value></envar>
 
 	<dependency>
 		<taskdep task="retaod"/>

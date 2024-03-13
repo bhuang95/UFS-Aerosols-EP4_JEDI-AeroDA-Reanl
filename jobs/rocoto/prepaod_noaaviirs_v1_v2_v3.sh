@@ -56,6 +56,7 @@ OBSDIR_NRT=${OBSDIR_NRT:-"/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/J
 #MISS_NOAA_NPP_RECORD=${MISS_NOAA_NPP_RECORD:-"${HOMEgfs}/dr-work-mpi/xmlFiles/record.miss_NOAAVIIRSnpp"}
 #MISS_NOAA_J01_RECORD=${MISS_NOAA_J01_RECORD:-"${HOMEgfs}/dr-work-mpi/xmlFiles/record.miss_NOAAVIIRSj01"}
 NDATE=${NDATE:-"/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate"}
+AODPRODDIR=${AODPRODDIR:-"/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/"}
 
 #Define JEDI -related executables
 VIIRSIODA1_EXEC=${HOMEgfs}/exec/viirs2ioda_v1.x
@@ -80,7 +81,8 @@ LDATES="${LDATE} ${CDATE}"
 mkdir -p INPUT
 OBSDIR_NESDIS=${DATA}/INPUT
 for IDATE in ${LDATES}; do
-    SRCDIR=${ROTDIR}/${IDATE}/
+    #SRCDIR=${ROTDIR}/${IDATE}/
+    SRCDIR=${AODPRODDIR}/${IDATE}/
     ${NLN} ${SRCDIR}/*.nc ./INPUT/
 done
 
@@ -259,7 +261,8 @@ done # for HR
     
 if [[ $err -eq 0 ]]; then
     ${NRM} $DATA
-    ${NRM} ${ROTDIR}/${LDATE}
+    #${NRM} ${ROTDIR}/${LDATE}
+    ${NRM} ${AODPRODDIR}/${LDATE}
 fi
 echo ${CDATE} > ${TASKRC}
 echo $(date) EXITING $0 with return code $err >&2

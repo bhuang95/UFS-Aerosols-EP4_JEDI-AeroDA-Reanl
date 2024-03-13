@@ -24,16 +24,23 @@ PSLOT=${PSLOT:-"Prep_VIIRSAOD_202007"}
 CDATE=${CDATE:-"2020070100"}
 AODSAT=${AODSAT:-"npp"}
 NDATE=${NDATE:-"/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate"}
+AODPRODDIR=${AODPRODDIR:-"/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/"}
 
 NRM="/bin/rm -rf"
 
 LDATE=$(${NDATE} -24 ${CDATE})
+PDATE=$(${NDATE} 24 ${CDATE})
 
-if ( ! ls ${ROTDIR}/${LDATE}/*.nc ); then
-    LDATES="${LDATE} ${CDATE}"
-else
-    LDATES="${CDATE}"
-fi
+IDATES="${LDATE} ${CDATE} ${PDATE}"
+
+for IDATE in ${IDATES}; do
+    if ( ! ls ${AODPRODDIR}/${LDATE}/*.nc ); then
+        echo "Data at ${IDATE} not available"
+	exit 100
+    fi
+done
+
+exit 0
 
 ECNT=0
 for IDATE in ${LDATES}; do
