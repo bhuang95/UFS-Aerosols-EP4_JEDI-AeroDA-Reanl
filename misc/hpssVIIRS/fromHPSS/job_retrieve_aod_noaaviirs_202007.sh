@@ -35,7 +35,8 @@ while [ ${IDATE} -le ${EDATE} ]; do
     HERADIR=${TOPDIR}/${EXP}/${IDATE}
     HPSSFILE=${HPSSDIR}/${IDATE}00.zip
 
-    [[ ! -d ${HERADIR} ]] && mkdir -p ${HERADIR}
+    [[ -d ${HERADIR} ]] && rm -rf ${HERADIR}
+    mkdir -p ${HERADIR}
     cd ${HERADIR}
 
     hsi "get ${HPSSFILE}"
