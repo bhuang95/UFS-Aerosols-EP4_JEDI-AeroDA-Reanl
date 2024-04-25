@@ -9,11 +9,21 @@ fi
 # Setup runtime environment by loading modules
 ulimit_s=$( ulimit -S -s )
 
-source "${HOMEgfs}/ush/detect_machine.sh"
-source "${HOMEgfs}/ush/module-setup.sh"
+#source "${HOMEgfs}/ush/detect_machine.sh"
+#export MACHINE_ID=hera
+#source "${HOMEgfs}/ush/module-setup.sh"
+source /scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/UFSAerosols-workflow/20240403-develop/global-workflow/sorc/ufs_model.fd/tests/detect_machine.sh
+source /scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/UFSAerosols-workflow/20240403-develop/global-workflow/sorc/ufs_model.fd/tests/module-setup.sh
+echo "HBO-0"
+
 if [[ "${MACHINE_ID}" != "noaacloud" ]]; then
-  module use "${HOMEgfs}/sorc/ufs_model.fd/tests"
-  module load modules.ufs_model.lua
+  echo "HBO-1"
+  #module use "${HOMEgfs}/sorc/ufs_model.fd/tests"
+  module use /scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/UFSAerosols-workflow/20240403-develop/global-workflow/sorc/ufs_model.fd/modulefiles
+  echo "HBO-2"
+ # module load modules.ufs_model.lua
+ module load ufs_hera.intel.lua
+  echo "HBO-3"
   if [[ "${MACHINE_ID}" = "wcoss2" ]]; then
     module load prod_util
     module load cray-pals
@@ -22,16 +32,21 @@ if [[ "${MACHINE_ID}" != "noaacloud" ]]; then
     module load craype-network-ucx
     module load cray-mpich-ucx
   else
-    module load prod-util
-    export UTILROOT=${prod_util_ROOT}
+    #HBO-31
+    echo "HBO-31"
+    #module load prod-util
+    #export UTILROOT=${prod_util_ROOT}
   fi
   module load wgrib2
   export WGRIB2=wgrib2
 fi
 if [[ "${MACHINE_ID}" = "hera" ]]; then
   module use "/scratch2/NCEPDEV/ensemble/save/Walter.Kolczynski/modulefiles/core"
-  module load "miniconda3/4.6.14"
-  module load "gfs_workflow/1.0.0"
+  echo "HBO-4"
+  #module load "miniconda3/4.6.14"
+  echo "HBO-5"
+  #module load "gfs_workflow/1.0.0"
+  echo "HBO-6"
 fi
 if [[ "${MACHINE_ID}" == "noaacloud" ]]; then
    if [[ "${PW_CSP:-}" = "aws" ]]; then
@@ -58,9 +73,10 @@ unset MACHINE_ID
 ###############################################################
 # exglobal_forecast.py requires the following in PYTHONPATH
 # This will be moved to a module load when ready
-wxflowPATH="${HOMEgfs}/ush/python:${HOMEgfs}/ush/python/wxflow/src:${HOMEgfs}/ush/python/pygfs"
-PYTHONPATH="${PYTHONPATH:+${PYTHONPATH}:}${wxflowPATH}"
-export PYTHONPATH
+echo "HBO-7"
+#wxflowPATH="${HOMEgfs}/ush/python:${HOMEgfs}/ush/python/wxflow/src:${HOMEgfs}/ush/python/pygfs"
+#PYTHONPATH="${PYTHONPATH:+${PYTHONPATH}:}${wxflowPATH}"
+#export PYTHONPATH
 
 # Restore stack soft limit:
 ulimit -S -s "${ulimit_s}"

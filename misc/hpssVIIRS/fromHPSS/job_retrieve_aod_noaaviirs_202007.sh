@@ -16,8 +16,8 @@ SCRIPTDIR="/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-Ae
 cd ${SCRIPTDIR}
 TOPDIR="/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/"
 EXP="Prep_VIIRSAOD_202007"
-SDATE=2021030100  #2021021000
-EDATE=2021033118  #2021022800
+SDATE=2021040100  #2021030100  #2021021000
+EDATE=2021043018  #2021033118  #2021022800
 echo ${SDATE} > SDAY_${EXP}.info
 echo ${EDATE} > EDAY_${EXP}.info
 CYCINC=24
@@ -49,7 +49,7 @@ while [ ${IDATE} -le ${EDATE} ]; do
         echo "There is an error and exit now"
 	exit ${ECNT}
     else
-	${NRM} ${HERADIR}/${IDATE}00.zip
+	rm -rf  ${HERADIR}/${IDATE}00.zip
     fi
     IDATE=$(${NDATE} ${CYCINC} ${IDATE})
 done

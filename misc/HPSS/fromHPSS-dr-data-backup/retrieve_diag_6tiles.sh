@@ -33,6 +33,12 @@ while [ ${CDATE} -le ${EDATE} ]; do
     CD=${CDATE:6:2}
     CH=${CDATE:8:2}
     CYMD=${CDATE:0:8}
+    CDATE_P6=$(${NDATE} ${CYCINC} ${CDATE})
+    CY_P6=${CDATE_P6:0:4}
+    CM_P6=${CDATE_P6:4:2}
+    CD_P6=${CDATE_P6:6:2}
+    CH_P6=${CDATE_P6:8:2}
+    CYMD_P6=${CDATE_P6:0:8}
 
     if [ ${ENSRUN} = "YES" ]; then
         HPSSDIR=${HPSSEXP}/${CY}/${CY}${CM}/${CYMD}/
@@ -99,6 +105,24 @@ while [ ${CDATE} -le ${EDATE} ]; do
         ANLTGT=NARA-2.0_AEROS_${CDATE}_PLL.nc
         ${NMV} ${ANLORG} ${ANLTGT}
         ${NLN} ${ANLTGT} ${ANLORG}
+        ERR=$?
+        ICNT=$((${ICNT}+${ERR}))
+    fi
+
+
+    if [ ${NGANL} = "YES" ]; then
+        RSTDIR=${HERADIR}/model_data/atmos/restart
+	REANLDIR_P6=${HERAEXP}/GriddedReanl/${CY_P6}/${CY_P6}${CM_P6}/${CYMD_P6}
+	NGANLDIR=${REANLDIR}/NativeGridReanl_${CDATE}
+	NGANLDIR_P6=${REANLDIR_P6}/NativeGridReanl_${CDATE_P6}
+	[[ ! -d ${NGANLDIR} ]] && mkdir -p ${NGANLDIR}
+	[[ ! -d ${NGANLDIR_P6} ]] && mkdir -p ${NGANLDIR_P6}
+        ${NMV} ${DIAGDIR}/aod_grid/FV3AOD_fv_tracer_aeroanl/* ${NGANLDIR}/
+        ERR=$?
+        ICNT=$((${ICNT}+${ERR}))
+
+        ${NMV} ${RSTDIR}/* ${NGANLDIR_P6}/
+	${NRM} ${NGANLDIR_P6}/*.fv_tracer.res.tile?.nc
         ERR=$?
         ICNT=$((${ICNT}+${ERR}))
     fi

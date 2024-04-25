@@ -34,7 +34,7 @@
 
 	<!-- Experiment parameter setup -->
 	<!ENTITY SDATE "202007010000">
-	<!ENTITY EDATE "202007311800">
+	<!ENTITY EDATE "202008010000">
 	<!ENTITY INTERVAL "06:00:00">
 	<!ENTITY CYCINTHR "06">
 	<!ENTITY CDUMP_CNTL "gdas">
@@ -67,7 +67,7 @@
 	<!-- Machine related entities -->
 	<!ENTITY PARTITION    "hera">
 	<!ENTITY ACCOUNT    "chem-var">
-	<!ENTITY QUEUE      "batch">
+	<!ENTITY QUEUE      "debug">
 	<!ENTITY QUEUE_DEB      "debug">
 	<!ENTITY SCHEDULER  "slurm">
 

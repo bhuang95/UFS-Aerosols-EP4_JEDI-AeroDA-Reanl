@@ -34,7 +34,7 @@
 
 	<!-- Experiment parameter setup -->
 	<!ENTITY SDATE "202007010000">
-	<!ENTITY EDATE "202007311800">
+	<!ENTITY EDATE "202008010000">
 	<!--ENTITY EDATE "201906111800"-->
 	<!ENTITY INTERVAL "06:00:00">
 	<!ENTITY CYCINTHR "06">
@@ -110,8 +110,8 @@
 	<!-- Machine related entities -->
 	<!ENTITY PARTITION    "hera">
 	<!ENTITY ACCOUNT    "chem-var">
-	<!ENTITY QUEUE      "batch">
-	<!ENTITY QUEUE_DEB      "batch">
+	<!ENTITY QUEUE      "debug">
+	<!ENTITY QUEUE_DEB      "debug">
 	<!ENTITY SCHEDULER  "slurm">
 
 	<!-- ROCOTO task control -->
@@ -153,7 +153,7 @@
 	<!ENTITY NATIVE_ANAL_ENKF_GDAS    "--export=NONE">
 
 	<!ENTITY QUEUE_DIAG_GDAS     "&QUEUE;">
-	<!ENTITY WALLTIME_DIAG_GDAS  "02:29:00">
+	<!ENTITY WALLTIME_DIAG_GDAS  "00:29:00">
 	<!ENTITY RESOURCES_DIAG_GDAS "1:ppn=24:tpp=1">
 	<!--ENTITY MEMORIES_DIAG_GDAS "100G"-->
 	<!ENTITY NATIVE_DIAG_GDAS    "--export=NONE">

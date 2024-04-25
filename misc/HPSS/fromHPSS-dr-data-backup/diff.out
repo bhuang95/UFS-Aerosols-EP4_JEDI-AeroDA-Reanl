@@ -1,0 +1,16 @@
+43d42
+< if [ "PASS" = "NOPASS" ]; then
+59c58
+< fi
+---
+> 
+79d77
+< if [ "PASS" = "NOPASS" ]; then
+113d110
+< fi # NOPASS
+118c115
+<         REANLDIR_P6=${HERAEXP}/GriddedReanl/${CY_P6}/${CY_P6}${CM_P6}/${CYMD_P6}
+---
+> 	REANLDIR_P6=${HERAEXP}/GriddedReanl/${CY_P6}/${CY_P6}${CM_P6}/${CYMD_P6}
+138d134
+< 	${NRM} ${DIAGDIR}/*_grid*/*.nc

@@ -33,7 +33,14 @@ while [ ${CDATE} -le ${EDATE} ]; do
     CD=${CDATE:6:2}
     CH=${CDATE:8:2}
     CYMD=${CDATE:0:8}
+    CDATE_P6=$(${NDATE} ${CYCINC} ${CDATE})
+    CY_P6=${CDATE_P6:0:4}
+    CM_P6=${CDATE_P6:4:2}
+    CD_P6=${CDATE_P6:6:2}
+    CH_P6=${CDATE_P6:8:2}
+    CYMD_P6=${CDATE_P6:0:8}
 
+if [ "PASS" = "NOPASS" ]; then
     if [ ${ENSRUN} = "YES" ]; then
         HPSSDIR=${HPSSEXP}/${CY}/${CY}${CM}/${CYMD}/
 	HPSSFILE=enkfgdas.${CDATE}.diag.tar
@@ -49,7 +56,7 @@ while [ ${CDATE} -le ${EDATE} ]; do
         ERR=$?
         ICNT=$((${ICNT}+${ERR}))
     fi
-
+fi
     HPSSDIR=${HPSSEXP}/${CY}/${CY}${CM}/${CYMD}
     HPSSFILE=gdas.${CDATE}.diag.tar
     HERADIR=${HERAEXP}/gdas.${CYMD}/${CH}
@@ -69,6 +76,7 @@ while [ ${CDATE} -le ${EDATE} ]; do
     REANLDIR=${HERAEXP}/GriddedReanl/${CY}/${CY}${CM}/${CYMD}
     [[ ! -d ${REANLDIR} ]] && mkdir -p ${REANLDIR}
 
+if [ "PASS" = "NOPASS" ]; then
     ${NMV} ${DIAGDIR}/aod_grid/fv3_aod_LUTs_fv_tracer*.nc ${REANLDIR}
     ERR=$?
     ICNT=$((${ICNT}+${ERR}))
@@ -102,12 +110,34 @@ while [ ${CDATE} -le ${EDATE} ]; do
         ERR=$?
         ICNT=$((${ICNT}+${ERR}))
     fi
+fi # NOPASS
+
+
+    if [ ${NGANL} = "YES" ]; then
+        RSTDIR=${HERADIR}/model_data/atmos/restart
+        REANLDIR_P6=${HERAEXP}/GriddedReanl/${CY_P6}/${CY_P6}${CM_P6}/${CYMD_P6}
+	NGANLDIR=${REANLDIR}/NativeGridReanl_${CDATE}
+	NGANLDIR_P6=${REANLDIR_P6}/NativeGridReanl_${CDATE_P6}
+	[[ ! -d ${NGANLDIR} ]] && mkdir -p ${NGANLDIR}
+	[[ ! -d ${NGANLDIR_P6} ]] && mkdir -p ${NGANLDIR_P6}
+        ${NMV} ${DIAGDIR}/aod_grid/FV3AOD_fv_tracer_aeroanl/* ${NGANLDIR}/
+        ERR=$?
+        ICNT=$((${ICNT}+${ERR}))
+
+        ${NMV} ${RSTDIR}/* ${NGANLDIR_P6}/
+	${NRM} ${NGANLDIR_P6}/*.fv_tracer.res.tile?.nc
+        ERR=$?
+        ICNT=$((${ICNT}+${ERR}))
+    fi
 
     if [ ${ICNT} -eq 0 ]; then
         echo "Succeeded at ${CDATE} and remove data"
 	${NRM} ${HERADIR}/model_data
 	${NRM} ${HERADIR}/*.tar
-	${NRM} ${HERADIR_ENKF}/*.tar
+        if [ "PASS" = "NOPASS" ]; then
+	    ${NRM} ${HERADIR_ENKF}/*.tar
+	fi
+	${NRM} ${DIAGDIR}/*_grid*/*.nc
     else
         echo "Failed at ${CDATE} and exit"
 	exit ${ICNT}

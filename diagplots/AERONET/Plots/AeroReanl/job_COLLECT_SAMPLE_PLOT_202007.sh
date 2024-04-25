@@ -19,8 +19,8 @@ CURDIR=$(pwd)
 
 # Plot scattering plot and relative bias and RMSE against AERONET for noda and da expariment
 # Both freerun and da experiments are needed. 
-SDATE=2020070100 #2017120800 # Starting cycle. Here not using cycels before 2017101000 for spinup purpose
-EDATE=2020070518 #2017123118 # Ending cycle
+SDATE=2020100100  #2020090100  #2020080100  #2020070100 #2017120800 # Starting cycle. Here not using cycels before 2017101000 for spinup purpose
+EDATE=2020103118  #2020093018  #2020083118  #2020073118 #2017123118 # Ending cycle
 #SDATE=2020060800 # Starting cycle. Here not using cycels before 2017101000 for spinup purpose
 #EDATE=2020063118 # Ending cycle
 MISS_AERONET=${CURDIR}/Record_AeronetHfxMissing.info

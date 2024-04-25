@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -n 1
-#SBATCH -t 02:20:00
+#SBATCH -t 23:59:00
 #SBATCH -p service
 #SBATCH -A chem-var
 #SBATCH -J aodhfx-202007
@@ -20,8 +20,8 @@ codedir=$(pwd)
 topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/
 ndate=/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate
 
-cycst=2020070100 # Starting cycle
-cyced=2020070700 # Ending cycle
+cycst=2020090100  #2020080100  #2020070100 # Starting cycle
+cyced=2020103118  #2020083118  #2020073118 # Ending cycle
 #cycst=2020061500 # Starting cycle
 #cyced=2020062900 # Ending cycle
 	# All four cycles at 00/06/12/18Z has to be available at a certain day. Otherwise, it will crash/ 
@@ -50,8 +50,8 @@ for exp in ${exps}; do
     topplotdir=${topexpdir}/${exp}/diagplots/VIIRS_AOD_HOFX_DIFF_IODAV3
     if ( echo ${aerodaexp} | grep ${exp} ); then
         aeroda=True
-        emean=True
-        prefix=AeroDA_NoSPE
+        emean=False
+        prefix=AeroDA_YesSPE
     elif ( echo ${freerunexp} | grep ${exp} ); then
         aeroda=False
         emean=False

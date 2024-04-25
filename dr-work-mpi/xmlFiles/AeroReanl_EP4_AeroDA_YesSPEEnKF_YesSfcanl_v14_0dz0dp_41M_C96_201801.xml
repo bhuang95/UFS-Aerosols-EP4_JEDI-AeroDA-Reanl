@@ -16,25 +16,29 @@
 	-->
 	<!-- Experiment directory setup -->
 	<!ENTITY PSLOT "AeroReanl_EP4_AeroDA_YesSPEEnKF_YesSfcanl_v14_0dz0dp_41M_C96_201801">
-	<!ENTITY HOMEgfs "/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/"> 
+	<!--ENTITY HOMEgfs "/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/"--> 
+	<!ENTITY HOMEgfs "/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/UFSAerosols-workflow/20240403-develop/global-workflow/">
 	<!--
 	<!ENTITY HOMEgfs "/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/MISC/UFS-Workflow/20231130/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl">
 	-->
 	<!ENTITY TOPRUNDIR "/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/">
-	<!ENTITY EXPDIR "&HOMEgfs;/dr-work-mpi/">
+	<!--ENTITY EXPDIR "&HOMEgfs;/dr-work-mpi/"-->
+	<!ENTITY EXPDIR "/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/UFSAerosols-workflow/20240403-develop/global-workflow/expdir/cycExp_ATMA_warm">
 	<!ENTITY ROTDIR "&TOPRUNDIR;/&PSLOT;/dr-data/">
 	<!ENTITY TASKRC "&EXPDIR;/TaskRecords/cmplCycle_&PSLOT;.rc">
 
 	<!-- Directories for driving the workflow -->
-	<!ENTITY HOMEjedi "/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/fv3-bundle/V20240115/build/">
+	<!--ENTITY HOMEjedi "/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/fv3-bundle/V20240115/build/"-->
+	<!ENTITY HOMEjedi "/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/misc/testRockey8/JEDI/V20240115/build/">
 	<!ENTITY JOBS_DIR "&HOMEgfs;/jobs/rocoto">
 	<!ENTITY DATAROOTTOP "/scratch2/BMC/gsd-fv3-dev/NCEPDEV/stmp3/Bo.Huang/RUNDIRS/&PSLOT;/">
 	<!ENTITY COMROOT "/scratch1/NCEPDEV/global/glopara/com/">
 	<!ENTITY DMPDIR   "/scratch1/NCEPDEV/global/glopara/dump">
 
 	<!-- Experiment parameter setup -->
-	<!ENTITY SDATE "201801010000">
-	<!ENTITY EDATE "201802281800">
+	<!--ENTITY SDATE "201801010000"-->
+	<!ENTITY SDATE "201802070000">
+	<!ENTITY EDATE "201802070000">
 	<!ENTITY INTERVAL "06:00:00">
 	<!ENTITY CYCINTHR "06">
 	<!ENTITY CDUMP_CNTL "gdas">
@@ -108,8 +112,8 @@
 
 	<!-- Machine related entities -->
 	<!ENTITY PARTITION    "hera">
-	<!ENTITY ACCOUNT    "chem-var">
-	<!ENTITY QUEUE      "batch">
+	<!ENTITY ACCOUNT    "wrf-chem">
+	<!ENTITY QUEUE      "debug">
 	<!ENTITY QUEUE_DEB      "debug">
 	<!ENTITY SCHEDULER  "slurm">
 
@@ -121,7 +125,7 @@
 	<!-- ROCOTO parameters that control workflow -->
 	<!ENTITY PARTITION_HPSS    "service">
 	<!ENTITY ACCOUNT_HPSS    "chem-var">
-	<!ENTITY QUEUE_HPSS      "batch">
+	<!ENTITY QUEUE_HPSS      "debug">
 	<!ENTITY WALLTIME_HPSS  "07:59:00">
 	<!ENTITY RESOURCES_HPSS "1:ppn=1:tpp=1">
 	<!ENTITY MEMORIES_HPSS "80000M">
@@ -146,7 +150,7 @@
 	<!ENTITY NATIVE_ANAL_GDAS    "--export=NONE">
 
 	<!ENTITY QUEUE_ANAL_ENKF_GDAS     "&QUEUE;">
-	<!ENTITY WALLTIME_ANAL_ENKF_GDAS  "00:59:00">
+	<!ENTITY WALLTIME_ANAL_ENKF_GDAS  "00:29:00">
 	<!ENTITY RESOURCES_ANAL_ENKF_GDAS "6:ppn=24:tpp=1">
 	<!ENTITY MEMORIES_ANAL_ENKF_GDAS "80000M">
 	<!ENTITY NATIVE_ANAL_ENKF_GDAS    "--export=NONE">
@@ -564,7 +568,7 @@
 
 <task name="gdasfcst" cycledefs="gdas_half,gdas" maxtries="&MAXTRIES;">
 
-	<command>&JOBS_DIR;/fcst.sh</command>
+	<command>&JOBS_DIR;/fcst_hbo.sh</command>
 
 	<jobname><cyclestr>&PSLOT;_gdasfcst_@H</cyclestr></jobname>
 	<account>&ACCOUNT;</account>

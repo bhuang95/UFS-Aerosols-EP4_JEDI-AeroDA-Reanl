@@ -7,8 +7,8 @@
 #SBATCH --time=8:00:00
 #SBATCH --job-name="2018VAOD"
 #SBATCH --exclusive
-#SBATCH -o /scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/misc/viirs2ioda.out
-#SBATCH -e /scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/misc/viirs2ioda.out
+#SBATCH -o /scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/misc/viirs2ioda_2018.out
+#SBATCH -e /scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/misc/viirs2ioda_2018.out
 
 ###############################################################
 ### Environmental variables defined in .xml file

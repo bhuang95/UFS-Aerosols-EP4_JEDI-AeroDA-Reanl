@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -n 1
-#SBATCH -t 02:20:00
+#SBATCH -t 23:59:00
 #SBATCH -p service
 #SBATCH -A chem-var
 #SBATCH -J aodinc_201801
@@ -21,8 +21,8 @@ topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl
 
 ndate=/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate
 
-cycst=2018010100
-cyced=2018011900
+cycst=2018030100  #2018020100  #2018010100
+cyced=2018043018  #2018022818  #2018013100
 #cycst=2020061400
 #cyced=2020062900
 # (if cycinc=24, set cycst and cyced as YYYYMMDD00)
@@ -44,8 +44,8 @@ for exp in ${exps}; do
     topplotdir=${topexpdir}/${exp}/diagplots/VIIRS_AOD_HOFX_INCREMENT_IODAV3
     if [ ${exp} = ${aerodaexp} ]; then
         aeroda=True
-        emean=True
-        prefix=AeroDA_NoSPE
+        emean=False
+        prefix=AeroDA_YesSPE
     elif [ ${exp} = ${freerunexp} ]; then
         aeroda=False
         emean=False

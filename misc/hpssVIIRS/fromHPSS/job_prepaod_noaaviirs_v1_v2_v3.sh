@@ -2,13 +2,16 @@
 
 #SBATCH --account=gsd-fv3-dev
 #SBATCH --qos=batch
+#SBATCH --time=8:00:00
+##SBATCH --qos=debug
+##SBATCH --time=00:30:00
 #SBATCH --ntasks=40
 #SBATCH --cpus-per-task=10
-#SBATCH --time=08:00:00
-#SBATCH --job-name="2020VAOD"
+#SBATCH --mem=5g
+#SBATCH --job-name="prepaod"
 #SBATCH --exclusive
-#SBATCH -o /scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/misc/viirs2ioda_202007.out
-#SBATCH -e /scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/misc/viirs2ioda_202007.out
+#SBATCH -o viirs2ioda.out
+#SBATCH -e viirs2ioda.out
 
 ###############################################################
 ### Environmental variables defined in .xml file
@@ -43,9 +46,12 @@ TASKRC=${TASKRC:-"./record.prepviirs_aod"}
 HOMEgfs=${HOMEgfs:-"/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl"}
 SCRIPTDIR="/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/misc/hpssVIIRS/fromHPSS"
 
-PSLOT=${PSLOT:-"Prep_VIIRSAOD_202007"}
-SDAY=$(cat SDAY_${PSLOT}.info)  #2019092100
-EDAY=$(cat EDAY_${PSLOT}.info)  #2019102200
+#PSLOT=${PSLOT:-"Prep_VIIRSAOD_201801"}
+SDAY=$(cat SDAY.info)  #2019092100
+EDAY=$(cat EDAY.info)  #2019102200
+PSLOT="Prep_VIIRSAOD_${SDAY}_${EDAY}"
+#SDAY=
+#EDAY=
 CDUMP=${CDUMP:-"gdas"}
 #CDATE=${CDATE:-"2019050800"}
 CYCINTHR=${CYCINTHR:-"6"}
@@ -280,5 +286,7 @@ echo ${CDATE} > ${TASKRC}
 CDAY=$(${NDATE} 24 ${CDAY})
 done # for CDAY
 
+
+echo "SUCCESSFUL" > ${ROTDIR}/${SDAY}_${EDAY}.prepaod
 echo $(date) EXITING $0 with return code $err >&2
 exit $err
