@@ -20,8 +20,8 @@ codedir=$(pwd)
 topexpdir=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/
 ndate=/scratch2/NCEPDEV/nwprod/NCEPLIBS/utils/prod_util.v1.1.0/exec/ndate
 
-cycst=2020090100  #2020080100  #2020070100 # Starting cycle
-cyced=2020103118  #2020083118  #2020073118 # Ending cycle
+cycst=2021120100   #2021090100  #2021070100  #2021040100  #2021030100  #2021010100 #2020110100  #2020090100  #2020080100  #2020070100 # Starting cycle
+cyced=2022022818   #2021113018  #2021083118  #2021063018  #2021033118  #2021022818 #2020123118  #2020103118  #2020083118  #2020073118 # Ending cycle
 #cycst=2020061500 # Starting cycle
 #cyced=2020062900 # Ending cycle
 	# All four cycles at 00/06/12/18Z has to be available at a certain day. Otherwise, it will crash/ 

@@ -28,11 +28,7 @@ If you need to stop the download while it is in progress, press the
 "control" and "c" keys.
 
 """
-# Module for accessing system-specific parameters and functions
-import sys
-
 # Module to interface with AWS Simple Storage Service (S3)
-sys.path.append('/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/AWS/s3fs/s3fs-2024.9.0')
 import s3fs
 
 # Module to set filesystem paths appropriate for user's operating system
@@ -44,6 +40,8 @@ import datetime
 # Library to create progress bars for loops/functions
 from tqdm import tqdm
 
+# Module for accessing system-specific parameters and functions
+import sys
 
 
 # Create list of VIIRS data file names for specified observation dates

@@ -10,14 +10,16 @@
 #SBATCH -p service
 #SBATCH -t 00:30:00
 
+set -x
 
 #module load matlab
-module load python/3.7.5
+#module load python/3.7.5
+module load anaconda/latest
 
 SDATE=20230601 # in YYYYMMDDyy
 EDATE=20230603 # in YYYYMMDDyy
-DATADIR="/work/noaa/gsd-fv3-dev/bhuang/JEDI-FV3/expRuns/MISC/VIIRS-AWS/data"
-PYEXE="/work/noaa/gsd-fv3-dev/bhuang/JEDI-FV3/expRuns/MISC/VIIRS-AWS/viirs_aws_download_globalmode_v1_bo.py"
+DATADIR="/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/AWS"
+PYEXE="/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/misc/awsVIIRS/scripts/viirs_aws_download_globalmode_v1_bo.py"
 
 python ${PYEXE} ${SDATE} ${EDATE} ${DATADIR}
 
