@@ -1,0 +1,58 @@
++ module load anaconda/latest
++ '[' -z '' ']'
++ case "$-" in
++ __lmod_sh_dbg=x
++ '[' -n x ']'
++ set +x
+Shell debugging temporarily silenced: export LMOD_SH_DBG_ON=1 for Lmod's output
+Shell debugging restarted
++ unset __lmod_sh_dbg
++ return 0
++ SDATE=20230601
++ EDATE=20230603
++ DATADIR=/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/AWS
++ PYEXE=/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/misc/awsVIIRS/scripts/viirs_aws_download_globalmode_v1_bo.py
++ python /home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/misc/awsVIIRS/scripts/viirs_aws_download_globalmode_v1_bo.py 20230601 20230603 /scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/AWS
+Traceback (most recent call last):
+  File "/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/misc/awsVIIRS/scripts/viirs_aws_download_globalmode_v1_bo.py", line 36, in <module>
+    import s3fs
+  File "/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/AWS/s3fs/s3fs-2024.9.0/s3fs/__init__.py", line 1, in <module>
+    from .core import S3FileSystem, S3File
+  File "/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/AWS/s3fs/s3fs-2024.9.0/s3fs/core.py", line 14, in <module>
+    import fsspec  # noqa: F401
+ModuleNotFoundError: No module named 'fsspec'
++ exit 0
+_______________________________________________________________
+Start Epilog on node hfe01 for job 66395959 :: Tue Sep 10 17:05:24 UTC 2024
+Job 66395959 finished for user Bo.Huang in partition service with exit code 0:0
+_______________________________________________________________
+End Epilogue Tue Sep 10 17:05:24 UTC 2024
++ module load anaconda/latest
++ '[' -z '' ']'
++ case "$-" in
++ __lmod_sh_dbg=x
++ '[' -n x ']'
++ set +x
+Shell debugging temporarily silenced: export LMOD_SH_DBG_ON=1 for Lmod's output
+Shell debugging restarted
++ unset __lmod_sh_dbg
++ return 0
++ SDATE=20230601
++ EDATE=20230603
++ DATADIR=/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/AWS
++ PYEXE=/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/misc/awsVIIRS/scripts/viirs_aws_download_globalmode_v1_bo.py
++ python /home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/misc/awsVIIRS/scripts/viirs_aws_download_globalmode_v1_bo.py 20230601 20230603 /scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/AWS
+Traceback (most recent call last):
+  File "/home/Bo.Huang/JEDI-2020/UFS-Aerosols_RETcyc/UFS-Aerosols-EP4_JEDI-AeroDA-Reanl/misc/awsVIIRS/scripts/viirs_aws_download_globalmode_v1_bo.py", line 36, in <module>
+    import s3fs
+  File "/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/AWS/s3fs/s3fs-2024.9.0/s3fs/__init__.py", line 1, in <module>
+    from .core import S3FileSystem, S3File
+  File "/scratch1/NCEPDEV/rstprod/Bo.Huang/HpssViirsAod/AWS/s3fs/s3fs-2024.9.0/s3fs/core.py", line 14, in <module>
+    import fsspec  # noqa: F401
+ModuleNotFoundError: No module named 'fsspec'
++ exit 0
+_______________________________________________________________
+Start Epilog on node hfe01 for job 66395961 :: Tue Sep 10 17:05:40 UTC 2024
+Job 66395961 finished for user Bo.Huang in partition service with exit code 0:0
+_______________________________________________________________
+End Epilogue Tue Sep 10 17:05:40 UTC 2024

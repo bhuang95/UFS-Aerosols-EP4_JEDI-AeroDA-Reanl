@@ -1,0 +1,9 @@
+###MODEL DIRECTORY
+#/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/PACEData
+###test data and IC
+#/scratch2/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/MISC/PACE-Workflow-Test
+###/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/PACEData/global-workflow-20241130/global-workflow/sorc/gsi_utils.fd/src/netcdf_io/calc_analysis.fd/inc2anl.f90
+###ENSANALEXEC=/scratch1/BMC/gsd-fv3-dev/MAPP_2018/bhuang/JEDI-2020/JEDI-FV3/expCodes/PACEData/global-workflow-20241130/global-workflow/sorc/gsi_utils.fd/install/bin/calc_analysis-copyPRESSFC.x
+(1) Remove "pressfc" from incvars_ncio var 
+---Copy pressfc from background to analysis due to erros from add_psrc_increment
+---Possibble reasonable becaue delp_inc were zero out in the forecast

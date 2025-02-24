@@ -1,0 +1,12 @@
+ACC calculation
+(1) OBS file in IODA format
+(2) FCST file in IODA format corresponding to OBS DATE
+    (a) sbatch_fv3aod_interp2ioda.sh and fv3aod_interp2ioda.x
+    (b) interpolate six-tile AOD files to IODA space to be consistent with (1)
+(3) ClimateOBS file in IODA format
+    (a) sbatch_viirsaod_clim_interp2ioda.sh and viirsaod_clim_interp2ioda.x
+    (b) interpolate 0.025 degree gridded VIIRS AOD climitology to IODA space consistent with (1)
+(4) ClimateFCST file in IODA format
+    (a) sbatch_fv3aod_clim_interp2ioda.sh and fv3aod_interp2ioda.x
+    (b) interpolate six-tile AOD files fcst mean to IODA space to be consistent with (1)
+    (c) calc_longfcst_mean.sh to calculate fcst mean. 

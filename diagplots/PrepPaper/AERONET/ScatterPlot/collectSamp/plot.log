@@ -1,0 +1,238 @@
++ module use -a /contrib/anaconda/modulefiles
++ '[' -z '' ']'
++ case "$-" in
++ __lmod_sh_dbg=x
++ '[' -n x ']'
++ set +x
+Shell debugging temporarily silenced: export LMOD_SH_DBG_ON=1 for Lmod's output
+Shell debugging restarted
++ unset __lmod_sh_dbg
++ return 0
++ module load anaconda/latest
++ '[' -z '' ']'
++ case "$-" in
++ __lmod_sh_dbg=x
++ '[' -n x ']'
++ set +x
+Shell debugging temporarily silenced: export LMOD_SH_DBG_ON=1 for Lmod's output
+Shell debugging restarted
++ unset __lmod_sh_dbg
++ return 0
++ EXPDIR=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl
++ SAMPDIR=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples
++ PLOTDIR=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Plots
++ [[ ! -d /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Plots ]]
++ cp COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py plt_AERONET_AOD_OBS_HFX_MPL_PDF_500nm.py /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Plots
++ cd /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Plots
++ FIELDS='freerun_cntlbkg aeroda_cntlbkg aeroda_cntlanl'
++ SEASONS='DJF MAM JJA SON'
++ COMP_ERROR=YES
++ PY_COLECT_ERROR=COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py
++ PY_PLOT_PDF=plt_AERONET_AOD_OBS_HFX_MPL_PDF_500nm.py
++ PY_PLOT_ERROR=plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py
++ '[' YES = YES ']'
++ for ISEASON in ${SEASONS}
++ for IFIELD in ${FIELDS}
++ echo 'DJF-freerun_cntlbkg-Collect bias and RMSE.'
+DJF-freerun_cntlbkg-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_freerun_cntlbkg_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_freerun_cntlbkg_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for IFIELD in ${FIELDS}
++ echo 'DJF-aeroda_cntlbkg-Collect bias and RMSE.'
+DJF-aeroda_cntlbkg-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlbkg_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlbkg_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for IFIELD in ${FIELDS}
++ echo 'DJF-aeroda_cntlanl-Collect bias and RMSE.'
+DJF-aeroda_cntlanl-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlanl_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for ISEASON in ${SEASONS}
++ for IFIELD in ${FIELDS}
++ echo 'MAM-freerun_cntlbkg-Collect bias and RMSE.'
+MAM-freerun_cntlbkg-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_freerun_cntlbkg_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_freerun_cntlbkg_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for IFIELD in ${FIELDS}
++ echo 'MAM-aeroda_cntlbkg-Collect bias and RMSE.'
+MAM-aeroda_cntlbkg-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlbkg_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlbkg_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for IFIELD in ${FIELDS}
++ echo 'MAM-aeroda_cntlanl-Collect bias and RMSE.'
+MAM-aeroda_cntlanl-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlanl_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for ISEASON in ${SEASONS}
++ for IFIELD in ${FIELDS}
++ echo 'JJA-freerun_cntlbkg-Collect bias and RMSE.'
+JJA-freerun_cntlbkg-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_freerun_cntlbkg_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_freerun_cntlbkg_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for IFIELD in ${FIELDS}
++ echo 'JJA-aeroda_cntlbkg-Collect bias and RMSE.'
+JJA-aeroda_cntlbkg-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlbkg_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlbkg_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for IFIELD in ${FIELDS}
++ echo 'JJA-aeroda_cntlanl-Collect bias and RMSE.'
+JJA-aeroda_cntlanl-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlanl_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for ISEASON in ${SEASONS}
++ for IFIELD in ${FIELDS}
++ echo 'SON-freerun_cntlbkg-Collect bias and RMSE.'
+SON-freerun_cntlbkg-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_freerun_cntlbkg_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_freerun_cntlbkg_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for IFIELD in ${FIELDS}
++ echo 'SON-aeroda_cntlbkg-Collect bias and RMSE.'
+SON-aeroda_cntlbkg-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlbkg_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlbkg_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for IFIELD in ${FIELDS}
++ echo 'SON-aeroda_cntlanl-Collect bias and RMSE.'
+SON-aeroda_cntlanl-Collect bias and RMSE.
++ INFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ OUTFILE=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python COLLECT_AERONET_AOD_COUNT_OBS_HFX_BIAS_RMSE_MAE_BRRMSE_500nm.py -i /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlanl_aeronet_aod_500nm_sample.out -o /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for ISEASON in ${SEASONS}
++ echo 'DJF-Plot PDF.'
+DJF-Plot PDF.
++ CYCLE=DJF
++ AODTYPE=AERONET
++ PMONTH=FALSE
++ FREERUN=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_freerun_cntlbkg_aeronet_aod_500nm_sample.out
++ DABKG=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlbkg_aeronet_aod_500nm_sample.out
++ DAANL=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ python plt_AERONET_AOD_OBS_HFX_MPL_PDF_500nm.py -c DJF -p AERONET -m FALSE -x /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_freerun_cntlbkg_aeronet_aod_500nm_sample.out -y /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlbkg_aeronet_aod_500nm_sample.out -z /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ FREERUN=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ DABKG=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ DAANL=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py -c DJF -p AERONET -x /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out -y /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out -z /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/DJF_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:219: MatplotlibDeprecationWarning: 
+The dedent function was deprecated in Matplotlib 3.1 and will be removed in 3.3. Use inspect.cleandoc instead.
+  map=Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,llcrnrlon=-180,urcrnrlon=180,resolution='c')
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:248: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  fig.tight_layout(rect=[0.00, 0.02, 1.00, 1.00])
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:276: MatplotlibDeprecationWarning: 
+The dedent function was deprecated in Matplotlib 3.1 and will be removed in 3.3. Use inspect.cleandoc instead.
+  map=Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,llcrnrlon=-180,urcrnrlon=180,resolution='c')
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for ISEASON in ${SEASONS}
++ echo 'MAM-Plot PDF.'
+MAM-Plot PDF.
++ CYCLE=MAM
++ AODTYPE=AERONET
++ PMONTH=FALSE
++ FREERUN=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_freerun_cntlbkg_aeronet_aod_500nm_sample.out
++ DABKG=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlbkg_aeronet_aod_500nm_sample.out
++ DAANL=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ python plt_AERONET_AOD_OBS_HFX_MPL_PDF_500nm.py -c MAM -p AERONET -m FALSE -x /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_freerun_cntlbkg_aeronet_aod_500nm_sample.out -y /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlbkg_aeronet_aod_500nm_sample.out -z /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ FREERUN=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ DABKG=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ DAANL=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py -c MAM -p AERONET -x /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out -y /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out -z /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/MAM_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:219: MatplotlibDeprecationWarning: 
+The dedent function was deprecated in Matplotlib 3.1 and will be removed in 3.3. Use inspect.cleandoc instead.
+  map=Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,llcrnrlon=-180,urcrnrlon=180,resolution='c')
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:248: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  fig.tight_layout(rect=[0.00, 0.02, 1.00, 1.00])
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:276: MatplotlibDeprecationWarning: 
+The dedent function was deprecated in Matplotlib 3.1 and will be removed in 3.3. Use inspect.cleandoc instead.
+  map=Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,llcrnrlon=-180,urcrnrlon=180,resolution='c')
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for ISEASON in ${SEASONS}
++ echo 'JJA-Plot PDF.'
+JJA-Plot PDF.
++ CYCLE=JJA
++ AODTYPE=AERONET
++ PMONTH=FALSE
++ FREERUN=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_freerun_cntlbkg_aeronet_aod_500nm_sample.out
++ DABKG=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlbkg_aeronet_aod_500nm_sample.out
++ DAANL=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ python plt_AERONET_AOD_OBS_HFX_MPL_PDF_500nm.py -c JJA -p AERONET -m FALSE -x /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_freerun_cntlbkg_aeronet_aod_500nm_sample.out -y /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlbkg_aeronet_aod_500nm_sample.out -z /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ FREERUN=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ DABKG=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ DAANL=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py -c JJA -p AERONET -x /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out -y /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out -z /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/JJA_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:219: MatplotlibDeprecationWarning: 
+The dedent function was deprecated in Matplotlib 3.1 and will be removed in 3.3. Use inspect.cleandoc instead.
+  map=Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,llcrnrlon=-180,urcrnrlon=180,resolution='c')
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:248: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  fig.tight_layout(rect=[0.00, 0.02, 1.00, 1.00])
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:276: MatplotlibDeprecationWarning: 
+The dedent function was deprecated in Matplotlib 3.1 and will be removed in 3.3. Use inspect.cleandoc instead.
+  map=Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,llcrnrlon=-180,urcrnrlon=180,resolution='c')
++ ERR=0
++ [[ 0 -ne 0 ]]
++ for ISEASON in ${SEASONS}
++ echo 'SON-Plot PDF.'
+SON-Plot PDF.
++ CYCLE=SON
++ AODTYPE=AERONET
++ PMONTH=FALSE
++ FREERUN=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_freerun_cntlbkg_aeronet_aod_500nm_sample.out
++ DABKG=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlbkg_aeronet_aod_500nm_sample.out
++ DAANL=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ python plt_AERONET_AOD_OBS_HFX_MPL_PDF_500nm.py -c SON -p AERONET -m FALSE -x /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_freerun_cntlbkg_aeronet_aod_500nm_sample.out -y /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlbkg_aeronet_aod_500nm_sample.out -z /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlanl_aeronet_aod_500nm_sample.out
++ ERR=0
++ [[ 0 -ne 0 ]]
++ FREERUN=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ DABKG=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ DAANL=/scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
++ python plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py -c SON -p AERONET -x /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_freerun_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out -y /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlbkg_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out -z /scratch2/BMC/gsd-fv3-dev/bhuang/expRuns/UFS-Aerosols_RETcyc/AeroReanl/PrepPaper/AERONET/ScatterPlot/Samples/SON_aeroda_cntlanl_aeronet_aod_500nm_count_obs_hfx_bias_rmse_mae_brrmse_sample.out
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:219: MatplotlibDeprecationWarning: 
+The dedent function was deprecated in Matplotlib 3.1 and will be removed in 3.3. Use inspect.cleandoc instead.
+  map=Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,llcrnrlon=-180,urcrnrlon=180,resolution='c')
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:248: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  fig.tight_layout(rect=[0.00, 0.02, 1.00, 1.00])
+plt_AERONET_AOD_COUNT_BIAS_RMSE_MAE_BRRMSE_500nm_relativeError.py:276: MatplotlibDeprecationWarning: 
+The dedent function was deprecated in Matplotlib 3.1 and will be removed in 3.3. Use inspect.cleandoc instead.
+  map=Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,llcrnrlon=-180,urcrnrlon=180,resolution='c')
++ ERR=0
++ [[ 0 -ne 0 ]]
++ exit 0

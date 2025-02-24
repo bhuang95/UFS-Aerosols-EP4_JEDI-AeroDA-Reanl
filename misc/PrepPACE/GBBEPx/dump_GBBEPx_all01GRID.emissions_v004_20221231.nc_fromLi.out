@@ -1,0 +1,185 @@
+netcdf GBBEPx_all01GRID.emissions_v004_20221231 {
+dimensions:
+	time = UNLIMITED ; // (1 currently)
+	lat = 1791 ;
+	lon = 3600 ;
+variables:
+	double BC(time, lat, lon) ;
+		BC:long_name = "BC Biomass Emissions" ;
+		BC:standard_name = "BC Biomass Emissions" ;
+		BC:units = "kg s-1 m-2" ;
+		BC:scale_factor = 1. ;
+		BC:_FillValue = -9999. ;
+	double CH4(time, lat, lon) ;
+		CH4:long_name = "CH4 Biomass Emissions" ;
+		CH4:standard_name = "CH4 Biomass Emissions" ;
+		CH4:units = "kg s-1 m-2" ;
+		CH4:valid_range = 0., 100000. ;
+		CH4:scale_factor = 1. ;
+		CH4:add_offset = 0. ;
+		CH4:_FillValue = -9999. ;
+		CH4:coordinates = "Time Latitude Longitude" ;
+	double CO(time, lat, lon) ;
+		CO:long_name = "CO Biomass Emissions" ;
+		CO:standard_name = "CO Biomass Emissions" ;
+		CO:units = "kg s-1 m-2" ;
+		CO:scale_factor = 1. ;
+		CO:_FillValue = -9999. ;
+	double CO2(time, lat, lon) ;
+		CO2:long_name = "CO2 Biomass Emissions" ;
+		CO2:standard_name = "CO2 Biomass Emissions" ;
+		CO2:units = "kg s-1 m-2" ;
+		CO2:valid_range = 0., 100000. ;
+		CO2:scale_factor = 1. ;
+		CO2:add_offset = 0. ;
+		CO2:_FillValue = -9999. ;
+		CO2:coordinates = "Time Latitude Longitude" ;
+	double MeanFRP(time, lat, lon) ;
+		MeanFRP:long_name = "Mean Fire Radiative Power" ;
+		MeanFRP:units = "MW" ;
+		MeanFRP:scale_factor = 1. ;
+		MeanFRP:_FillValue = -9999. ;
+	double NH3(time, lat, lon) ;
+		NH3:long_name = "NH3 Biomass Emissions" ;
+		NH3:standard_name = "NH3 Biomass Emissions" ;
+		NH3:units = "kg s-1 m-2" ;
+		NH3:scale_factor = 1. ;
+		NH3:_FillValue = -9999. ;
+	double NOx(time, lat, lon) ;
+		NOx:long_name = "NOx Biomass Emissions" ;
+		NOx:standard_name = "NOx Biomass Emissions" ;
+		NOx:units = "kg s-1 m-2" ;
+		NOx:scale_factor = 1. ;
+		NOx:_FillValue = -9999. ;
+	double OC(time, lat, lon) ;
+		OC:long_name = "OC Biomass Emissions" ;
+		OC:standard_name = "OC Biomass Emissions" ;
+		OC:units = "kg s-1 m-2" ;
+		OC:scale_factor = 1. ;
+		OC:_FillValue = -9999. ;
+	double PM2.5(time, lat, lon) ;
+		PM2.5:long_name = "PM2.5 Biomass Emissions" ;
+		PM2.5:standard_name = "PM2.5 Biomass Emissions" ;
+		PM2.5:units = "kg s-1 m-2" ;
+		PM2.5:scale_factor = 1. ;
+		PM2.5:_FillValue = -9999. ;
+	double SO2(time, lat, lon) ;
+		SO2:long_name = "SO2 Biomass Emissions" ;
+		SO2:standard_name = "SO2 Biomass Emissions" ;
+		SO2:units = "kg s-1 m-2" ;
+		SO2:scale_factor = 1. ;
+		SO2:_FillValue = -9999. ;
+	float lat(lat) ;
+		lat:long_name = "latitude" ;
+		lat:standard_name = "Latitude" ;
+		lat:units = "degrees_north" ;
+	float lon(lon) ;
+		lon:long_name = "longitude" ;
+		lon:standard_name = "Longitude" ;
+		lon:units = "degrees_east" ;
+	int time(time) ;
+		time:units = "hours since 2022-12-31 12:00:00" ;
+		time:long_name = "Time" ;
+		time:calendar = "gregorian" ;
+		time:axis = "T" ;
+
+// global attributes:
+		:PRODUCT_ALGORITHM_VERSION = "v4r0" ;
+		:TIME_RANGE = "day" ;
+		:RangeBeginningDate_YYYY_DOY = "2022-365" ;
+		:RangeBeginningTime_UTC_hour = "0" ;
+		:RangeEndingDate_YYYY_DOY = "2022-365" ;
+		:RangeEndingTime_UTC_hour = "23" ;
+		:WestBoundingCoordinate_degree = -180.f ;
+		:EastBoundingCoordinate_degree = 180.f ;
+		:NorthBoundingCoordinate_degree = 90.f ;
+		:SouthBoundingCoordinate_degree = -90.f ;
+		:Conventions = "CF-1.6, ACDD-1.3" ;
+		:ascend_descend_data_flag = "2" ;
+		:cdm_data_type = "Grid" ;
+		:creator_email = "Xiaoyang.zhang@sdstate.edu" ;
+		:creator_name = "DOC/NOAA/NESDIS/STAR; the Geospatial Spatial Sciences Center of Excellence at South Dakota State University" ;
+		:creator_url = "http://www.star.nesdis.noaa.gov" ;
+		:day_night_data_flag = "both" ;
+		:geospatial_lat_units = "degrees_north" ;
+		:geospatial_lon_units = "degrees_east" ;
+		:history = "Mon Apr 29 23:08:30 2024: ncatted -O -a coordinates,MeanFRP,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:29 2024: ncatted -O -a valid_range,MeanFRP,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:28 2024: ncatted -O -a add_offset,MeanFRP,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:27 2024: ncatted -O -a add_offset,NH3,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:26 2024: ncatted -O -a add_offset,NOx,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:25 2024: ncatted -O -a add_offset,CO,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:24 2024: ncatted -O -a add_offset,BC,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:23 2024: ncatted -O -a add_offset,OC,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:22 2024: ncatted -O -a add_offset,PM2.5,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:21 2024: ncatted -O -a add_offset,SO2,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:20 2024: ncatted -O -a valid_range,NH3,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:18 2024: ncatted -O -a valid_range,NOx,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:17 2024: ncatted -O -a valid_range,CO,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:16 2024: ncatted -O -a valid_range,BC,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:15 2024: ncatted -O -a valid_range,OC,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:14 2024: ncatted -O -a valid_range,PM2.5,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:13 2024: ncatted -O -a valid_range,SO2,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:12 2024: ncatted -O -a coordinates,NH3,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:11 2024: ncatted -O -a coordinates,NOx,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:10 2024: ncatted -O -a coordinates,CO,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:09 2024: ncatted -O -a coordinates,BC,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:08 2024: ncatted -O -a coordinates,OC,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:07 2024: ncatted -O -a coordinates,PM2.5,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:06 2024: ncatted -O -a coordinates,SO2,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:05 2024: ncatted -O -a _FillValue,lat,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:03 2024: ncatted -O -a add_offset,lat,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:02 2024: ncatted -O -a scale_factor,lat,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:01 2024: ncatted -O -a valid_range,lat,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:08:00 2024: ncatted -O -a bounds,lat,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:59 2024: ncatted -O -a axis,lat,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:58 2024: ncatted -O -a _FillValue,lon,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:57 2024: ncatted -O -a add_offset,lon,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:56 2024: ncatted -O -a scale_factor,lon,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:54 2024: ncatted -O -a valid_range,lon,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:53 2024: ncatted -O -a bounds,lon,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:52 2024: ncatted -O -a axis,lon,d,, ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:51 2024: ncatted -O -a long_name,lon,m,c,longitude ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:50 2024: ncatted -O -a long_name,lat,m,c,latitude ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:49 2024: ncatted -O -a axis,time,c,c,T ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:48 2024: ncatted -O -a calendar,time,c,c,gregorian ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:47 2024: ncatted -O -a long_name,time,c,c,Time ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:45 2024: ncatted -O -a units,time,c,c,hours since 2022-12-31 12:00:00 ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:44 2024: ncks -O -d lat,-89.5,89.5 ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp2\n",
+			"Mon Apr 29 23:07:42 2024: ncks -C -O -x -v quality_information ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:40 2024: ncks -C -O -x -v TotalEmis_region_SouthAmerica ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:39 2024: ncks -C -O -x -v TotalEmis_region_NorthAmerica ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:37 2024: ncks -C -O -x -v TotalEmis_region_Europe ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:35 2024: ncks -C -O -x -v TotalEmis_region_Australia ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:34 2024: ncks -C -O -x -v TotalEmis_region_Asia ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:32 2024: ncks -C -O -x -v TotalEmis_region_Africa ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:30 2024: ncks -C -O -x -v QCAll,CloudPerc,FirePerc,NumSensor ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:28 2024: ncks -C -O -x -v Max_emission,Max_emission_col,Max_emission_row ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:27 2024: ncap2 -O -s time[time]=0 ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp -o ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:26 2024: ncrename -v Longitude,lon -d Longitude,lon ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp -O -o ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:25 2024: ncrename -v Latitude,lat -d Latitude,lat ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp -O -o ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:23 2024: ncrename -v Time,time -d Time,time ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp -O -o ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:22 2024: ncatted -O -a units,Longitude,m,c,degrees_east ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"Mon Apr 29 23:07:20 2024: ncks --mk_rec_dmn Time ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp -O -o ./GBBEPx_all01GRID.emissions_v004_20221231.nc.tmp\n",
+			"GBBEPx v1r0" ;
+		:history_package = "v1r0" ;
+		:id = "f47ac10b-58cc-4372-9567-0e02b2c3d145" ;
+		:institution = "DOC/NOAA/NESDIS/OSPO > Office of Satellite and Product Operations, NESDIS, NOAA, U.S. Department of Commerce" ;
+		:instrument = "VIIRS, MODIS" ;
+		:keywords = "fire, biomass burning, emission, global" ;
+		:metadata_link = "GBBEPx-all01GRID_v4r0_blend_s202212310000000_e202212312359590_c202404032133035.nc" ;
+		:platform = "S-NPP/NOAA-21, NOAA-20, Terra, Aqua" ;
+		:processing_level = "NOAA Level 3" ;
+		:production_environment = "OE" ;
+		:production_site = "Ops" ;
+		:publisher_email = "espcoperations@noaa.gov" ;
+		:publisher_name = "DOC/NOAA/NESDIS/OSPO > Office of Satellite and Product Operations, NESIDS, NOAA, U.S. Department of Commerce" ;
+		:publisher_url = "http://www.ospo.noaa.gov" ;
+		:source = "AF-Iband/EFIRE-VIIRSI, GITCO, VNP14IMG, VNP03IMGLL, MOD14/MYD14, MOD03/MYD03" ;
+		:standard_name_vocabulary = "CF Standard Name Table v4r0" ;
+		:summary = "global biomass burning emissions" ;
+		:time_coverage_start = "2022-12-31T00:00:00Z" ;
+		:time_coverage_end = "2022-12-31T23:59:59Z" ;
+		:date_created = "2024-04-03T21:33:37Z" ;
+		:NCO = "netCDF Operators version 5.1.6 (Homepage = http://nco.sf.net, Code = http://github.com/nco/nco)" ;
+}
